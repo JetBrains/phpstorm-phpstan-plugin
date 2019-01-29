@@ -1,0 +1,45 @@
+<idea-plugin>
+  <name>PHPStan Support</name>
+  <id>com.intellij.php.tools.quality.phpstan</id>
+  <description>PHPStan static analysis tool support</description>
+  <vendor>JetBrains</vendor>
+  <resource-bundle>messages.PhpStanBundle</resource-bundle>
+  <depends>com.jetbrains.php</depends>
+  <depends>com.intellij.modules.ultimate</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationService
+        serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanAppConfigurationManager"/>
+    <projectService serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanBlackList"/>
+    <projectService serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanProjectConfiguration"/>
+    <projectService serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager"/>
+    <projectService
+        serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanProjectConfigurationManager"/>
+    <localInspection language="PHP" shortName="PhpStanValidationInspection"
+                     displayName="PHPStan validation"
+                     groupPath="PHP"
+                     groupName="Quality tools"
+                     enabledByDefault="false"
+                     level="WEAK WARNING"
+                     implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanValidationInspection"/>
+    <externalAnnotator language="PHP" implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanAnnotatorProxy"/>
+  </extensions>
+
+  <extensions defaultExtensionNs="com.jetbrains.php">
+    <tools.projectConfigurableForm instance="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurable"/>
+  </extensions>
+
+  <extensionPoints>
+    <extensionPoint qualifiedName="com.jetbrains.php.tools.quality.PhpStan.PhpStanConfigurationProvider"
+                    interface="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationProvider"/>
+  </extensionPoints>
+
+  <actions>
+    <action id="PhpStanAddToIgnored"
+            class="com.jetbrains.php.tools.quality.phpstan.PhpStanAddToIgnoredAction"
+            text="Add to PHPStan Ignore List"
+            description="Add to PHPStan Ignore List">
+      <add-to-group group-id="PHPQualityToolsAddToIgnoredList"/>
+    </action>
+  </actions>
+</idea-plugin>
