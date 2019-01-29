@@ -15,18 +15,18 @@ import org.xml.sax.Attributes;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.ERROR;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.WARNING;
 
 public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   private static final String PHP_STAN = "PHPStan";
-  private final static String ERROR_MESSAGE_START = "<error";
-  private final static String ERROR_MESSAGE_END = "</error>";
   private final static String ERROR_TAG = "error";
-  private final static String WARNING_MESSAGE_START = "<warning";
-  private final static String WARNING_MESSAGE_END = "</warning>";
+  private final static String WARNING_MESSAGE_START = "<file";
+  private final static String WARNING_MESSAGE_END = "</file>";
   private final static String WARNING_TAG = "warning";
   private final static String LINE_NUMBER_ATTR = "line";
-  private final static String SNIFF_NAME_ATTR = "source";
+  private final static String MESSAGE_ATTR = "message";
+  private final static String SEVERITY_ATTR = "severity";
   private static final Logger LOG = Logger.getInstance(QualityToolXmlMessageProcessor.class);
   private final Set<TextRange> lineMessages = new HashSet<>();
   private final HighlightDisplayLevel myWarningsHighlightLevel;
@@ -43,20 +43,12 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
 
   @Override
   public int getMessageStart(@NotNull String line) {
-    int messageStart = line.indexOf(ERROR_MESSAGE_START);
-    if (messageStart < 0) {
-      messageStart = line.indexOf(WARNING_MESSAGE_START);
-    }
-    return messageStart;
+    return line.indexOf(WARNING_MESSAGE_START);
   }
 
   @Override
   public int getMessageEnd(@NotNull String line) {
-    int messageEnd = line.indexOf(ERROR_MESSAGE_END);
-    if (messageEnd < 0) {
-      messageEnd = line.indexOf(WARNING_MESSAGE_END);
-    }
-    return messageEnd;
+    return line.indexOf(WARNING_MESSAGE_END);
   }
 
   @Nullable
@@ -90,13 +82,12 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   private class PhpStanXmlMessageHandler extends XMLMessageHandler {
     @Override
     protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
-      if (ERROR_TAG.equals(tagName)) {
-        mySeverity = WARNING;
+      if (ERROR_TAG.equals(tagName)| WARNING_TAG.equals(tagName)) {
+        final String severity = attributes.getValue(SEVERITY_ATTR);
+        mySeverity = severity.equals(ERROR_TAG) ? ERROR: WARNING;
+        myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
+        myMessageBuf.append(attributes.getValue(MESSAGE_ATTR));
       }
-      else if (WARNING_TAG.equals(tagName)) {
-        mySeverity = WARNING;
-      }
-      myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
     }
   }
 }
