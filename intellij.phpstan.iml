@@ -16,5 +16,6 @@
     <orderEntry type="module" module-name="intellij.platform.analysis" />
     <orderEntry type="module" module-name="intellij.platform.ide" />
     <orderEntry type="library" name="JDOM" level="project" />
+    <orderEntry type="library" name="gson" level="project" />
   </component>
 </module>

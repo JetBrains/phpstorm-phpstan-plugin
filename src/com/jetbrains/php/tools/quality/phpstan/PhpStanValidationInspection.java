@@ -1,6 +1,5 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.codeInspection.CleanupLocalInspectionTool;
 import com.jetbrains.php.lang.inspections.PhpInspection;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
@@ -52,13 +51,13 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     return "PHPStan";
   }
 
-  public List<String> getCommandLineOptions(String filePath, boolean dryRun) {
+  public List<String> getCommandLineOptions(List<String> filePath) {
     ArrayList<String> options = new ArrayList<>();
     options.add("analyze");
     options.add("--level=max");
     options.add("--memory-limit=2G");
     options.add("--error-format=checkstyle");
-    options.add(filePath);
+    options.addAll(filePath);
     return options;
   }
 }
