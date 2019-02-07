@@ -13,7 +13,9 @@ import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.process.ProcessOutputTypes;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.Key;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.SmartList;
 import com.jetbrains.php.config.interpreters.PhpSdkFileTransfer;
@@ -21,7 +23,9 @@ import com.jetbrains.php.tools.quality.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.intellij.openapi.util.text.StringUtil.equalsIgnoreWhitespaces;
 import static com.intellij.util.containers.ContainerUtil.newArrayList;
@@ -98,7 +102,9 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator {
     if (settings != null) {
       final GeneralCommandLine cmd = new GeneralCommandLine();
       cmd.setExePath(settings.getToolPath());
-      final String pathToGatherDeps = collectedInfo.getProject().getBasePath() + "/src"; // TODO: fix
+      final String pathToGatherDeps = Arrays.stream(ProjectRootManager.getInstance(collectedInfo.getProject()).getContentSourceRoots())
+        .map(VirtualFile::getPath)
+        .collect(Collectors.joining(","));
       cmd.addParameters(
         newArrayList("dump-deps", "--no-progress", "--analysed-paths=" + collectedInfo.getOriginalFile().getPath(), pathToGatherDeps));
 
