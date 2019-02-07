@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
+import com.intellij.openapi.util.text.StringUtil;
 import com.jetbrains.php.lang.inspections.PhpInspection;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
@@ -9,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.intellij.openapi.util.text.StringUtil.join;
 
 public class PhpStanValidationInspection extends QualityToolValidationInspection {
 
@@ -57,7 +60,7 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     options.add("--level=max");
     options.add("--memory-limit=2G");
     options.add("--error-format=checkstyle");
-    options.addAll(filePath);
+    options.add(join(filePath, ","));
     return options;
   }
 }
