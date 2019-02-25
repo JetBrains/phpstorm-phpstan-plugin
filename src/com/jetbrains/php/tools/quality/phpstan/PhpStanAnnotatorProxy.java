@@ -64,12 +64,11 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator {
   protected void runTool(@NotNull QualityToolMessageProcessor messageProcessor,
                          @NotNull final QualityToolAnnotatorInfo collectedInfo,
                          @NotNull PhpSdkFileTransfer transfer) throws ExecutionException {
-    String workingDirectory = null;
     PhpStanValidationInspection inspection = (PhpStanValidationInspection)collectedInfo.getInspection();
     messageProcessor.addSubstitution(collectedInfo.getFileName(), collectedInfo.getOriginalFileName());
 
     final PhpStanBlackList blackList = PhpStanBlackList.getInstance(collectedInfo.getProject());
-    runToolProcess(collectedInfo, blackList, messageProcessor, workingDirectory, transfer,
+    runToolProcess(collectedInfo, blackList, messageProcessor, collectedInfo.getProject().getBasePath(), transfer,
                    inspection.getCommandLineOptions(((PhpStanQualityToolAnnotatorInfo)collectedInfo).getDependsOn()));
     if (messageProcessor.getInternalErrorMessage() != null && collectedInfo.isOnTheFly()) {
       if (collectedInfo.isOnTheFly()) {
