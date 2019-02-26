@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
+import com.intellij.openapi.util.text.StringUtil;
 import com.jetbrains.php.lang.inspections.PhpInspection;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
@@ -10,8 +11,11 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.intellij.openapi.util.text.StringUtil.split;
+
 public class PhpStanValidationInspection extends QualityToolValidationInspection {
   public boolean FULL_PROJECT = false;
+  public String OPTIONS = "--level=max --memory-limit=2G";
 
   public final static String DISPLAY_NAME = "PHPStan Validation";
 
@@ -55,8 +59,7 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
   public List<String> getCommandLineOptions(List<String> filePath) {
     ArrayList<String> options = new ArrayList<>();
     options.add("analyze");
-    options.add("--level=max");
-    options.add("--memory-limit=2G");
+    options.addAll(split(OPTIONS, " "));
     options.add("--error-format=checkstyle");
     options.add("--no-progress");
     options.addAll(filePath);
