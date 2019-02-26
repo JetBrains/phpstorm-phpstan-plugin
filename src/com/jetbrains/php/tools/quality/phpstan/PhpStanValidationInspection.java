@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhpStanValidationInspection extends QualityToolValidationInspection {
+  public boolean FULL_PROJECT = false;
 
   public final static String DISPLAY_NAME = "PHPStan Validation";
 

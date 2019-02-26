@@ -27,7 +27,9 @@ public class PhpStanQualityToolAnnotatorInfo extends QualityToolAnnotatorInfo {
 
 
   public List<String> getDependsOn() {
-    return new SmartList<>(map(ProjectRootManager.getInstance(getProject()).getContentSourceRoots(), VirtualFile::getPath));
+    return ((PhpStanValidationInspection)getInspection()).FULL_PROJECT
+           ? new SmartList<>(getProject().getBasePath())
+           : new SmartList<>(map(ProjectRootManager.getInstance(getProject()).getContentSourceRoots(), VirtualFile::getPath));
     // TODO: replace with dependsOn after dump-deps batch mode fix
     //return dependsOn;
   }
