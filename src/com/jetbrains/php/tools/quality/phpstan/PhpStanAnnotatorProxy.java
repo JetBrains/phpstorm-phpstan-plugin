@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import com.intellij.codeInspection.LocalInspectionTool;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
@@ -23,6 +24,7 @@ import com.jetbrains.php.tools.quality.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.StringReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -124,7 +126,8 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator {
           public void processTerminated(@NotNull ProcessEvent event) {
             final List<String> foundDeps = new SmartList<>();
             if (!equalsIgnoreWhitespaces(output, "[]")) {
-              final JsonElement jsonElement = new JsonParser().parse(output.toString());
+              final JsonReader jsonReader = new JsonReader(new StringReader(output.toString()));
+              final JsonElement jsonElement = new JsonParser().parse(jsonReader);
               if (jsonElement instanceof JsonObject && ((JsonObject)jsonElement).size() == 1) {
                 final JsonArray array = ((JsonObject)jsonElement).getAsJsonArray(collectedInfo.getOriginalFile().getPath());
                 for (int i = 0; i < array.size(); i++) {
