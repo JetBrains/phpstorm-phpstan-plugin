@@ -22,6 +22,11 @@ public class PhpStanProjectConfiguration extends QualityToolProjectConfiguration
     XmlSerializerUtil.copyBean(state, this);
   }
 
+  @Override
+  protected String getInspectionId() {
+    return new PhpStanValidationInspection().getID();
+  }
+
   @NotNull
   @Override
   protected String getQualityToolName() {
