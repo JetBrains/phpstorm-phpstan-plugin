@@ -62,6 +62,12 @@ public class PhpStanConfigurable extends QualityToolProjectConfigurableForm impl
 
   @NotNull
   @Override
+  protected String getInspectionShortName() {
+    return new PhpStanValidationInspection().getShortName();
+  }
+
+  @NotNull
+  @Override
   protected QualityToolConfigurationComboBox createConfigurationComboBox() {
     return new PhpStanConfigurationComboBox(myProject);
   }
