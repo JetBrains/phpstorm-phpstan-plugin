@@ -4,7 +4,6 @@ import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.Trinity;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolMessage;
@@ -51,8 +50,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
       for (Trinity<Integer, String, QualityToolMessage.Severity> problem : messageHandler.getProblemList()) {
         QualityToolMessage qualityToolMessage =
           new QualityToolMessage(this, problem.first, problem.third, problem.second);
-        if (!lineMessages.contains(problem)) {
-          lineMessages.add(problem);
+        if (lineMessages.add(problem)) {
           addMessage(qualityToolMessage);
         }
       }
