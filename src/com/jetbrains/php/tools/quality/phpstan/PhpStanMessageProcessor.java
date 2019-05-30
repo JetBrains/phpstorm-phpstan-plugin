@@ -100,7 +100,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     return new PhpStanConfigurable(project);
   }
 
-  private class PhpStanXmlMessageHandler extends XMLMessageHandler {
+  private static class PhpStanXmlMessageHandler extends XMLMessageHandler {
     private List<Trinity<Integer, String, QualityToolMessage.Severity>> myProblemList;
 
     private List<Trinity<Integer, String, QualityToolMessage.Severity>> getProblemList() {
