@@ -84,7 +84,7 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator {
 
   @Override
   protected QualityToolMessageProcessor createMessageProcessor(@NotNull QualityToolAnnotatorInfo collectedInfo) {
-    return new PhpStanMessageProcessor(collectedInfo, collectedInfo.getMaxMessagesPerFile());
+    return new PhpStanMessageProcessor(collectedInfo);
   }
 
   @NotNull

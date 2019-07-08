@@ -37,8 +37,8 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   private final Set<Trinity<Integer, String, QualityToolMessage.Severity>> lineMessages = new HashSet<>();
   private final HighlightDisplayLevel myWarningsHighlightLevel;
 
-  protected PhpStanMessageProcessor(QualityToolAnnotatorInfo info, int maxMessages) {
-    super(info, maxMessages);
+  protected PhpStanMessageProcessor(QualityToolAnnotatorInfo info) {
+    super(info);
     myWarningsHighlightLevel = HighlightDisplayLevel.WARNING; // TODO: fix
   }
 
