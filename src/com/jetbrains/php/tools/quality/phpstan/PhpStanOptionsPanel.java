@@ -11,8 +11,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class PhpStanOptionsPanel {
   private final PhpStanValidationInspection myInspection;
