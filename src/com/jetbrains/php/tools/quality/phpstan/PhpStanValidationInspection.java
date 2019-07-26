@@ -1,6 +1,5 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.openapi.util.text.StringUtil;
 import com.jetbrains.php.lang.inspections.PhpInspection;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
