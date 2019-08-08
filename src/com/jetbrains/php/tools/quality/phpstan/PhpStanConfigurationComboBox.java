@@ -1,12 +1,11 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.project.Project;
+import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
+import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.awt.event.ActionListener;
-import java.util.List;
 
 public class PhpStanConfigurationComboBox extends QualityToolConfigurationComboBox<PhpStanConfiguration> {
 
@@ -14,25 +13,14 @@ public class PhpStanConfigurationComboBox extends QualityToolConfigurationComboB
     super(project);
   }
 
-  @NotNull
   @Override
-  protected ActionListener createBrowserAction(@NotNull final Project project) {
-    return e -> {
-      final QualityToolConfigurationItem item = getSelectedItem();
-      final PhpStanConfigurableList configurableList = new PhpStanConfigurableList(project, item == null ? null : item.getName());
-      editConfigurableList(configurableList, item);
-    };
+  protected QualityToolConfigurableList<PhpStanConfiguration> getQualityToolConfigurableList(@NotNull Project project,
+                                                                                             @Nullable String item) {
+    return new PhpStanConfigurableList(project, item);
   }
 
   @Override
-  @NotNull
-  protected List<PhpStanConfiguration> getItems() {
-    return PhpStanConfigurationManager.getInstance(myProject).getAllSettings();
-  }
-
-  @Override
-  @NotNull
-  protected PhpStanConfiguration getDefaultItem() {
-    return PhpStanConfigurationManager.getInstance(myProject).getLocalSettings();
+  protected QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
+    return PhpStanConfigurationManager.getInstance(project);
   }
 }
