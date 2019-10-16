@@ -23,7 +23,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   }
 
   @Override
-  protected PhpStanValidationInspection getQualityInspection() {
+  public PhpStanValidationInspection getQualityInspection() {
     return PHP_STAN_VALIDATION_INSPECTION;
   }
 
