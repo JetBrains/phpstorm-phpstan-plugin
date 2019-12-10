@@ -30,13 +30,6 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     return getClass().getSimpleName();
   }
 
-  @Nls
-  @NotNull
-  @Override
-  public String getDisplayName() {
-    return DISPLAY_NAME;
-  }
-
   @Override
   public JComponent createOptionsPanel() {
     final PhpStanOptionsPanel optionsPanel = new PhpStanOptionsPanel(this);
