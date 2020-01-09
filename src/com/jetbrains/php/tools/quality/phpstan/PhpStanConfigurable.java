@@ -2,6 +2,7 @@ package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
+import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
 import com.jetbrains.php.tools.quality.QualityToolProjectConfigurableForm;
 import com.jetbrains.php.tools.quality.QualityToolProjectConfiguration;
@@ -23,7 +24,7 @@ public class PhpStanConfigurable extends QualityToolProjectConfigurableForm impl
   @Nls
   @Override
   public String getDisplayName() {
-    return "PHPStan";
+    return PhpBundle.message("configurable.PhpStanConfigurable.display.name");
   }
 
   @Override
