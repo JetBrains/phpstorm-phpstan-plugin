@@ -18,9 +18,8 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
 
   public final static String DISPLAY_NAME = "PHPStan Validation";
 
-  @NotNull
   @Override
-  public String[] getGroupPath() {
+  public String @NotNull [] getGroupPath() {
     return PhpInspection.GROUP_PATH_GENERAL;
   }
 
