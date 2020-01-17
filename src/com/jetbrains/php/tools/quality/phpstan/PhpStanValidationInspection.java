@@ -1,6 +1,5 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.openapi.util.text.StringUtil;
 import com.jetbrains.php.lang.inspections.PhpInspection;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
@@ -19,9 +18,8 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
 
   public final static String DISPLAY_NAME = "PHPStan Validation";
 
-  @NotNull
   @Override
-  public String[] getGroupPath() {
+  public String @NotNull [] getGroupPath() {
     return PhpInspection.GROUP_PATH_GENERAL;
   }
 
@@ -29,13 +27,6 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
   @Override
   public String getShortName() {
     return getClass().getSimpleName();
-  }
-
-  @Nls
-  @NotNull
-  @Override
-  public String getDisplayName() {
-    return DISPLAY_NAME;
   }
 
   @Override

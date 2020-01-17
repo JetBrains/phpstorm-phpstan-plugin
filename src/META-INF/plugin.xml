@@ -3,7 +3,6 @@
   <id>com.intellij.php.tools.quality.phpstan</id>
   <description>PHPStan static analysis tool support</description>
   <vendor>JetBrains</vendor>
-  <resource-bundle>messages.PhpStanBundle</resource-bundle>
   <depends>com.jetbrains.php</depends>
   <depends>com.intellij.modules.ultimate</depends>
 

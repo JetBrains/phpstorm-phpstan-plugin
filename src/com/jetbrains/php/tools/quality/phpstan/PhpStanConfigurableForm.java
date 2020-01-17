@@ -18,7 +18,7 @@ public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends Qua
   @Nls
   @Override
   public String getDisplayName() {
-    return "PHPStan";
+    return PhpBundle.message("configurable.PhpStanConfigurableForm.display.name");
   }
 
   @Override

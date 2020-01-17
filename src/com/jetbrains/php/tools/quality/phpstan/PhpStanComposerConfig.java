@@ -2,11 +2,9 @@ package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.project.Project;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
-import com.jetbrains.php.config.interpreters.PhpInterpreter;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
 import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> {
   private static final String PACKAGE = "phpstan/phpstan";
@@ -25,7 +23,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   }
 
   @Override
-  protected PhpStanValidationInspection getQualityInspection() {
+  public PhpStanValidationInspection getQualityInspection() {
     return PHP_STAN_VALIDATION_INSPECTION;
   }
 

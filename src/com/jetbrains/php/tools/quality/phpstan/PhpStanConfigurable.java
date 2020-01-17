@@ -2,14 +2,13 @@ package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
+import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
 import com.jetbrains.php.tools.quality.QualityToolProjectConfigurableForm;
-import com.jetbrains.php.tools.quality.QualityToolValidationException;
+import com.jetbrains.php.tools.quality.QualityToolProjectConfiguration;
 import com.jetbrains.php.tools.quality.QualityToolsIgnoreFilesConfigurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class PhpStanConfigurable extends QualityToolProjectConfigurableForm implements Configurable.NoScroll {
 
@@ -17,10 +16,15 @@ public class PhpStanConfigurable extends QualityToolProjectConfigurableForm impl
     super(project);
   }
 
+  @Override
+  protected QualityToolProjectConfiguration getProjectConfiguration() {
+    return PhpStanProjectConfiguration.getInstance(myProject);
+  }
+
   @Nls
   @Override
   public String getDisplayName() {
-    return "PHPStan";
+    return PhpBundle.message("configurable.PhpStanConfigurable.display.name");
   }
 
   @Override
@@ -32,32 +36,6 @@ public class PhpStanConfigurable extends QualityToolProjectConfigurableForm impl
   @Override
   public String getId() {
     return PhpStanConfigurable.class.getName();
-  }
-
-  @Override
-  protected void updateSelectedConfiguration(@Nullable String newConfigurationId) {
-    final PhpStanProjectConfiguration projectConfiguration = PhpStanProjectConfiguration.getInstance(myProject);
-    if (newConfigurationId != null && !StringUtil.equals(newConfigurationId, projectConfiguration.getSelectedConfigurationId())) {
-      projectConfiguration.setSelectedConfigurationId(newConfigurationId);
-    }
-  }
-
-  @Nullable
-  @Override
-  protected String getSavedSelectedConfigurationId() {
-    return PhpStanProjectConfiguration.getInstance(myProject).getSelectedConfigurationId();
-  }
-
-  @Nullable
-  @Override
-  protected String validate(@Nullable String configuration) {
-    try {
-      PhpStanProjectConfiguration.getInstance(myProject).findConfiguration(myProject, configuration);
-      return null;
-    }
-    catch (QualityToolValidationException e) {
-      return e.getMessage();
-    }
   }
 
   @NotNull

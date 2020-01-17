@@ -13,13 +13,6 @@ public abstract class PhpStanConfigurationProvider extends QualityToolConfigurat
   private static final ExtensionPointName<PhpStanConfigurationProvider> EP_NAME =
     ExtensionPointName.create("com.jetbrains.php.tools.quality.PhpStan.PhpStanConfigurationProvider");
 
-  protected void fillSettingsByDefaultValue(@NotNull PhpStanConfiguration settings,
-                                            @NotNull NullableFunction<String, String> preparePath,
-                                            @NotNull Project project) {
-    final PhpStanConfiguration localConfiguration = PhpStanConfigurationManager.getInstance(project).getLocalSettings();
-    super.fillSettingsByDefaultValue(settings, localConfiguration, preparePath);
-  }
-
   @Nullable
   public static PhpStanConfigurationProvider getInstances() {
     final PhpStanConfigurationProvider[] extensions = EP_NAME.getExtensions();

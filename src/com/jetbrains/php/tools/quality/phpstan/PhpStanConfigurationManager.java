@@ -16,6 +16,7 @@ public class PhpStanConfigurationManager extends QualityToolConfigurationManager
   public static final int DEFAULT_MAX_MESSAGES_PER_FILE = 50;
 
   public PhpStanConfigurationManager(@Nullable Project project) {
+    super(project);
     if (project != null) {
       myProjectManager = ServiceManager.getService(project, PhpStanConfigurationManager.PhpStanProjectConfigurationManager.class);
     }
