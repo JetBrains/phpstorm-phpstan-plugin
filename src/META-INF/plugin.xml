@@ -6,6 +6,7 @@
   <depends>com.jetbrains.php</depends>
   <depends>com.intellij.modules.ultimate</depends>
   <category>Other Tools</category>
+  <resource-bundle>messages.PhpBundle</resource-bundle>
 
   <extensions defaultExtensionNs="com.intellij">
     <applicationService
@@ -37,9 +38,7 @@
 
   <actions>
     <action id="PhpStanAddToIgnored"
-            class="com.jetbrains.php.tools.quality.phpstan.PhpStanAddToIgnoredAction"
-            text="Add to PHPStan Ignore List"
-            description="Add to PHPStan Ignore List">
+            class="com.jetbrains.php.tools.quality.phpstan.PhpStanAddToIgnoredAction">
       <add-to-group group-id="PHPQualityToolsAddToIgnoredList"/>
     </action>
   </actions>
