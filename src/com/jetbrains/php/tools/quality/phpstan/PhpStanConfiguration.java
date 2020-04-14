@@ -18,7 +18,7 @@ public class PhpStanConfiguration implements QualityToolConfiguration {
   private static final String LOCAL = "Local";
   private String myPhpStanPath = "";
   private int myMaxMessagesPerFile = DEFAULT_MAX_MESSAGES_PER_FILE;
-  private int myTimeoutMs = 5000;
+  private int myTimeoutMs = 30000;
 
   @Override
   @Transient
