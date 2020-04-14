@@ -33,18 +33,21 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   private final static String LINE_NUMBER_ATTR = "line";
   private final static String MESSAGE_ATTR = "message";
   private final static String SEVERITY_ATTR = "severity";
+  private final static String FILE_NAME_ATTR = "name";
   private static final Logger LOG = Logger.getInstance(QualityToolXmlMessageProcessor.class);
   private final Set<Trinity<Integer, String, QualityToolMessage.Severity>> lineMessages = new HashSet<>();
   private final HighlightDisplayLevel myWarningsHighlightLevel;
+  final String myFilePath;
 
   protected PhpStanMessageProcessor(QualityToolAnnotatorInfo info) {
     super(info);
     myWarningsHighlightLevel = HighlightDisplayLevel.WARNING; // TODO: fix
+    myFilePath = info.getOriginalFile().getPath();
   }
 
   @Override
   protected void processMessage(InputSource source) throws SAXException, IOException {
-    PhpStanXmlMessageHandler messageHandler = (PhpStanXmlMessageHandler)getXmlMessageHandler();
+    PhpStanXmlMessageHandler messageHandler = (PhpStanXmlMessageHandler)getXmlMessageHandler(myFilePath);
     mySAXParser.parse(source, messageHandler);
     if (messageHandler.isStatusValid()) {
       for (Trinity<Integer, String, QualityToolMessage.Severity> problem : messageHandler.getProblemList()) {
@@ -59,7 +62,11 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
 
   @Override
   protected XMLMessageHandler getXmlMessageHandler() {
-    return new PhpStanXmlMessageHandler();
+    return null;
+  }
+
+  protected XMLMessageHandler getXmlMessageHandler(@NotNull String filePath) {
+    return new PhpStanXmlMessageHandler(filePath);
   }
 
   @Override
@@ -101,6 +108,13 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   }
 
   private static class PhpStanXmlMessageHandler extends XMLMessageHandler {
+
+    private String myFilePath;
+
+    private PhpStanXmlMessageHandler(@NotNull String filePath) {
+      myFilePath = filePath;
+    }
+
     private List<Trinity<Integer, String, QualityToolMessage.Severity>> myProblemList;
 
     private List<Trinity<Integer, String, QualityToolMessage.Severity>> getProblemList() {
@@ -110,13 +124,20 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     @Override
     protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
       if (FILE_TAG.equals(tagName)) {
-        myProblemList = new ArrayList<>();
+        if (myFilePath.endsWith(attributes.getValue(FILE_NAME_ATTR))) {
+          myProblemList = new ArrayList<>();
+        }
+        else {
+          myProblemList = null;
+        }
       }
-      if (ERROR_TAG.equals(tagName) | WARNING_TAG.equals(tagName)) {
-        final String severity = attributes.getValue(SEVERITY_ATTR);
-        mySeverity = severity.equals(ERROR_TAG) ? ERROR : WARNING;
-        myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
-        myProblemList.add(Trinity.create(myLineNumber, attributes.getValue(MESSAGE_ATTR), mySeverity));
+      else if (ERROR_TAG.equals(tagName) | WARNING_TAG.equals(tagName)) {
+        if (myProblemList != null) {
+          final String severity = attributes.getValue(SEVERITY_ATTR);
+          mySeverity = severity.equals(ERROR_TAG) ? ERROR : WARNING;
+          myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
+          myProblemList.add(Trinity.create(myLineNumber, attributes.getValue(MESSAGE_ATTR), mySeverity));
+        }
       }
     }
   }
