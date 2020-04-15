@@ -98,56 +98,6 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator {
 
   @Override
   protected void addAdditionalAnnotatorInfo(QualityToolAnnotatorInfo collectedInfo, QualityToolValidationInspection tool) {
-    final PhpStanConfiguration settings = (PhpStanConfiguration)getConfiguration(collectedInfo.getProject(), tool);
-    if (settings != null) {
-      final GeneralCommandLine cmd = new GeneralCommandLine();
-      cmd.setExePath(settings.getToolPath());
-      final String pathToGatherDeps = Arrays.stream(ProjectRootManager.getInstance(collectedInfo.getProject()).getContentSourceRoots())
-        .map(VirtualFile::getPath)
-        .collect(Collectors.joining(","));
-      cmd.addParameters(
-        newArrayList("dump-deps", "--no-progress", "--analysed-paths=" + collectedInfo.getOriginalFile().getPath(), pathToGatherDeps));
-
-      final OSProcessHandler processHandler;
-      try {
-        processHandler = new OSProcessHandler(cmd);
-        final StringBuilder output = new StringBuilder();
-
-        processHandler.addProcessListener(new ProcessAdapter() {
-          @Override
-          public void onTextAvailable(@NotNull ProcessEvent event, @NotNull Key outputType) {
-            if (outputType == ProcessOutputTypes.STDOUT) {
-              output.append(event.getText());
-            }
-          }
-
-          @Override
-          public void processTerminated(@NotNull ProcessEvent event) {
-            final List<String> foundDeps = new SmartList<>();
-            if (!equalsIgnoreWhitespaces(output, "[]")) {
-              final JsonReader jsonReader = new JsonReader(new StringReader(output.toString()));
-              final JsonElement jsonElement = new JsonParser().parse(jsonReader);
-              if (jsonElement instanceof JsonObject && ((JsonObject)jsonElement).size() == 1) {
-                final JsonArray array = ((JsonObject)jsonElement).getAsJsonArray(collectedInfo.getOriginalFile().getPath());
-                for (int i = 0; i < array.size(); i++) {
-                  foundDeps.add(array.get(i).getAsString());
-                }
-              }
-            }
-            foundDeps.add(collectedInfo.getOriginalFile().getPath());
-            ((PhpStanQualityToolAnnotatorInfo)collectedInfo).setDependsOn(foundDeps);
-            processHandler.removeProcessListener(this);
-            if (processHandler.isProcessTerminated()) {
-              processHandler.destroyProcess();
-            }
-          }
-        });
-        processHandler.startNotify();
-      }
-      catch (ExecutionException e) {
-        LOG.warn("Couldn't gather dependent files info");
-      }
-    }
   }
 }
 
