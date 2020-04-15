@@ -5,6 +5,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.ui.DocumentAdapter;
+import com.intellij.ui.JBIntSpinner;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBTextField;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,7 @@ public class PhpStanOptionsPanel {
   private JPanel myOptionsPanel;
   private JBCheckBox myFullProjectRunJBCheckBox;
   private JBTextField myOptionsTextField;
+  private JBIntSpinner myJBIntSpinner;
 
   public PhpStanOptionsPanel(PhpStanValidationInspection inspection) {
     myInspection = inspection;
@@ -30,9 +32,12 @@ public class PhpStanOptionsPanel {
         inspection.OPTIONS = myOptionsTextField.getText();
       }
     });
+    myJBIntSpinner.setNumber(inspection.level);
+    myJBIntSpinner.addChangeListener(event -> myInspection.level = myJBIntSpinner.getNumber());
   }
 
   private void createUIComponents() {
+    myJBIntSpinner = new JBIntSpinner(4, 0, 8);
   }
 
   public JPanel getOptionsPanel() {

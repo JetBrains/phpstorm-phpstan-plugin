@@ -14,7 +14,8 @@ import static com.intellij.openapi.util.text.StringUtil.split;
 
 public class PhpStanValidationInspection extends QualityToolValidationInspection {
   public boolean FULL_PROJECT = false;
-  public String OPTIONS = "--level=max --memory-limit=2G";
+  public String OPTIONS = "--memory-limit=2G";
+  public int level = 4;
 
   public final static String DISPLAY_NAME = "PHPStan Validation";
 
@@ -50,6 +51,7 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
   public List<String> getCommandLineOptions(List<String> filePath) {
     ArrayList<String> options = new ArrayList<>();
     options.add("analyze");
+    options.add("--level=" + level);
     options.addAll(split(OPTIONS, " "));
     options.add("--error-format=checkstyle");
     options.add("--no-progress");
