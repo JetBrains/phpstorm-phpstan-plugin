@@ -3,19 +3,20 @@ package com.jetbrains.php.tools.quality.phpstan;
 import com.jetbrains.php.lang.inspections.PhpInspection;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
 import static com.intellij.openapi.util.text.StringUtil.split;
 
 public class PhpStanValidationInspection extends QualityToolValidationInspection {
   public boolean FULL_PROJECT = false;
   public String OPTIONS = "--memory-limit=2G";
   public int level = 4;
+  public String config = "";
 
   public final static String DISPLAY_NAME = "PHPStan Validation";
 
@@ -52,6 +53,9 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     ArrayList<String> options = new ArrayList<>();
     options.add("analyze");
     options.add("--level=" + level);
+    if (isNotEmpty(config)) {
+      options.add("--configuration=" + config);
+    }
     options.addAll(split(OPTIONS, " "));
     options.add("--error-format=checkstyle");
     options.add("--no-progress");
