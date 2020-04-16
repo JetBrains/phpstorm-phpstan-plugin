@@ -17,8 +17,7 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
   public String OPTIONS = "--memory-limit=2G";
   public int level = 4;
   public String config = "";
-
-  public final static String DISPLAY_NAME = "PHPStan Validation";
+  public String autoload = "";
 
   @Override
   public String @NotNull [] getGroupPath() {
@@ -55,6 +54,9 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     options.add("--level=" + level);
     if (isNotEmpty(config)) {
       options.add("--configuration=" + config);
+    }
+    if (isNotEmpty(autoload)) {
+      options.add("--autoload-file=" + autoload);
     }
     options.addAll(split(OPTIONS, " "));
     options.add("--error-format=checkstyle");

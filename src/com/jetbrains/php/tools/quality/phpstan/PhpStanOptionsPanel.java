@@ -30,6 +30,7 @@ public class PhpStanOptionsPanel {
   private JBTextField myOptionsTextField;
   private JBIntSpinner myJBIntSpinner;
   private PhpTextFieldWithSdkBasedBrowse myConfigPathTextField;
+  private PhpTextFieldWithSdkBasedBrowse myAutoloadPathTextField;
 
   public PhpStanOptionsPanel(PhpStanValidationInspection inspection) {
     myInspection = inspection;
@@ -53,6 +54,16 @@ public class PhpStanOptionsPanel {
       @Override
       protected void textChanged(@NotNull DocumentEvent e) {
         myInspection.config = myConfigPathTextField.getText();
+      }
+    });
+    
+    myAutoloadPathTextField.setText(inspection.autoload);
+    myAutoloadPathTextField
+      .init(project, getSdkAdditionalData(project), PhpStanBundle.message("phpstan.autoload.file"), true, false);
+    myAutoloadPathTextField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
+      @Override
+      protected void textChanged(@NotNull DocumentEvent e) {
+        myInspection.autoload = myAutoloadPathTextField.getText();
       }
     });
   }
