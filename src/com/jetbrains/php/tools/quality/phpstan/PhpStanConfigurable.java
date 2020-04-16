@@ -24,7 +24,7 @@ public class PhpStanConfigurable extends QualityToolProjectConfigurableForm impl
   @Nls
   @Override
   public String getDisplayName() {
-    return PhpBundle.message("configurable.PhpStanConfigurable.display.name");
+    return PhpStanBundle.message("configurable.PhpStanConfigurable.display.name");
   }
 
   @Override

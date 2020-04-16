@@ -48,7 +48,7 @@ public class PhpStanOptionsPanel {
     final Project project = getCurrentProject();
     myConfigPathTextField.setText(inspection.config);
     myConfigPathTextField
-      .init(project, getSdkAdditionalData(project), PhpBundle.message("phpstan.configuration.file"), true, false);
+      .init(project, getSdkAdditionalData(project), PhpStanBundle.message("phpstan.configuration.file"), true, false);
     myConfigPathTextField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
       @Override
       protected void textChanged(@NotNull DocumentEvent e) {

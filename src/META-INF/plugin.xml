@@ -1,12 +1,12 @@
 <idea-plugin>
   <name>PHPStan Support</name>
   <id>com.intellij.php.tools.quality.phpstan</id>
-  <description>PHPStan static analysis tool support</description>
+  <description>Plugin provides PHPStan static analysis tool support</description>
   <vendor>JetBrains</vendor>
   <depends>com.jetbrains.php</depends>
   <depends>com.intellij.modules.ultimate</depends>
   <category>Other Tools</category>
-  <resource-bundle>messages.PhpBundle</resource-bundle>
+  <resource-bundle>messages.PhpStanBundle</resource-bundle>
 
   <extensions defaultExtensionNs="com.intellij">
     <applicationService
