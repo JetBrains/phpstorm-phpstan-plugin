@@ -9,7 +9,6 @@ import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.JBIntSpinner;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBTextField;
-import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.config.interpreters.PhpInterpreter;
 import com.jetbrains.php.config.interpreters.PhpInterpretersManagerImpl;
 import com.jetbrains.php.config.interpreters.PhpSdkAdditionalData;
@@ -27,7 +26,7 @@ public class PhpStanOptionsPanel {
   private final PhpStanValidationInspection myInspection;
   private JPanel myOptionsPanel;
   private JBCheckBox myFullProjectRunJBCheckBox;
-  private JBTextField myOptionsTextField;
+  private JBTextField myMemoryLimitTextField;
   private JBIntSpinner myJBIntSpinner;
   private PhpTextFieldWithSdkBasedBrowse myConfigPathTextField;
   private PhpTextFieldWithSdkBasedBrowse myAutoloadPathTextField;
@@ -37,11 +36,11 @@ public class PhpStanOptionsPanel {
     myFullProjectRunJBCheckBox.setSelected(inspection.FULL_PROJECT);
     myFullProjectRunJBCheckBox.addActionListener(event -> myInspection.FULL_PROJECT = myFullProjectRunJBCheckBox.isSelected());
 
-    myOptionsTextField.setText(inspection.OPTIONS);
-    myOptionsTextField.getDocument().addDocumentListener(new DocumentAdapter() {
+    myMemoryLimitTextField.setText(inspection.memoryLimit);
+    myMemoryLimitTextField.getDocument().addDocumentListener(new DocumentAdapter() {
       @Override
       protected void textChanged(@NotNull DocumentEvent e) {
-        inspection.OPTIONS = myOptionsTextField.getText();
+        inspection.memoryLimit = myMemoryLimitTextField.getText();
       }
     });
     myJBIntSpinner.setNumber(inspection.level);

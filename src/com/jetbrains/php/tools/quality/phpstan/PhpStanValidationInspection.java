@@ -3,6 +3,7 @@ package com.jetbrains.php.tools.quality.phpstan;
 import com.jetbrains.php.lang.inspections.PhpInspection;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ import static com.intellij.openapi.util.text.StringUtil.split;
 
 public class PhpStanValidationInspection extends QualityToolValidationInspection {
   public boolean FULL_PROJECT = false;
-  public String OPTIONS = "--memory-limit=2G";
+  @NonNls public String memoryLimit = "2G";
   public int level = 4;
   public String config = "";
   public String autoload = "";
@@ -58,7 +59,7 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     if (isNotEmpty(autoload)) {
       options.add("--autoload-file=" + autoload);
     }
-    options.addAll(split(OPTIONS, " "));
+    options.add("--memory-limit=" + memoryLimit);
     options.add("--error-format=checkstyle");
     options.add("--no-progress");
     options.add("--no-ansi");

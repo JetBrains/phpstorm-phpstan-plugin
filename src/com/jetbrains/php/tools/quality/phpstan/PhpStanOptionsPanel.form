@@ -47,7 +47,7 @@
                   <text resource-bundle="messages/PhpStanBundle" key="phpstan.label.options"/>
                 </properties>
               </component>
-              <component id="783fb" class="com.intellij.ui.components.JBTextField" binding="myOptionsTextField">
+              <component id="783fb" class="com.intellij.ui.components.JBTextField" binding="myMemoryLimitTextField">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
