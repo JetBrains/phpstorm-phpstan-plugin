@@ -2,9 +2,14 @@ package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.Trinity;
+import com.intellij.psi.PsiDocumentManager;
+import com.intellij.psi.PsiFile;
+import com.intellij.util.DocumentUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolMessage;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
@@ -20,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.intellij.util.DocumentUtil.getFirstNonSpaceCharOffset;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.ERROR;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.WARNING;
 
@@ -38,11 +44,13 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   private final Set<Trinity<Integer, String, QualityToolMessage.Severity>> lineMessages = new HashSet<>();
   private final HighlightDisplayLevel myWarningsHighlightLevel;
   final String myFilePath;
+  final PsiFile myPsiFile;
 
   protected PhpStanMessageProcessor(QualityToolAnnotatorInfo info) {
     super(info);
     myWarningsHighlightLevel = HighlightDisplayLevel.WARNING; // TODO: fix
     myFilePath = info.getOriginalFile().getPath();
+    myPsiFile = info.getPsiFile();
   }
 
   @Override
@@ -51,8 +59,14 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     mySAXParser.parse(source, messageHandler);
     if (messageHandler.isStatusValid()) {
       for (Trinity<Integer, String, QualityToolMessage.Severity> problem : messageHandler.getProblemList()) {
-        QualityToolMessage qualityToolMessage =
-          new QualityToolMessage(this, problem.first, problem.third, problem.second);
+        final Document document = PsiDocumentManager.getInstance(myPsiFile.getProject()).getDocument(myPsiFile);
+        QualityToolMessage qualityToolMessage;
+        if (document != null) {
+          qualityToolMessage = new QualityToolMessage(this, TextRange.create(getFirstNonSpaceCharOffset(document, problem.first), document.getLineEndOffset(problem.first)), problem.third, problem.second);
+        }
+        else {
+          qualityToolMessage = new QualityToolMessage(this, problem.first, problem.third, problem.second);
+        }
         if (lineMessages.add(problem)) {
           addMessage(qualityToolMessage);
         }
