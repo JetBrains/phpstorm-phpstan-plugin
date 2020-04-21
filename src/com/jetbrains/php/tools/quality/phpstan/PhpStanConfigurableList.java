@@ -3,7 +3,6 @@ package com.jetbrains.php.tools.quality.phpstan;
 import com.intellij.openapi.project.Project;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
-import com.jetbrains.php.tools.quality.QualityToolConfiguration;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationProvider;
 import com.jetbrains.php.ui.PhpUiUtil;
 import org.jetbrains.annotations.Nls;
@@ -40,12 +39,6 @@ public class PhpStanConfigurableList extends QualityToolConfigurableList<PhpStan
   @Override
   protected QualityToolConfigurationProvider<PhpStanConfiguration> getConfigurationProvider() {
     return PhpStanConfigurationProvider.getInstances();
-  }
-
-  @Override
-  @Nullable
-  protected PhpStanConfiguration getConfiguration(@Nullable QualityToolConfiguration configuration) {
-    return configuration instanceof PhpStanConfiguration ? (PhpStanConfiguration)configuration : null;
   }
 
   @Nls
