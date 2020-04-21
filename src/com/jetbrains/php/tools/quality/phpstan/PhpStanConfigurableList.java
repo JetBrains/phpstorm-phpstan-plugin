@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PhpStanConfigurableList extends QualityToolConfigurableList<PhpStanConfiguration> {
   public static final String DISPLAY_NAME = "PHPStan";
-  public static final String HELP_TOPIC = "reference.settings.php.PhpStan";
+  @NonNls public static final String HELP_TOPIC = "reference.settings.php.PhpStan";
   @NonNls private static final String SUBJ_DISPLAY_NAME = "php_stan";
 
   public PhpStanConfigurableList(@NotNull final Project project, @Nullable String initialElement) {

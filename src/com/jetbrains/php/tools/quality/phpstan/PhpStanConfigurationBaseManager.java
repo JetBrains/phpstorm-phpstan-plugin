@@ -5,13 +5,14 @@ import com.intellij.util.xmlb.XmlSerializer;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationBaseManager;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationProvider;
 import org.jdom.Element;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PhpStanConfigurationBaseManager extends QualityToolConfigurationBaseManager<PhpStanConfiguration> {
-  private static final String PHP_STAN_PATH = "PhpStanPath";
-  private static final String PHP_STAN = "PHPStan";
-  private static final String ROOT_NAME = "PhpStan_settings";
+  @NonNls private static final String PHP_STAN_PATH = "PhpStanPath";
+  @NonNls private static final String PHP_STAN = "PHPStan";
+  @NonNls private static final String ROOT_NAME = "PhpStan_settings";
 
   @Override
   @NotNull

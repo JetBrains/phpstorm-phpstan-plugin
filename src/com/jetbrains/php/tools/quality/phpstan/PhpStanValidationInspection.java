@@ -50,7 +50,7 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
   }
 
   public List<String> getCommandLineOptions(List<String> filePath) {
-    ArrayList<String> options = new ArrayList<>();
+    @NonNls ArrayList<String> options = new ArrayList<>();
     options.add("analyze");
     options.add("--level=" + level);
     if (isNotEmpty(config)) {

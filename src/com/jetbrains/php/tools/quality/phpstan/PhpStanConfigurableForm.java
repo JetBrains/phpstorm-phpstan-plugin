@@ -7,6 +7,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
 import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends QualityToolConfigurableForm<C> {
@@ -34,7 +35,7 @@ public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends Qua
 
   @NotNull
   @Override
-  public Pair<Boolean, String> validateMessage(String message) {
+  public Pair<Boolean, String> validateMessage(@NonNls String message) {
     final Version version = extractVersion(message.replaceFirst("PHPStan.* ([\\d.]*).*", "$1").trim());
     if (version == null || !message.contains("PHPStan")) {
       return Pair.create(false, PhpBundle.message("quality.tool.can.not.determine.version", message));

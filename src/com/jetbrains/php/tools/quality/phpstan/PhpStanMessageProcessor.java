@@ -9,10 +9,10 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.Trinity;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
-import com.intellij.util.DocumentUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolMessage;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.xml.sax.Attributes;
@@ -30,17 +30,15 @@ import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.ERROR;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.WARNING;
 
 public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
-  private static final String PHP_STAN = "PHPStan";
   private final static String ERROR_TAG = "error";
   private final static String FILE_TAG = "file";
-  private final static String WARNING_MESSAGE_START = "<file";
-  private final static String WARNING_MESSAGE_END = "</file>";
+  @NonNls private final static String WARNING_MESSAGE_START = "<file";
+  @NonNls private final static String WARNING_MESSAGE_END = "</file>";
   private final static String WARNING_TAG = "warning";
-  private final static String LINE_NUMBER_ATTR = "line";
+  @NonNls private final static String LINE_NUMBER_ATTR = "line";
   private final static String MESSAGE_ATTR = "message";
-  private final static String SEVERITY_ATTR = "severity";
+  @NonNls private final static String SEVERITY_ATTR = "severity";
   private final static String FILE_NAME_ATTR = "name";
-  private static final Logger LOG = Logger.getInstance(QualityToolXmlMessageProcessor.class);
   private final Set<Trinity<Integer, String, QualityToolMessage.Severity>> lineMessages = new HashSet<>();
   private final HighlightDisplayLevel myWarningsHighlightLevel;
   final String myFilePath;
@@ -93,6 +91,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     return line.indexOf(WARNING_MESSAGE_END);
   }
 
+  @NonNls
   @Nullable
   @Override
   protected String getMessagePrefix() {

@@ -21,6 +21,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.SmartList;
 import com.jetbrains.php.config.interpreters.PhpSdkFileTransfer;
 import com.jetbrains.php.tools.quality.*;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,7 +37,7 @@ import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.runToolP
 public class PhpStanAnnotatorProxy extends QualityToolAnnotator {
   public final static PhpStanAnnotatorProxy INSTANCE = new PhpStanAnnotatorProxy();
   private static final Logger LOG = Logger.getInstance(PhpStanAnnotatorProxy.class);
-  private static final String TEMP_DIRECTORY = "PhpStan_temp.tmp";
+  @NonNls private static final String TEMP_DIRECTORY = "PhpStan_temp.tmp";
 
   @Nullable
   @Override

@@ -4,14 +4,14 @@ import com.intellij.openapi.project.Project;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
 import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 import static com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder.Settings.PHPSTAN;
 
 public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> {
-  private static final String PACKAGE = "phpstan/phpstan";
-  private static final String RELATIVE_PATH = "phpstan/phpstan/bin/phpstan";
-  private static final String PHPSTAN_DISPLAY_NAME = "PHPStan";
+  @NonNls private static final String PACKAGE = "phpstan/phpstan";
+  @NonNls private static final String RELATIVE_PATH = "phpstan/phpstan/bin/phpstan";
   private static final PhpStanValidationInspection PHP_STAN_VALIDATION_INSPECTION = new PhpStanValidationInspection();
 
 
