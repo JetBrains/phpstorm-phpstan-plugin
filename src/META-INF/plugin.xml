@@ -29,6 +29,7 @@
   <extensions defaultExtensionNs="com.jetbrains.php">
     <tools.projectConfigurableForm instance="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurable"/>
     <composerConfigClient implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanComposerConfig"/>
+    <tools.quality.type implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanQualityToolType"/>
   </extensions>
 
   <extensionPoints>
