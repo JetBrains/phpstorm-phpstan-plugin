@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PhpStanConfigurationBaseManager extends QualityToolConfigurationBaseManager<PhpStanConfiguration> {
   @NonNls private static final String PHP_STAN_PATH = "PhpStanPath";
-  @NonNls private static final String PHP_STAN = "PHPStan";
+  @NonNls public static final String PHP_STAN = "PHPStan";
   @NonNls private static final String ROOT_NAME = "PhpStan_settings";
 
   @Override

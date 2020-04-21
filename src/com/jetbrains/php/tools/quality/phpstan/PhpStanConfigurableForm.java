@@ -10,10 +10,12 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
+
 public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends QualityToolConfigurableForm<C> {
 
   public PhpStanConfigurableForm(@NotNull Project project, @NotNull C configuration) {
-    super(project, configuration, "PHPStan", "phpstan");
+    super(project, configuration, PHP_STAN, "phpstan");
   }
 
   @Nls
@@ -37,7 +39,7 @@ public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends Qua
   @Override
   public Pair<Boolean, String> validateMessage(@NonNls String message) {
     final Version version = extractVersion(message.replaceFirst("PHPStan.* ([\\d.]*).*", "$1").trim());
-    if (version == null || !message.contains("PHPStan")) {
+    if (version == null || !message.contains(PHP_STAN)) {
       return Pair.create(false, PhpBundle.message("quality.tool.can.not.determine.version", message));
     }
     return Pair.create(true, "OK, " + message);

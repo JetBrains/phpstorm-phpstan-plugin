@@ -7,6 +7,8 @@ import com.jetbrains.php.tools.quality.QualityToolProjectConfigurableForm;
 import com.jetbrains.php.tools.quality.QualityToolsIgnoreFilesConfigurable;
 import org.jetbrains.annotations.NotNull;
 
+import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
+
 public class PhpStanAddToIgnoredAction extends QualityToolAddToIgnoredAction {
 
 
@@ -19,7 +21,7 @@ public class PhpStanAddToIgnoredAction extends QualityToolAddToIgnoredAction {
   @NotNull
   @Override
   protected String getToolName() {
-    return "PHPStan";
+    return PHP_STAN;
   }
 
   @NotNull

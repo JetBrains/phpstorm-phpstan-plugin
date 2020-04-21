@@ -7,6 +7,8 @@ import com.jetbrains.php.tools.quality.QualityToolProjectConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
+
 @State(name = "PhpStanProjectConfiguration", storages = {@Storage(StoragePathMacros.WORKSPACE_FILE)})
 public class PhpStanProjectConfiguration extends QualityToolProjectConfiguration<PhpStanConfiguration>
   implements PersistentStateComponent<PhpStanProjectConfiguration> {
@@ -30,7 +32,7 @@ public class PhpStanProjectConfiguration extends QualityToolProjectConfiguration
   @NotNull
   @Override
   protected String getQualityToolName() {
-    return "PHPStan";
+    return PHP_STAN;
   }
 
   @NotNull

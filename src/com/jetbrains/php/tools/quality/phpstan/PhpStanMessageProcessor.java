@@ -28,6 +28,7 @@ import java.util.Set;
 import static com.intellij.util.DocumentUtil.getFirstNonSpaceCharOffset;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.ERROR;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.WARNING;
+import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   private final static String ERROR_TAG = "error";
@@ -112,7 +113,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   @NotNull
   @Override
   protected String getQuickFixFamilyName() {
-    return "PHPStan";
+    return PHP_STAN;
   }
 
   @Override

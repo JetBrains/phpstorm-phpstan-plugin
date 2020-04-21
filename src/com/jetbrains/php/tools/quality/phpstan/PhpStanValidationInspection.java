@@ -12,6 +12,7 @@ import java.util.List;
 
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
 import static com.intellij.openapi.util.text.StringUtil.split;
+import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanValidationInspection extends QualityToolValidationInspection {
   public boolean FULL_PROJECT = false;
@@ -46,7 +47,7 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
 
   @Override
   public String getToolName() {
-    return "PHPStan";
+    return PHP_STAN;
   }
 
   public List<String> getCommandLineOptions(List<String> filePath) {

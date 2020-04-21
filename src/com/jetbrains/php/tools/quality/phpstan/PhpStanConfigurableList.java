@@ -11,8 +11,9 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
+
 public class PhpStanConfigurableList extends QualityToolConfigurableList<PhpStanConfiguration> {
-  public static final String DISPLAY_NAME = "PHPStan";
   @NonNls public static final String HELP_TOPIC = "reference.settings.php.PhpStan";
   @NonNls private static final String SUBJ_DISPLAY_NAME = "php_stan";
 
@@ -50,7 +51,7 @@ public class PhpStanConfigurableList extends QualityToolConfigurableList<PhpStan
   @Nls
   @Override
   public String getDisplayName() {
-    return DISPLAY_NAME;
+    return PHP_STAN;
   }
 
   @Override

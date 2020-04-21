@@ -4,6 +4,8 @@ import com.intellij.openapi.project.Project;
 import com.jetbrains.php.tools.quality.QualityToolsIgnoreFilesConfigurable;
 import org.jetbrains.annotations.NotNull;
 
+import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
+
 public class PhpStanIgnoredFilesConfigurable extends QualityToolsIgnoreFilesConfigurable {
   public PhpStanIgnoredFilesConfigurable(Project project) {super(PhpStanBlackList.getInstance(project), project);}
 
@@ -16,6 +18,6 @@ public class PhpStanIgnoredFilesConfigurable extends QualityToolsIgnoreFilesConf
   @NotNull
   @Override
   protected String getQualityToolName() {
-    return "PHPStan";
+    return PHP_STAN;
   }
 }
