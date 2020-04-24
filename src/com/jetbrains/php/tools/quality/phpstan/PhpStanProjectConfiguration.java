@@ -4,12 +4,11 @@ import com.intellij.openapi.components.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.jetbrains.php.tools.quality.QualityToolProjectConfiguration;
+import com.jetbrains.php.tools.quality.QualityToolType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
-
-@State(name = "PhpStanProjectConfiguration", storages = {@Storage(StoragePathMacros.WORKSPACE_FILE)})
+@State(name = "PhpStanProjectConfiguration", storages = @Storage(StoragePathMacros.WORKSPACE_FILE))
 public class PhpStanProjectConfiguration extends QualityToolProjectConfiguration<PhpStanConfiguration>
   implements PersistentStateComponent<PhpStanProjectConfiguration> {
 
@@ -25,20 +24,8 @@ public class PhpStanProjectConfiguration extends QualityToolProjectConfiguration
   }
 
   @Override
-  protected String getInspectionId() {
-    return new PhpStanValidationInspection().getID();
-  }
-
-  @NotNull
-  @Override
-  protected String getQualityToolName() {
-    return PHP_STAN;
-  }
-
-  @NotNull
-  @Override
-  protected PhpStanConfigurationManager getConfigurationManager(@NotNull Project project) {
-    return PhpStanConfigurationManager.getInstance(project);
+  protected QualityToolType<PhpStanConfiguration> getQualityToolType() {
+    return new PhpStanQualityToolType();
   }
 
   public static PhpStanProjectConfiguration getInstance(Project project) {
