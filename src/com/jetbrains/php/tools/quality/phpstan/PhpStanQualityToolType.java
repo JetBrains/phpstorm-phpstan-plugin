@@ -45,4 +45,9 @@ public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration
                                                                                               PhpStanConfiguration settings) {
     return new PhpStanConfigurableForm<>(project, settings);
   }
+
+  @Override
+  protected @NotNull QualityToolProjectConfiguration getProjectConfiguration(@NotNull Project project) {
+    return PhpStanProjectConfiguration.getInstance(project);
+  }
 }
