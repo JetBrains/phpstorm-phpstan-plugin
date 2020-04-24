@@ -4,12 +4,9 @@ import com.intellij.openapi.project.Project;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
 import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.ui.PhpUiUtil;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanConfigurableList extends QualityToolConfigurableList<PhpStanConfiguration> {
   @NonNls public static final String HELP_TOPIC = "reference.settings.php.PhpStan";
@@ -18,12 +15,6 @@ public class PhpStanConfigurableList extends QualityToolConfigurableList<PhpStan
   public PhpStanConfigurableList(@NotNull final Project project, @Nullable String initialElement) {
     super(project, new PhpStanQualityToolType(), PhpStanConfiguration::new, PhpStanConfiguration::clone, initialElement);
     setSubjectDisplayName(SUBJ_DISPLAY_NAME);
-  }
-
-  @Nls
-  @Override
-  public String getDisplayName() {
-    return PHP_STAN;
   }
 
   @Override
