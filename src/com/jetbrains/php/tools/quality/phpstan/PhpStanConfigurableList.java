@@ -1,9 +1,8 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.project.Project;
-import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
-import com.jetbrains.php.tools.quality.QualityToolConfigurationProvider;
+import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.ui.PhpUiUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
@@ -17,28 +16,8 @@ public class PhpStanConfigurableList extends QualityToolConfigurableList<PhpStan
   @NonNls private static final String SUBJ_DISPLAY_NAME = "php_stan";
 
   public PhpStanConfigurableList(@NotNull final Project project, @Nullable String initialElement) {
-    super(project, PhpStanConfigurationManager.getInstance(project),
-          PhpStanConfiguration::new,
-          PhpStanConfiguration::clone,
-          settings -> {
-            final PhpStanConfigurationProvider provider = PhpStanConfigurationProvider.getInstances();
-            if (provider != null) {
-              final QualityToolConfigurableForm form = provider.createConfigurationForm(project, settings);
-              if (form != null) {
-                return form;
-              }
-            }
-            return new PhpStanConfigurableForm<>(project, settings);
-          },
-          initialElement
-    );
+    super(project, new PhpStanQualityToolType(), PhpStanConfiguration::new, PhpStanConfiguration::clone, initialElement);
     setSubjectDisplayName(SUBJ_DISPLAY_NAME);
-  }
-
-  @Nullable
-  @Override
-  protected QualityToolConfigurationProvider<PhpStanConfiguration> getConfigurationProvider() {
-    return PhpStanConfigurationProvider.getInstances();
   }
 
   @Nls
@@ -50,6 +29,11 @@ public class PhpStanConfigurableList extends QualityToolConfigurableList<PhpStan
   @Override
   public String getHelpTopic() {
     return HELP_TOPIC;
+  }
+
+  @Override
+  protected QualityToolType<PhpStanConfiguration> getQualityToolType() {
+    return new PhpStanQualityToolType();
   }
 
   @NotNull

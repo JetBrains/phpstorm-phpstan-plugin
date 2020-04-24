@@ -34,4 +34,15 @@ public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration
   protected @NotNull QualityToolValidationInspection getInspection() {
     return new PhpStanValidationInspection();
   }
+
+  @Override
+  protected @Nullable QualityToolConfigurationProvider<PhpStanConfiguration> getConfigurationProvider() {
+    return PhpStanConfigurationProvider.getInstances();
+  }
+
+  @Override
+  protected @NotNull QualityToolConfigurableForm<PhpStanConfiguration> createConfigurableForm(@NotNull Project project,
+                                                                                              PhpStanConfiguration settings) {
+    return new PhpStanConfigurableForm<>(project, settings);
+  }
 }
