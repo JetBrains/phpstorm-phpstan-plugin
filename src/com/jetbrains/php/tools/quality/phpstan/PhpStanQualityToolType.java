@@ -1,10 +1,7 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.project.Project;
-import com.jetbrains.php.tools.quality.QualityToolBlackList;
-import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
-import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
-import com.jetbrains.php.tools.quality.QualityToolType;
+import com.jetbrains.php.tools.quality.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,5 +28,10 @@ public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration
   @Override
   protected QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
     return PhpStanConfigurationManager.getInstance(project);
+  }
+
+  @Override
+  protected @NotNull QualityToolValidationInspection getInspection() {
+    return new PhpStanValidationInspection();
   }
 }
