@@ -20,13 +20,13 @@ public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration
   }
 
   @Override
-  protected QualityToolConfigurableList<PhpStanConfiguration> getQualityToolConfigurableList(@NotNull Project project,
-                                                                                             @Nullable String item) {
+  protected @NotNull QualityToolConfigurableList<PhpStanConfiguration> getQualityToolConfigurableList(@NotNull Project project,
+                                                                                                      @Nullable String item) {
     return new PhpStanConfigurableList(project, item);
   }
 
   @Override
-  protected QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
+  protected @NotNull QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
     return PhpStanConfigurationManager.getInstance(project);
   }
 
