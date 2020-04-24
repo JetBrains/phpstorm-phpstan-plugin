@@ -2,12 +2,15 @@ package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.project.Project;
 import com.jetbrains.php.tools.quality.QualityToolBlackList;
+import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
+import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
 import com.jetbrains.php.tools.quality.QualityToolType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
-public class PhpStanQualityToolType extends QualityToolType {
+public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration> {
   @NotNull
   @Override
   public String getDisplayName() {
@@ -17,5 +20,16 @@ public class PhpStanQualityToolType extends QualityToolType {
   @Override
   public @NotNull QualityToolBlackList getQualityToolBlackList(@NotNull Project project) {
     return PhpStanBlackList.getInstance(project);
+  }
+
+  @Override
+  protected QualityToolConfigurableList<PhpStanConfiguration> getQualityToolConfigurableList(@NotNull Project project,
+                                                                                             @Nullable String item) {
+    return new PhpStanConfigurableList(project, item);
+  }
+
+  @Override
+  protected QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
+    return PhpStanConfigurationManager.getInstance(project);
   }
 }
