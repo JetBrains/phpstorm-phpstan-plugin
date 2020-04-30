@@ -30,13 +30,8 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   }
 
   @Override
-  protected ComposerLogMessageBuilder.Settings getQualityToolsSettings() {
-    return PHPSTAN;
-  }
-
-  @Override
   public ComposerLogMessageBuilder.Settings getSettings() {
-    return getQualityToolsSettings();
+    return PHPSTAN;
   }
 
   @Override
