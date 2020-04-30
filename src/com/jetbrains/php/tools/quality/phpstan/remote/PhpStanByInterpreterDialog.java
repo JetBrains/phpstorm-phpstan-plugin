@@ -17,10 +17,4 @@ class PhpStanByInterpreterDialog extends QualityToolByInterpreterDialog<PhpStanC
   protected boolean canProcessSetting(@NotNull PhpStanConfiguration settings) {
     return settings instanceof PhpStanRemoteConfiguration;
   }
-
-  @Nullable
-  @Override
-  protected String getInterpreterId(@NotNull PhpStanRemoteConfiguration configuration) {
-    return configuration.getInterpreterId();
-  }
 }
