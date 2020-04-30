@@ -18,21 +18,9 @@ public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends Qua
     super(project, configuration, PHP_STAN, "phpstan");
   }
 
-  @Nls
-  @Override
-  public String getDisplayName() {
-    return PhpStanBundle.message("configurable.PhpStanConfigurableForm.display.name");
-  }
-
   @Override
   public String getHelpTopic() {
     return "reference.settings.php.PhpStan";
-  }
-
-  @NotNull
-  @Override
-  public String getId() {
-    return PhpStanConfigurableForm.class.getName();
   }
 
   @NotNull

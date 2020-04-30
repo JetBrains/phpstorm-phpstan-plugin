@@ -19,7 +19,7 @@ public class PhpStanConfigurable extends QualityToolProjectConfigurableForm impl
   }
 
   @Override
-  protected QualityToolType getQualityToolType() {
+  protected QualityToolType<PhpStanConfiguration> getQualityToolType() {
     return new PhpStanQualityToolType();
   }
 }

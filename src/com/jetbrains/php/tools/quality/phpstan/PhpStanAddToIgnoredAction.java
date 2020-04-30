@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class PhpStanAddToIgnoredAction extends QualityToolAddToIgnoredAction {
 
   @Override
-  protected @NotNull QualityToolType getQualityToolType(Project project) {
+  protected @NotNull QualityToolType<PhpStanConfiguration> getQualityToolType(Project project) {
     return new PhpStanQualityToolType();
   }
 }
