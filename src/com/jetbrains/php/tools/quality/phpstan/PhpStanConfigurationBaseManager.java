@@ -16,7 +16,7 @@ public class PhpStanConfigurationBaseManager extends QualityToolConfigurationBas
 
   @Override
   protected @NotNull QualityToolType<PhpStanConfiguration> getQualityToolType() {
-    return new PhpStanQualityToolType();
+    return PhpStanQualityToolType.INSTANCE;
   }
 
   @NotNull

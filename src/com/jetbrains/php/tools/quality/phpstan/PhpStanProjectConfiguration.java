@@ -25,7 +25,7 @@ public class PhpStanProjectConfiguration extends QualityToolProjectConfiguration
 
   @Override
   protected QualityToolType<PhpStanConfiguration> getQualityToolType() {
-    return new PhpStanQualityToolType();
+    return PhpStanQualityToolType.INSTANCE;
   }
 
   public static PhpStanProjectConfiguration getInstance(Project project) {

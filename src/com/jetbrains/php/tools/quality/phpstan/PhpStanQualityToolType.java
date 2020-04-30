@@ -8,6 +8,11 @@ import org.jetbrains.annotations.Nullable;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration> {
+  public static final PhpStanQualityToolType INSTANCE = new PhpStanQualityToolType();
+
+  private PhpStanQualityToolType() {
+  }
+  
   @NotNull
   @Override
   public String getDisplayName() {
@@ -41,7 +46,7 @@ public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration
   }
 
   @Override
-  protected @NotNull QualityToolProjectConfiguration getProjectConfiguration(@NotNull Project project) {
+  protected @NotNull QualityToolProjectConfiguration<PhpStanConfiguration> getProjectConfiguration(@NotNull Project project) {
     return PhpStanProjectConfiguration.getInstance(project);
   }
 

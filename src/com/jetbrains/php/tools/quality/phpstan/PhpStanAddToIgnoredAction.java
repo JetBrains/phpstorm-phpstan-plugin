@@ -9,6 +9,6 @@ public class PhpStanAddToIgnoredAction extends QualityToolAddToIgnoredAction {
 
   @Override
   protected @NotNull QualityToolType<PhpStanConfiguration> getQualityToolType(Project project) {
-    return new PhpStanQualityToolType();
+    return PhpStanQualityToolType.INSTANCE;
   }
 }
