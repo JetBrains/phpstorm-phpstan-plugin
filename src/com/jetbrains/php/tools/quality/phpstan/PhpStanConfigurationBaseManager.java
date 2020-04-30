@@ -3,7 +3,7 @@ package com.jetbrains.php.tools.quality.phpstan;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.util.xmlb.XmlSerializer;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationBaseManager;
-import com.jetbrains.php.tools.quality.QualityToolConfigurationProvider;
+import com.jetbrains.php.tools.quality.QualityToolType;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -15,15 +15,8 @@ public class PhpStanConfigurationBaseManager extends QualityToolConfigurationBas
   @NonNls private static final String ROOT_NAME = "PhpStan_settings";
 
   @Override
-  @NotNull
-  protected PhpStanConfiguration createLocalSettings() {
-    return new PhpStanConfiguration();
-  }
-
-  @Override
-  @NotNull
-  protected String getQualityToolName() {
-    return PHP_STAN;
+  protected @NotNull QualityToolType<PhpStanConfiguration> getQualityToolType() {
+    return new PhpStanQualityToolType();
   }
 
   @NotNull
@@ -36,12 +29,6 @@ public class PhpStanConfigurationBaseManager extends QualityToolConfigurationBas
   @Override
   protected String getConfigurationRootName() {
     return ROOT_NAME;
-  }
-
-  @Nullable
-  @Override
-  protected QualityToolConfigurationProvider<PhpStanConfiguration> getConfigurationProvider() {
-    return PhpStanConfigurationProvider.getInstances();
   }
 
   @Override

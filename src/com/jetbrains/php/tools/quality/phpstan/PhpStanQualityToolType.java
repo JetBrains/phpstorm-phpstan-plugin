@@ -47,7 +47,7 @@ public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration
 
   @NotNull
   @Override
-  protected PhpStanConfiguration createConfiguration(@NotNull Project project) {
+  protected PhpStanConfiguration createConfiguration() {
     return new PhpStanConfiguration();
   }
 
