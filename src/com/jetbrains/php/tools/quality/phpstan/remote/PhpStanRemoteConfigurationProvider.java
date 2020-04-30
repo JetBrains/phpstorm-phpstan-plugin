@@ -9,6 +9,7 @@ import com.jetbrains.php.config.interpreters.PhpInterpreter;
 import com.jetbrains.php.config.interpreters.PhpInterpretersManagerImpl;
 import com.jetbrains.php.config.interpreters.PhpSdkAdditionalData;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterConfigurableForm;
+import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterDialog;
 import com.jetbrains.php.run.remote.PhpRemoteInterpreterManager;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurableForm;
@@ -23,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
+import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProvider {
 
@@ -54,8 +56,8 @@ public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProv
 
   @Override
   public PhpStanConfiguration createNewInstance(@Nullable Project project, @NotNull List<PhpStanConfiguration> existingSettings) {
-    final PhpStanByInterpreterDialog
-      dialog = new PhpStanByInterpreterDialog(project, existingSettings);
+    final QualityToolByInterpreterDialog<PhpStanConfiguration, PhpStanRemoteConfiguration>
+      dialog = new QualityToolByInterpreterDialog<>(project, existingSettings, PHP_STAN, PhpStanRemoteConfiguration.class);
     if (dialog.showAndGet()) {
       final String id = PhpInterpretersManagerImpl.getInstance(project).findInterpreterId(dialog.getSelectedInterpreterName());
       if (isNotEmpty(id)) {
