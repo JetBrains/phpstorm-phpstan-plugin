@@ -1,16 +1,14 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.Trinity;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolMessage;
+import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +26,6 @@ import java.util.Set;
 import static com.intellij.util.DocumentUtil.getFirstNonSpaceCharOffset;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.ERROR;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.WARNING;
-import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   private final static String ERROR_TAG = "error";
@@ -106,24 +103,18 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   }
 
   @Override
+  protected QualityToolType getQualityToolType() {
+    return PhpStanQualityToolType.INSTANCE;
+  }
+
+  @Override
   public boolean processStdErrMessages() {
     return false;
   }
 
-  @NotNull
-  @Override
-  protected String getQuickFixFamilyName() {
-    return PHP_STAN;
-  }
-
-  @Override
-  protected Configurable getToolConfigurable(@NotNull Project project) {
-    return new PhpStanConfigurable(project);
-  }
-
   private static class PhpStanXmlMessageHandler extends XMLMessageHandler {
 
-    private String myFilePath;
+    private final String myFilePath;
 
     private PhpStanXmlMessageHandler(@NotNull String filePath) {
       myFilePath = filePath;

@@ -1,7 +1,9 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
+import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
 import com.jetbrains.php.tools.quality.*;
+import com.jetbrains.php.tools.quality.phpcs.PhpCSConfigurable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,6 +45,11 @@ public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration
   protected @NotNull QualityToolConfigurableForm<PhpStanConfiguration> createConfigurableForm(@NotNull Project project,
                                                                                               PhpStanConfiguration settings) {
     return new PhpStanConfigurableForm<>(project, settings);
+  }
+
+  @Override
+  protected @NotNull Configurable getToolConfigurable(@NotNull Project project) {
+    return new PhpCSConfigurable(project);
   }
 
   @Override
