@@ -1,6 +1,5 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.jetbrains.php.lang.inspections.PhpInspection;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
 import org.jetbrains.annotations.NonNls;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
-import static com.intellij.openapi.util.text.StringUtil.split;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanValidationInspection extends QualityToolValidationInspection {
@@ -20,17 +18,6 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
   public int level = 4;
   public String config = "";
   public String autoload = "";
-
-  @Override
-  public String @NotNull [] getGroupPath() {
-    return PhpInspection.GROUP_PATH_GENERAL;
-  }
-
-  @NotNull
-  @Override
-  public String getShortName() {
-    return getClass().getSimpleName();
-  }
 
   @Override
   public JComponent createOptionsPanel() {
