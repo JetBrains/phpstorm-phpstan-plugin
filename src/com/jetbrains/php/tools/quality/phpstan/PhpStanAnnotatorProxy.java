@@ -1,54 +1,27 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.codeInspection.LocalInspectionTool;
-import com.intellij.execution.ExecutionException;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
-import com.jetbrains.php.config.interpreters.PhpSdkFileTransfer;
+import com.intellij.util.SmartList;
 import com.jetbrains.php.tools.quality.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.jetbrains.php.tools.quality.QualityToolProcessCreator.runToolProcess;
+import java.util.List;
 
-public class PhpStanAnnotatorProxy extends QualityToolAnnotator {
+import static com.intellij.util.containers.ContainerUtil.map;
+
+public class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidationInspection> {
   public final static PhpStanAnnotatorProxy INSTANCE = new PhpStanAnnotatorProxy();
 
+  @Override
   @Nullable
-  @Override
-  protected QualityToolConfiguration getConfiguration(@NotNull Project project, @NotNull LocalInspectionTool inspection) {
-    try {
-      return PhpStanProjectConfiguration.getInstance(project).findSelectedConfiguration(project);
-    }
-    catch (QualityToolValidationException e) {
-      // skip
-    }
-    return null;
-  }
-
-  @NotNull
-  @Override
-  protected String getInspectionId() {
-    return new PhpStanValidationInspection().getID();
-  }
-
-  @Override
-  protected void runTool(@NotNull QualityToolMessageProcessor messageProcessor,
-                         @NotNull final QualityToolAnnotatorInfo collectedInfo,
-                         @NotNull PhpSdkFileTransfer transfer) throws ExecutionException {
-    PhpStanValidationInspection inspection = (PhpStanValidationInspection)collectedInfo.getInspection();
-
-    final PhpStanBlackList blackList = PhpStanBlackList.getInstance(collectedInfo.getProject());
-    runToolProcess(collectedInfo, blackList, messageProcessor, collectedInfo.getProject().getBasePath(), transfer,
-                   inspection.getCommandLineOptions(((PhpStanQualityToolAnnotatorInfo)collectedInfo).getDependsOn()));
-    if (messageProcessor.getInternalErrorMessage() != null && collectedInfo.isOnTheFly()) {
-      if (collectedInfo.isOnTheFly()) {
-        final String message = messageProcessor.getInternalErrorMessage().getMessageText();
-        showProcessErrorMessage(collectedInfo, blackList, message);
-        logWarning(collectedInfo, message, null);
-      }
-      messageProcessor.setFatalError();
-    }
+  protected List<String> getOptions(@NotNull String filePath, @NotNull PhpStanValidationInspection inspection, @NotNull Project project) {
+    return inspection.getCommandLineOptions(inspection.FULL_PROJECT
+                                            ? new SmartList<>(project.getBasePath())
+                                            : new SmartList<>(map(ProjectRootManager.getInstance(project).getContentSourceRoots(), VirtualFile::getPath)));
   }
 
   @Override
@@ -58,8 +31,8 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator {
 
   @NotNull
   @Override
-  protected QualityToolAnnotatorInfo createAnnotatorInfo(@NotNull PsiFile file,
-                                                         QualityToolValidationInspection tool,
+  protected QualityToolAnnotatorInfo<PhpStanValidationInspection> createAnnotatorInfo(@NotNull PsiFile file,
+                                                         PhpStanValidationInspection tool,
                                                          Project project,
                                                          QualityToolConfiguration configuration,
                                                          boolean isOnTheFly) {
@@ -68,6 +41,11 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator {
 
   @Override
   protected void addAdditionalAnnotatorInfo(QualityToolAnnotatorInfo collectedInfo, QualityToolValidationInspection tool) {
+  }
+
+  @Override
+  protected @NotNull QualityToolType getQualityToolType() {
+    return PhpStanQualityToolType.INSTANCE;
   }
 }
 
