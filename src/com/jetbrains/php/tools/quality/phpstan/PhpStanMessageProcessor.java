@@ -129,17 +129,11 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     @Override
     protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
       if (FILE_TAG.equals(tagName)) {
-        if (myFilePath.endsWith(attributes.getValue(FILE_NAME_ATTR))) {
-          myProblemList = new ArrayList<>();
-        }
-        else {
-          myProblemList = null;
-        }
+        myProblemList = myFilePath.endsWith(attributes.getValue(FILE_NAME_ATTR)) ? new ArrayList<>() : null;
       }
       else if (ERROR_TAG.equals(tagName) | WARNING_TAG.equals(tagName)) {
         if (myProblemList != null) {
-          final String severity = attributes.getValue(SEVERITY_ATTR);
-          mySeverity = severity.equals(ERROR_TAG) ? ERROR : WARNING;
+          mySeverity = attributes.getValue(SEVERITY_ATTR).equals(ERROR_TAG) ? ERROR : WARNING;
           myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
           myProblemList.add(Trinity.create(myLineNumber, attributes.getValue(MESSAGE_ATTR), mySeverity));
         }

@@ -7,7 +7,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.SmartList;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolConfiguration;
-import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -15,11 +14,11 @@ import java.util.List;
 
 import static com.intellij.util.containers.ContainerUtil.map;
 
-public class PhpStanQualityToolAnnotatorInfo extends QualityToolAnnotatorInfo {
+public class PhpStanQualityToolAnnotatorInfo extends QualityToolAnnotatorInfo<PhpStanValidationInspection> {
   private List<String> dependsOn = new ArrayList<>();
 
   public PhpStanQualityToolAnnotatorInfo(@NotNull PsiFile psiFile,
-                                         @NotNull QualityToolValidationInspection inspection,
+                                         @NotNull PhpStanValidationInspection inspection,
                                          @NotNull Project project,
                                          @NotNull QualityToolConfiguration configuration, boolean isOnTheFly) {
     super(psiFile, inspection, project, configuration, isOnTheFly);
@@ -27,7 +26,7 @@ public class PhpStanQualityToolAnnotatorInfo extends QualityToolAnnotatorInfo {
 
 
   public List<String> getDependsOn() {
-    return ((PhpStanValidationInspection)getInspection()).FULL_PROJECT
+    return getInspection().FULL_PROJECT
            ? new SmartList<>(getProject().getBasePath())
            : new SmartList<>(map(ProjectRootManager.getInstance(getProject()).getContentSourceRoots(), VirtualFile::getPath));
     // TODO: replace with dependsOn after dump-deps batch mode fix

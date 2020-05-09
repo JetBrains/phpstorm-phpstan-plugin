@@ -6,7 +6,6 @@ import com.intellij.openapi.util.Version;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
