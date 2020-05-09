@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle>
+<file name="Simple.php">
+  <error line="8" column="1" severity="error" message="Property WebServCo\Framework\SourceCode::$type has no typehint specified." />
+  <error line="9" column="1" severity="error" message="Property WebServCo\Framework\SourceCode::$data has no typehint specified." />
+  <error line="11" column="1" severity="error" message="Method WebServCo\Framework\SourceCode::__construct() has parameter $data with no typehint specified." />
+  <error line="11" column="1" severity="error" message="Method WebServCo\Framework\SourceCode::__construct() has parameter $type with no typehint specified." />
+  <error line="18" column="1" severity="error" message="Unreachable statement - code above always terminates." />
+  <error line="24" column="1" severity="error" message="Method WebServCo\Framework\SourceCode::highlight() has no return typehint specified." />
+  <error line="29" column="1" severity="error" message="Unreachable statement - code above always terminates." />
+  <error line="32" column="1" severity="error" message="Unreachable statement - code above always terminates." />
+  <error line="36" column="1" severity="error" message="Method WebServCo\Framework\SourceCode::highlightXml() has no return typehint specified." />
+  <error line="36" column="1" severity="error" message="Method WebServCo\Framework\SourceCode::highlightXml() has parameter $data with no typehint specified." />
+</file>
+</checkstyle>
