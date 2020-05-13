@@ -3,7 +3,6 @@ package com.jetbrains.php.tools.quality.phpstan;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.Version;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
 import org.jetbrains.annotations.NonNls;
@@ -30,10 +29,5 @@ public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends Qua
       return Pair.create(false, PhpBundle.message("quality.tool.can.not.determine.version", message));
     }
     return Pair.create(true, "OK, " + message);
-  }
-
-  @Override
-  public boolean isValidToolFile(VirtualFile file) {
-    return file.getName().startsWith("phpstan");
   }
 }
