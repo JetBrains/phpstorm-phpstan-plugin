@@ -65,6 +65,6 @@ public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration
 
   @Override
   public @Nullable String getHelpTopic() {
-    return "reference.settings.php.PhpStan";
+    return "reference.settings.php.PHPStan";
   }
 }

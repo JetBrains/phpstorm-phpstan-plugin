@@ -14,11 +14,6 @@ public class PhpStanConfigurable extends QualityToolProjectConfigurableForm impl
   }
 
   @Override
-  public String getHelpTopic() {
-    return "reference.settings.php.PHPStan";
-  }
-
-  @Override
   protected QualityToolType<PhpStanConfiguration> getQualityToolType() {
     return PhpStanQualityToolType.INSTANCE;
   }
