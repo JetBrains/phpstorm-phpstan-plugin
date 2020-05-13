@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
 import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
@@ -11,7 +12,8 @@ import static com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder.S
 
 public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> {
   @NonNls private static final String PACKAGE = "phpstan/phpstan";
-  @NonNls private static final String RELATIVE_PATH = "phpstan/phpstan/bin/phpstan";
+  @NonNls private static final String RELATIVE_PATH = "bin/phpstan";
+  @NonNls private static final String PHPSTAN_NEON = "phpstan.neon";
   private static final PhpStanValidationInspection PHP_STAN_VALIDATION_INSPECTION = new PhpStanValidationInspection();
 
 
@@ -36,7 +38,26 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
 
   @Override
   protected boolean applyRulesetFromComposer(@NotNull Project project, PhpStanConfiguration configuration) {
-    return true;
+    return false;
+  }
+
+  @Override
+  protected boolean applyRulesetFromRoot(@NotNull Project project) {
+    VirtualFile customRulesetFile = detectCustomRulesetFile(project.getBaseDir(), PHPSTAN_NEON);
+    if(customRulesetFile == null){
+      customRulesetFile = detectCustomRulesetFile(project.getBaseDir(), PHPSTAN_NEON + ".dist");
+    }
+
+    if (customRulesetFile != null) {
+      final String path = customRulesetFile.getPath();
+      return modifyRulesetInspectionSetting(project, tool -> applyRuleset(tool, path));
+    }
+    return false;
+  }
+
+
+  private static void applyRuleset(PhpStanValidationInspection tool, String customRuleset) {
+    tool.config = customRuleset;
   }
 
   @NotNull
