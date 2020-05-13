@@ -2,6 +2,7 @@ package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.Trinity;
 import com.intellij.psi.PsiDocumentManager;
@@ -23,7 +24,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.intellij.util.DocumentUtil.getFirstNonSpaceCharOffset;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.ERROR;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.WARNING;
 
@@ -34,10 +34,11 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   @NonNls private final static String WARNING_MESSAGE_END = "</file>";
   private final static String WARNING_TAG = "warning";
   @NonNls private final static String LINE_NUMBER_ATTR = "line";
+  @NonNls private final static String COLUMN_NUMBER_ATTR = "column";
   private final static String MESSAGE_ATTR = "message";
   @NonNls private final static String SEVERITY_ATTR = "severity";
   private final static String FILE_NAME_ATTR = "name";
-  private final Set<Trinity<Integer, String, QualityToolMessage.Severity>> lineMessages = new HashSet<>();
+  private final Set<Trinity<Pair<Integer, Integer>, String, QualityToolMessage.Severity>> lineMessages = new HashSet<>();
   private final HighlightDisplayLevel myWarningsHighlightLevel;
   final String myFilePath;
   final PsiFile myPsiFile;
@@ -54,14 +55,16 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     PhpStanXmlMessageHandler messageHandler = (PhpStanXmlMessageHandler)getXmlMessageHandler(myFilePath);
     mySAXParser.parse(source, messageHandler);
     if (messageHandler.isStatusValid()) {
-      for (Trinity<Integer, String, QualityToolMessage.Severity> problem : messageHandler.getProblemList()) {
+      for (Trinity<Pair<Integer, Integer>, String, QualityToolMessage.Severity> problem : messageHandler.getProblemList()) {
         final Document document = PsiDocumentManager.getInstance(myPsiFile.getProject()).getDocument(myPsiFile);
         QualityToolMessage qualityToolMessage;
         if (document != null) {
-          qualityToolMessage = new QualityToolMessage(this, TextRange.create(getFirstNonSpaceCharOffset(document, problem.first), document.getLineEndOffset(problem.first)), problem.third, problem.second);
+          qualityToolMessage = new QualityToolMessage(this, TextRange
+            .create(document.getLineStartOffset(problem.first.first - 1) + problem.first.second,
+                    document.getLineEndOffset(problem.first.first - 1)), problem.third, problem.second);
         }
         else {
-          qualityToolMessage = new QualityToolMessage(this, problem.first, problem.third, problem.second);
+          qualityToolMessage = new QualityToolMessage(this, problem.first.first, problem.third, problem.second);
         }
         if (lineMessages.add(problem)) {
           addMessage(qualityToolMessage);
@@ -120,9 +123,9 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
       myFilePath = filePath;
     }
 
-    private List<Trinity<Integer, String, QualityToolMessage.Severity>> myProblemList;
+    private List<Trinity<Pair<Integer, Integer>, String, QualityToolMessage.Severity>> myProblemList;
 
-    private List<Trinity<Integer, String, QualityToolMessage.Severity>> getProblemList() {
+    private List<Trinity<Pair<Integer, Integer>, String, QualityToolMessage.Severity>> getProblemList() {
       return myProblemList;
     }
     
@@ -135,7 +138,8 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
         if (myProblemList != null) {
           mySeverity = attributes.getValue(SEVERITY_ATTR).equals(ERROR_TAG) ? ERROR : WARNING;
           myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
-          myProblemList.add(Trinity.create(myLineNumber, attributes.getValue(MESSAGE_ATTR), mySeverity));
+          int column = parseLineNumber(attributes.getValue(COLUMN_NUMBER_ATTR));
+          myProblemList.add(Trinity.create(Pair.create(myLineNumber, column), attributes.getValue(MESSAGE_ATTR), mySeverity));
         }
       }
     }
