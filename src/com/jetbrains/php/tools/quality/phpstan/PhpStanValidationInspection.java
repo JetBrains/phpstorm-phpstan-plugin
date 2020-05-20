@@ -51,6 +51,7 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     options.add("--error-format=checkstyle");
     options.add("--no-progress");
     options.add("--no-ansi");
+    options.add("--no-interaction");
     options.addAll(filePath);
     return options;
   }
