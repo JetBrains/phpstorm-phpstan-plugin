@@ -8,8 +8,6 @@ import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-import static com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder.Settings.PHPSTAN;
-
 public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> {
   @NonNls private static final String PACKAGE = "phpstan/phpstan";
   @NonNls private static final String RELATIVE_PATH = "bin/phpstan";
@@ -30,12 +28,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   public PhpStanValidationInspection getQualityInspection() {
     return PHP_STAN_VALIDATION_INSPECTION;
   }
-
-  @Override
-  public ComposerLogMessageBuilder.Settings getSettings() {
-    return PHPSTAN;
-  }
-
+  
   @Override
   protected boolean applyRulesetFromComposer(@NotNull Project project, PhpStanConfiguration configuration) {
     return false;
