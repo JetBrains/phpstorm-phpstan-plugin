@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.php.composer.ComposerOpenSettingsProvider;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> implements
                                                                                                                          ComposerOpenSettingsProvider {
   @NonNls private static final String PACKAGE = "phpstan/phpstan";
-  @NonNls private static final String RELATIVE_PATH = "bin/phpstan";
+  @NonNls private static final String RELATIVE_PATH = "bin/phpstan" + (SystemInfo.isWindows ? ".bat" : "");
   @NonNls private static final String PHPSTAN_NEON = "phpstan.neon";
   private static final PhpStanValidationInspection PHP_STAN_VALIDATION_INSPECTION = new PhpStanValidationInspection();
 
