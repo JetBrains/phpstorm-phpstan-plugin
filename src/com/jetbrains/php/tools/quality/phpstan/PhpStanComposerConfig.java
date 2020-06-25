@@ -2,13 +2,18 @@ package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.jetbrains.php.composer.ComposerOpenSettingsProvider;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
+import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
+import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
+import com.jetbrains.php.ui.PhpUiUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> {
+public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> implements
+                                                                                                                         ComposerOpenSettingsProvider {
   @NonNls private static final String PACKAGE = "phpstan/phpstan";
   @NonNls private static final String RELATIVE_PATH = "bin/phpstan";
   @NonNls private static final String PHPSTAN_NEON = "phpstan.neon";
@@ -46,6 +51,16 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
       return modifyRulesetInspectionSetting(project, tool -> applyRuleset(tool, path));
     }
     return false;
+  }
+
+  @Override
+  public void openSettings(@NotNull Project project) {
+    PhpUiUtil.editConfigurable(project, new QualityToolConfigurableList<PhpStanConfiguration>(project, PhpStanQualityToolType.INSTANCE, null) {
+      @Override
+      protected QualityToolType<PhpStanConfiguration> getQualityToolType() {
+        return PhpStanQualityToolType.INSTANCE;
+      }
+    });
   }
 
 
