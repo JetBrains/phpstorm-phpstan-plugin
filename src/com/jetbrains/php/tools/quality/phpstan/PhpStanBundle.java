@@ -7,7 +7,7 @@ import org.jetbrains.annotations.PropertyKey;
 
 import java.util.function.Supplier;
 
-public class PhpStanBundle extends DynamicBundle {
+public final class PhpStanBundle extends DynamicBundle {
   @NonNls public static final String BUNDLE = "messages.PhpStanBundle";
   private static final PhpStanBundle INSTANCE = new PhpStanBundle();
 

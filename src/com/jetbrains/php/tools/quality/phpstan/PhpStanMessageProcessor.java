@@ -115,7 +115,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     return false;
   }
 
-  private static class PhpStanXmlMessageHandler extends XMLMessageHandler {
+  private static final class PhpStanXmlMessageHandler extends XMLMessageHandler {
 
     private final String myFilePath;
 
@@ -128,7 +128,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     private List<Trinity<Pair<Integer, Integer>, String, QualityToolMessage.Severity>> getProblemList() {
       return myProblemList;
     }
-    
+
     @Override
     protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
       if (FILE_TAG.equals(tagName)) {

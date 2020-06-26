@@ -9,12 +9,12 @@ import org.jetbrains.annotations.Nullable;
 
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
-public class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration> {
+public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfiguration> {
   public static final PhpStanQualityToolType INSTANCE = new PhpStanQualityToolType();
 
   private PhpStanQualityToolType() {
   }
-  
+
   @NotNull
   @Override
   public String getDisplayName() {
