@@ -24,7 +24,7 @@ public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends Qua
   @NotNull
   @Override
   public Pair<Boolean, String> validateMessage(@NonNls String message) {
-    final Version version = extractVersion(message.replaceFirst("PHPStan.* ([\\d.]*).*", "$1").trim());
+    final Version version = extractVersion(message.trim().replaceFirst("PHPStan.* ([\\d.]*).*", "$1").trim());
     if (version == null || !message.contains(PHP_STAN)) {
       return Pair.create(false, PhpBundle.message("quality.tool.can.not.determine.version", message));
     }
