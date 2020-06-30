@@ -58,7 +58,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
       for (Trinity<Pair<Integer, Integer>, String, QualityToolMessage.Severity> problem : messageHandler.getProblemList()) {
         final Document document = PsiDocumentManager.getInstance(myPsiFile.getProject()).getDocument(myPsiFile);
         QualityToolMessage qualityToolMessage;
-        if (document != null) {
+        if (document != null && problem.first.first - 1 > 0 && problem.first.first - 1 < document.getLineCount()) {
           qualityToolMessage = new QualityToolMessage(this, TextRange
             .create(document.getLineStartOffset(problem.first.first - 1) + problem.first.second,
                     document.getLineEndOffset(problem.first.first - 1)), problem.third, problem.second);
