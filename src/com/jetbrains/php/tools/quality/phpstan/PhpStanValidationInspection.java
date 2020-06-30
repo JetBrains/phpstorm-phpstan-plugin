@@ -42,7 +42,8 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     options.add("analyze");
     options.add("--level=" + level);
     if (isNotEmpty(config)) {
-      options.add("--configuration=" + config);
+      options.add("-c");
+      options.add(config);
     }
     if (isNotEmpty(autoload)) {
       options.add("--autoload-file=" + autoload);
