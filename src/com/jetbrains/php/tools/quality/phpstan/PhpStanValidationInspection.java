@@ -46,7 +46,8 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
       options.add(config);
     }
     if (isNotEmpty(autoload)) {
-      options.add("--autoload-file=" + autoload);
+      options.add("-a");
+      options.add(autoload);
     }
     options.add("--memory-limit=" + memoryLimit);
     options.add("--error-format=checkstyle");
