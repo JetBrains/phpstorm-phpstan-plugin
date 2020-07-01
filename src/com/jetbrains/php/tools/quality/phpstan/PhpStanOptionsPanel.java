@@ -6,11 +6,16 @@ import com.intellij.ui.JBIntSpinner;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBTextField;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
+import com.jetbrains.php.tools.quality.QualityToolCommonConfigurable;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
+
+import static com.jetbrains.php.lang.inspections.PhpInspectionsUtil.createPanelWithSettingsLink;
+import static com.jetbrains.php.tools.quality.phpcs.PhpCSConfigurationBaseManager.CODE_SNIFFER;
+import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   private final PhpStanValidationInspection myInspection;
@@ -20,6 +25,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   private JBIntSpinner myJBIntSpinner;
   private PhpTextFieldWithSdkBasedBrowse myConfigPathTextField;
   private PhpTextFieldWithSdkBasedBrowse myAutoloadPathTextField;
+  private JPanel myLinkPanel;
 
   public PhpStanOptionsPanel(PhpStanValidationInspection inspection) {
     myInspection = inspection;
@@ -59,6 +65,10 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
 
   private void createUIComponents() {
     myJBIntSpinner = new JBIntSpinner(4, 0, 8);
+    myLinkPanel = createPanelWithSettingsLink(PHP_STAN,
+                                              QualityToolCommonConfigurable.class,
+                                              QualityToolCommonConfigurable::new,
+                                              i -> i.showConfigurable(PHP_STAN));
   }
 
   @Override
