@@ -1,8 +1,12 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
+import com.google.gson.JsonElement;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.SystemInfo;
+import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.jetbrains.php.composer.ComposerDataService;
 import com.jetbrains.php.composer.ComposerOpenSettingsProvider;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
@@ -12,6 +16,8 @@ import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
 import com.jetbrains.php.ui.PhpUiUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+
+import static com.intellij.openapi.util.text.StringUtil.*;
 
 public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> implements
                                                                                                                          ComposerOpenSettingsProvider {
@@ -37,6 +43,16 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   
   @Override
   protected boolean applyRulesetFromComposer(@NotNull Project project, PhpStanConfiguration configuration) {
+    final String configPath = ComposerDataService.getInstance(project).getConfigPath();
+    final VirtualFile config = LocalFileSystem.getInstance().refreshAndFindFileByPath(configPath);
+    if (config == null) return false;
+
+    final String ruleset = getRuleset(config);
+    if (ruleset == null) return false;
+    final VirtualFile customRulesetFile = detectCustomRulesetFile(config.getParent(), ruleset);
+    if (customRulesetFile != null) {
+      return modifyRulesetInspectionSetting(project, tool -> applyRuleset(tool, customRulesetFile.getPath()));
+    }
     return false;
   }
 
@@ -64,6 +80,19 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     });
   }
 
+
+  @Override
+  protected void checkComposerScriptsLeaves(JsonElement element, Ref<String> result) {
+    final String string = element.getAsString();
+    if (string != null && string.contains("phpstan")) {
+      for (String arg: split(string, " ")) {
+        final String prefix = "--configuration=";
+        if (startsWith(arg, prefix)) {
+          result.set(trimStart(arg, prefix));
+        }
+      }
+    }
+  }
 
   private static void applyRuleset(PhpStanValidationInspection tool, String customRuleset) {
     tool.config = customRuleset;
