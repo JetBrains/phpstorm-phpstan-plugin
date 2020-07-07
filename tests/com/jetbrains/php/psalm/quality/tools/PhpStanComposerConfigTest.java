@@ -1,3 +1,5 @@
+package com.jetbrains.php.psalm.quality.tools;
+
 import com.intellij.openapi.util.SystemInfo;
 import com.jetbrains.php.config.composer.QualityToolsComposerConfigTest;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
