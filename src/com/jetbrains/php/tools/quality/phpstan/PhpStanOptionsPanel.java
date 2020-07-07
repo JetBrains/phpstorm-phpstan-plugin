@@ -1,9 +1,7 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.ide.DataManager;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.JBIntSpinner;
 import com.intellij.ui.components.JBCheckBox;
@@ -44,10 +42,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
     myJBIntSpinner.setNumber(inspection.level);
     myJBIntSpinner.addChangeListener(event -> myInspection.level = myJBIntSpinner.getNumber());
     DataManager.getInstance().getDataContextFromFocusAsync().onSuccess(context -> {
-      Project project = CommonDataKeys.PROJECT.getData(context);
-      if (project == null) {
-        project = ProjectManager.getInstance().getDefaultProject();
-      }
+      Project project = getCurrentProject(context);
       myConfigPathTextField.setText(inspection.config);
       myConfigPathTextField
         .init(project, getSdkAdditionalData(project), PhpStanBundle.message("phpstan.configuration.file"), true, false);
