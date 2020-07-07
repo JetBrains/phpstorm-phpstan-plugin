@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.SystemInfo;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.php.composer.ComposerDataService;
@@ -16,6 +17,8 @@ import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
 import com.jetbrains.php.ui.PhpUiUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import static com.intellij.openapi.util.text.StringUtil.*;
 
@@ -85,10 +88,17 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   protected void checkComposerScriptsLeaves(JsonElement element, Ref<String> result) {
     final String string = element.getAsString();
     if (string != null && string.contains("phpstan")) {
-      for (String arg: split(string, " ")) {
+      final List<String> split = split(string, " ");
+      for (String arg: split) {
         final String prefix = "--configuration=";
         if (startsWith(arg, prefix)) {
           result.set(trimStart(arg, prefix));
+          return;
+        }
+        final int index = split.indexOf(arg);
+        if (StringUtil.equals(arg, "-c") && index < split.size() - 1) {
+          result.set(split.get(index + 1));
+          return;
         }
       }
     }
