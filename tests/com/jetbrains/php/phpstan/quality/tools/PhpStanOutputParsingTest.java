@@ -1,4 +1,4 @@
-package com.jetbrains.php.psalm.quality.tools;
+package com.jetbrains.php.phpstan.quality.tools;
 
 import com.jetbrains.php.fixtures.PhpHeavyCodeInsightFixtureTestCase;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager;

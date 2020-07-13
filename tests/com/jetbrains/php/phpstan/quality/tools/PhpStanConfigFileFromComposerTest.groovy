@@ -1,4 +1,4 @@
-package com.jetbrains.php.psalm.quality.tools
+package com.jetbrains.php.phpstan.quality.tools
 
 import com.intellij.testFramework.fixtures.CodeInsightFixtureTestCase
 import com.jetbrains.php.tools.quality.phpstan.PhpStanComposerConfig
