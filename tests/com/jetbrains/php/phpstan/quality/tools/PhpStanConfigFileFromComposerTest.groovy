@@ -35,7 +35,7 @@ class PhpStanConfigFileFromComposerTest extends CodeInsightFixtureTestCase {
 ''', null)
   }
 
-  void testNoPsalmInScriptsSection() {
+  void testNoPHPStanInScriptsSection() {
     doRulesetTest('''
 {
     "scripts": {
