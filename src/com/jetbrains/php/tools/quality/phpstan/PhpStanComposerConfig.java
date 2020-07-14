@@ -17,10 +17,12 @@ import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
 import com.jetbrains.php.ui.PhpUiUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 import static com.intellij.openapi.util.text.StringUtil.*;
+import static com.jetbrains.php.tools.quality.phpstan.PhpStanOpenSettingsProvider.PHP_STAN_OPEN_SETTINGS_PROVIDER;
 
 public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> implements
                                                                                                                          ComposerOpenSettingsProvider {
@@ -102,6 +104,11 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
         }
       }
     }
+  }
+
+  @Override
+  public @Nullable ComposerLogMessageBuilder.Settings getSettings() {
+    return PHP_STAN_OPEN_SETTINGS_PROVIDER;
   }
 
   private static void applyRuleset(PhpStanValidationInspection tool, String customRuleset) {
