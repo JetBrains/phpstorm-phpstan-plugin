@@ -8,13 +8,9 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.jetbrains.php.composer.ComposerDataService;
-import com.jetbrains.php.composer.ComposerOpenSettingsProvider;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
-import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
-import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.tools.quality.QualityToolsComposerConfig;
-import com.jetbrains.php.ui.PhpUiUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,8 +20,7 @@ import java.util.List;
 import static com.intellij.openapi.util.text.StringUtil.*;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanOpenSettingsProvider.PHP_STAN_OPEN_SETTINGS_PROVIDER;
 
-public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> implements
-                                                                                                                         ComposerOpenSettingsProvider {
+public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> {
   @NonNls private static final String PACKAGE = "phpstan/phpstan";
   @NonNls private static final String RELATIVE_PATH = "bin/phpstan" + (SystemInfo.isWindows ? ".bat" : "");
   @NonNls private static final String PHPSTAN_NEON = "phpstan.neon";
@@ -74,17 +69,6 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     }
     return false;
   }
-
-  @Override
-  public void openSettings(@NotNull Project project) {
-    PhpUiUtil.editConfigurable(project, new QualityToolConfigurableList<PhpStanConfiguration>(project, PhpStanQualityToolType.INSTANCE, null) {
-      @Override
-      protected QualityToolType<PhpStanConfiguration> getQualityToolType() {
-        return PhpStanQualityToolType.INSTANCE;
-      }
-    });
-  }
-
 
   @Override
   protected void checkComposerScriptsLeaves(JsonElement element, Ref<String> result) {
