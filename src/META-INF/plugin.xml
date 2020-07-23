@@ -23,6 +23,13 @@
                      enabledByDefault="false"
                      level="WEAK WARNING"
                      implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanValidationInspection"/>
+    <globalInspection language="PHP" shortName="PhpStanGlobalInspection"
+                      displayName="PHPStan Global validation"
+                      groupPath="PHP"
+                      groupName="Quality tools"
+                      enabledByDefault="false"
+                      level="WEAK WARNING"
+                      implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection"/>
     <externalAnnotator language="PHP" implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanAnnotatorProxy"/>
   </extensions>
 
