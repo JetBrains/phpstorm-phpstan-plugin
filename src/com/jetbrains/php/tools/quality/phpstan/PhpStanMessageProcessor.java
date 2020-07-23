@@ -74,7 +74,14 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
           }
         }
       } else {
-        myProject.putUserData(PHPSTAN_ANNOTATOR_INFO, messageHandler.getProblemList());
+        final List<PhpStanXmlMessageHandler.ProblemDescription> data = myProject.getUserData(PHPSTAN_ANNOTATOR_INFO);
+        if (data != null) {
+          data.addAll(messageHandler.getProblemList());
+          myProject.putUserData(PHPSTAN_ANNOTATOR_INFO, data);
+        }
+        else {
+          myProject.putUserData(PHPSTAN_ANNOTATOR_INFO, messageHandler.getProblemList());
+        }
       }
     }
   }
