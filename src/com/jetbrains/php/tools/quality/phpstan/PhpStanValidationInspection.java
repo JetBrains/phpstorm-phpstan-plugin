@@ -37,7 +37,7 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     return PHP_STAN;
   }
 
-  public List<String> getCommandLineOptions(List<String> filePath) {
+  public List<String> getCommandLineOptions(@NotNull List<String> filePath) {
     @NonNls ArrayList<String> options = new ArrayList<>();
     options.add("analyze");
     options.add("--level=" + level);

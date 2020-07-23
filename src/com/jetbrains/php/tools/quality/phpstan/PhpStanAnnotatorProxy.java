@@ -20,7 +20,7 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidatio
 
   @Override
   @Nullable
-  protected List<String> getOptions(@NotNull String filePath, @NotNull PhpStanValidationInspection inspection, @NotNull Project project) {
+  protected List<String> getOptions(@Nullable String filePath, @NotNull PhpStanValidationInspection inspection, @NotNull Project project) {
     return inspection.getCommandLineOptions(inspection.FULL_PROJECT
                                             ? new SmartList<>(filePath, project.getBasePath())
                                             : concat(singletonList(filePath), map(ProjectRootManager.getInstance(project).getContentSourceRoots(), VirtualFile::getPath)));
@@ -33,7 +33,7 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidatio
 
   @NotNull
   @Override
-  protected QualityToolAnnotatorInfo<PhpStanValidationInspection> createAnnotatorInfo(@NotNull PsiFile file,
+  protected QualityToolAnnotatorInfo<PhpStanValidationInspection> createAnnotatorInfo(@Nullable PsiFile file,
                                                          PhpStanValidationInspection tool,
                                                          Project project,
                                                          QualityToolConfiguration configuration,

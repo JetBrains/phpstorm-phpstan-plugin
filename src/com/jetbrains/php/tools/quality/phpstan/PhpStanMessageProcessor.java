@@ -46,7 +46,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   protected PhpStanMessageProcessor(QualityToolAnnotatorInfo info) {
     super(info);
     myWarningsHighlightLevel = HighlightDisplayLevel.WARNING; // TODO: fix
-    myFilePath = info.getOriginalFile().getPath();
+    myFilePath = info.getOriginalFile() != null ? info.getOriginalFile().getPath(): null;
     myPsiFile = info.getPsiFile();
   }
 
@@ -78,7 +78,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     return null;
   }
 
-  protected XMLMessageHandler getXmlMessageHandler(@NotNull String filePath) {
+  protected XMLMessageHandler getXmlMessageHandler(@Nullable String filePath) {
     return new PhpStanXmlMessageHandler(filePath);
   }
 
@@ -119,7 +119,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
 
     private final String myFilePath;
 
-    private PhpStanXmlMessageHandler(@NotNull String filePath) {
+    private PhpStanXmlMessageHandler(@Nullable String filePath) {
       myFilePath = filePath;
     }
 
@@ -132,7 +132,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     @Override
     protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
       if (FILE_TAG.equals(tagName)) {
-        myProblemList = myFilePath.endsWith(attributes.getValue(FILE_NAME_ATTR)) ? new ArrayList<>() : null;
+        myProblemList = myFilePath == null || myFilePath.endsWith(attributes.getValue(FILE_NAME_ATTR)) ? new ArrayList<>() : null;
       }
       else if (ERROR_TAG.equals(tagName) | WARNING_TAG.equals(tagName)) {
         if (myProblemList != null) {
