@@ -61,4 +61,12 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
       }
     }
   }
+
+  @Override
+  public void inspectionStarted(@NotNull InspectionManager manager,
+                                @NotNull GlobalInspectionContext globalContext,
+                                @NotNull ProblemDescriptionsProcessor problemDescriptionsProcessor) {
+    globalContext.getProject().putUserData(PHPSTAN_ANNOTATOR_INFO, null);
+    super.inspectionStarted(manager, globalContext, problemDescriptionsProcessor);
+  }
 }
