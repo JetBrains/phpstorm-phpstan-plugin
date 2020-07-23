@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
+import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
 import org.jetbrains.annotations.NonNls;
@@ -8,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
@@ -54,7 +56,7 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     options.add("--no-progress");
     options.add("--no-ansi");
     options.add("--no-interaction");
-    options.addAll(filePath);
+    options.addAll(ContainerUtil.filter(filePath, Objects::nonNull));
     return options;
   }
 }
