@@ -1,32 +1,19 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.util.containers.ContainerUtil;
+import com.intellij.codeInspection.InspectionProfile;
+import com.intellij.codeInspection.InspectionProfileEntry;
+import com.intellij.codeInspection.ex.InspectionToolWrapper;
+import com.intellij.openapi.project.Project;
+import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationInspection;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
+import static com.intellij.util.ObjectUtils.tryCast;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanValidationInspection extends QualityToolValidationInspection {
-  public boolean FULL_PROJECT = false;
-  @NonNls public String memoryLimit = "2G";
-  public int level = 4;
-  public String config = "";
-  public String autoload = "";
-
-  @Override
-  public JComponent createOptionsPanel() {
-    final PhpStanOptionsPanel optionsPanel = new PhpStanOptionsPanel(this);
-    optionsPanel.init();
-    return optionsPanel.getOptionsPanel();
-  }
 
   @NotNull
   @Override
@@ -39,24 +26,14 @@ public class PhpStanValidationInspection extends QualityToolValidationInspection
     return PHP_STAN;
   }
 
-  public List<String> getCommandLineOptions(@NotNull List<String> filePath) {
-    @NonNls ArrayList<String> options = new ArrayList<>();
-    options.add("analyze");
-    options.add("--level=" + level);
-    if (isNotEmpty(config)) {
-      options.add("-c");
-      options.add(config);
+  @Nullable
+  public PhpStanGlobalInspection getGlobalTool(@NotNull Project project) {
+    final InspectionToolWrapper inspectionTool = ((InspectionProfile)InspectionProjectProfileManager.getInstance(project)
+      .getCurrentProfile())
+      .getInspectionTool("PhpStanGlobalInspection", project);
+    if (inspectionTool == null){
+      return null;
     }
-    if (isNotEmpty(autoload)) {
-      options.add("-a");
-      options.add(autoload);
-    }
-    options.add("--memory-limit=" + memoryLimit);
-    options.add("--error-format=checkstyle");
-    options.add("--no-progress");
-    options.add("--no-ansi");
-    options.add("--no-interaction");
-    options.addAll(ContainerUtil.filter(filePath, Objects::nonNull));
-    return options;
+    return tryCast(inspectionTool.getTool(), PhpStanGlobalInspection.class);
   }
 }

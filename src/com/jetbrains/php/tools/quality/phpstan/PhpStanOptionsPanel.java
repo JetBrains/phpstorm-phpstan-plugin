@@ -18,7 +18,7 @@ import static com.jetbrains.php.lang.inspections.PhpInspectionsUtil.createPanelW
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
-  private final PhpStanValidationInspection myInspection;
+  private final PhpStanGlobalInspection myInspection;
   private JPanel myOptionsPanel;
   private JBCheckBox myFullProjectRunJBCheckBox;
   private JBTextField myMemoryLimitTextField;
@@ -27,7 +27,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   private PhpTextFieldWithSdkBasedBrowse myAutoloadPathTextField;
   private JPanel myLinkPanel;
 
-  public PhpStanOptionsPanel(PhpStanValidationInspection inspection) {
+  public PhpStanOptionsPanel(PhpStanGlobalInspection inspection) {
     myInspection = inspection;
     myFullProjectRunJBCheckBox.setSelected(inspection.FULL_PROJECT);
     myFullProjectRunJBCheckBox.addActionListener(event -> myInspection.FULL_PROJECT = myFullProjectRunJBCheckBox.isSelected());

@@ -11,8 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.intellij.util.containers.ContainerUtil.concat;
-import static com.intellij.util.containers.ContainerUtil.map;
+import static com.intellij.util.containers.ContainerUtil.*;
 import static java.util.Collections.singletonList;
 
 public class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidationInspection> {
@@ -21,9 +20,15 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidatio
   @Override
   @Nullable
   protected List<String> getOptions(@Nullable String filePath, @NotNull PhpStanValidationInspection inspection, @NotNull Project project) {
-    return inspection.getCommandLineOptions(inspection.FULL_PROJECT
-                                            ? new SmartList<>(filePath, project.getBasePath())
-                                            : concat(singletonList(filePath), map(ProjectRootManager.getInstance(project).getContentSourceRoots(), VirtualFile::getPath)));
+    final PhpStanGlobalInspection tool = inspection.getGlobalTool(project);
+    if (tool == null) {
+      return emptyList();
+    }
+    return tool.getCommandLineOptions(tool.FULL_PROJECT
+                                      ? new SmartList<>(filePath, project.getBasePath())
+                                      : concat(singletonList(filePath), map(
+                                        ProjectRootManager.getInstance(project).getContentSourceRoots(),
+                                        VirtualFile::getPath)));
   }
 
   @Override

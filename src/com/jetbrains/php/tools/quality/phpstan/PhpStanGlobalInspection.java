@@ -12,15 +12,33 @@ import com.jetbrains.php.tools.quality.QualityToolMessage;
 import com.jetbrains.php.tools.quality.QualityToolMessageProcessor;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanMessageProcessor.PhpStanXmlMessageHandler.ProblemDescription;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.intellij.codeInspection.ProblemHighlightType.WEAK_WARNING;
+import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
 
 public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection {
   public static final Key<List<ProblemDescription>> PHPSTAN_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_2");
+  public boolean FULL_PROJECT = false;
+  @NonNls public String memoryLimit = "2G";
+  public int level = 4;
+  public String config = "";
+  public String autoload = "";
+
+  @Override
+  public JComponent createOptionsPanel() {
+    final PhpStanOptionsPanel optionsPanel = new PhpStanOptionsPanel(this);
+    optionsPanel.init();
+    return optionsPanel.getOptionsPanel();
+  }
+
 
   @Override
   public @Nullable LocalInspectionTool getSharedLocalInspectionTool() {
@@ -68,5 +86,26 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
                                 @NotNull ProblemDescriptionsProcessor problemDescriptionsProcessor) {
     globalContext.getProject().putUserData(PHPSTAN_ANNOTATOR_INFO, null);
     super.inspectionStarted(manager, globalContext, problemDescriptionsProcessor);
+  }
+
+  public List<String> getCommandLineOptions(@NotNull List<String> filePath) {
+    @NonNls ArrayList<String> options = new ArrayList<>();
+    options.add("analyze");
+    options.add("--level=" + level);
+    if (isNotEmpty(config)) {
+      options.add("-c");
+      options.add(config);
+    }
+    if (isNotEmpty(autoload)) {
+      options.add("-a");
+      options.add(autoload);
+    }
+    options.add("--memory-limit=" + memoryLimit);
+    options.add("--error-format=checkstyle");
+    options.add("--no-progress");
+    options.add("--no-ansi");
+    options.add("--no-interaction");
+    options.addAll(ContainerUtil.filter(filePath, Objects::nonNull));
+    return options;
   }
 }
