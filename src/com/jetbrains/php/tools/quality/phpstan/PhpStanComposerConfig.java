@@ -110,7 +110,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
 
     final PsiDirectory file = PsiManager.getInstance(project).findDirectory(projectDir);
     if (file != null) {
-      Key<PhpStanGlobalInspection> key = Key.create("PhpStanGlobalInspection");
+      Key<PhpStanGlobalInspection> key = Key.create(PhpStanQualityToolType.INSTANCE.getInspectionId());
       InspectionProfileManager.getInstance(project).getCurrentProfile().modifyToolSettings(key, file, consumer);
       return true;
     }
