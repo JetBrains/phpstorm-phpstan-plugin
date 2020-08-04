@@ -38,7 +38,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   private final static String MESSAGE_ATTR = "message";
   @NonNls private final static String SEVERITY_ATTR = "severity";
   private final static String FILE_NAME_ATTR = "name";
-  private final Set<PhpStanXmlMessageHandler.ProblemDescription> lineMessages = new HashSet<>();
+  private final Set<ProblemDescription> lineMessages = new HashSet<>();
   private final HighlightDisplayLevel myWarningsHighlightLevel;
   final String myFilePath;
   final PsiFile myPsiFile;
@@ -58,7 +58,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     mySAXParser.parse(source, messageHandler);
     if (messageHandler.isStatusValid()) {
       if (myPsiFile != null) {
-        for (PhpStanXmlMessageHandler.ProblemDescription problem : messageHandler.getProblemList()) {
+        for (ProblemDescription problem : messageHandler.getProblemList()) {
           final Document document = PsiDocumentManager.getInstance(myPsiFile.getProject()).getDocument(myPsiFile);
           QualityToolMessage qualityToolMessage;
           if (document != null && problem.getLineNumber() - 1 > 0 && problem.getLineNumber() - 1 < document.getLineCount()) {
@@ -74,7 +74,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
           }
         }
       } else {
-        final List<PhpStanXmlMessageHandler.ProblemDescription> data = myProject.getUserData(PHPSTAN_ANNOTATOR_INFO);
+        final List<ProblemDescription> data = myProject.getUserData(PHPSTAN_ANNOTATOR_INFO);
         if (data != null) {
           data.addAll(messageHandler.getProblemList());
           myProject.putUserData(PHPSTAN_ANNOTATOR_INFO, data);
@@ -156,42 +156,6 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
           int column = parseLineNumber(attributes.getValue(COLUMN_NUMBER_ATTR));
           myProblemList.add(new ProblemDescription(mySeverity, myLineNumber, column, attributes.getValue(MESSAGE_ATTR), myFileAttr));
         }
-      }
-    }
-    
-    static class ProblemDescription{
-      ProblemDescription(QualityToolMessage.Severity severity, int lineNumber, int column, String message, String file) {
-        mySeverity = severity;
-        myLineNumber = lineNumber;
-        myColumn = column;
-        myMessage = message;
-        myFile = file;
-      }
-
-      private final QualityToolMessage.Severity mySeverity;
-      private final int myLineNumber;
-      private final int myColumn;
-      private final String myMessage;
-      private final String myFile;
-
-      QualityToolMessage.Severity getSeverity() {
-        return mySeverity;
-      }
-
-      int getLineNumber() {
-        return myLineNumber;
-      }
-
-      int getColumn() {
-        return myColumn;
-      }
-
-      String getMessage() {
-        return myMessage;
-      }
-
-      String getFile() {
-        return myFile;
       }
     }
   }
