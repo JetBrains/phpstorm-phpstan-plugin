@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import static com.intellij.util.ObjectUtils.tryCast;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
+@SuppressWarnings("InspectionDescriptionNotFoundInspection")
 public class PhpStanValidationInspection extends QualityToolValidationInspection {
 
   @NotNull

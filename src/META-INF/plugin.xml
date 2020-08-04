@@ -16,13 +16,6 @@
     <projectService serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager"/>
     <projectService
         serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanProjectConfigurationManager"/>
-    <localInspection language="PHP" shortName="PhpStanValidationInspection"
-                     displayName="PHPStan validation"
-                     groupPath="PHP"
-                     groupName="Quality tools"
-                     enabledByDefault="false"
-                     level="WEAK WARNING"
-                     implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanValidationInspection"/>
     <globalInspection language="PHP" shortName="PhpStanGlobalInspection"
                       displayName="PHPStan Global validation"
                       groupPath="PHP"
