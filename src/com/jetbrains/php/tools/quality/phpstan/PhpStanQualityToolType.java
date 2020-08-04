@@ -73,11 +73,6 @@ public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfigu
   }
 
   @Override
-  public boolean hasGlobalTool() {
-    return true;
-  }
-
-  @Override
   public QualityToolValidationGlobalInspection getGlobalTool(@NotNull Project project) {
     final InspectionToolWrapper inspectionTool = ((InspectionProfile)InspectionProjectProfileManager.getInstance(project)
       .getCurrentProfile())
