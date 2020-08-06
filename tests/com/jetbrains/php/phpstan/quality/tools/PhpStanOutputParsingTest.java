@@ -2,7 +2,7 @@ package com.jetbrains.php.phpstan.quality.tools;
 
 import com.jetbrains.php.fixtures.PhpHeavyCodeInsightFixtureTestCase;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager;
-import com.jetbrains.php.tools.quality.phpstan.PhpStanValidationInspection;
+import com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection;
 import org.jetbrains.annotations.NotNull;
 
 public class PhpStanOutputParsingTest extends PhpHeavyCodeInsightFixtureTestCase {
@@ -10,7 +10,7 @@ public class PhpStanOutputParsingTest extends PhpHeavyCodeInsightFixtureTestCase
   public void testSimple() {
     PhpStanConfigurationManager.getInstance(myFixture.getProject()).getLocalSettings().setToolPath("phpstan"); // Dummy, needed to run annotator
     configureByFiles(getFileBeforeRelativePath().replace(".php", ".txt"));
-    myFixture.enableInspections(PhpStanValidationInspection.class);
+    myFixture.enableInspections(new PhpStanGlobalInspection());
     myFixture.testHighlighting(true, false, true);
   }
 
