@@ -17,12 +17,12 @@
     <projectService
         serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanProjectConfigurationManager"/>
     <globalInspection language="PHP" shortName="PhpStanGlobal"
-                      displayName="PHPStan Global validation"
                       groupPath="PHP"
                       groupName="Quality tools"
                       enabledByDefault="false"
                       level="WEAK WARNING"
-                      implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection"/>
+                      implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection"
+                      key="inspection.php.stan.global.display.name" bundle="messages.PhpStanBundle"/>
     <externalAnnotator language="PHP" implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanAnnotatorProxy"/>
   </extensions>
 
