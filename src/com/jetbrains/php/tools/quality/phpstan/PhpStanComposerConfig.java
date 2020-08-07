@@ -3,6 +3,7 @@ package com.jetbrains.php.tools.quality.phpstan;
 import com.google.gson.JsonElement;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.text.StringUtil;
@@ -100,7 +101,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     return PHP_STAN_OPEN_SETTINGS_PROVIDER;
   }
 
-  private static void applyRuleset(PhpStanGlobalInspection tool, String customRuleset) {
+  private static void applyRuleset(PhpStanGlobalInspection tool, @NlsSafe String customRuleset) {
     tool.config = customRuleset;
   }
 

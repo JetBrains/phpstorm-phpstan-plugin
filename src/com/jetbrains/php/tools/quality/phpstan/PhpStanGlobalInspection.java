@@ -2,10 +2,12 @@ package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.codeInspection.LocalInspectionTool;
 import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,8 +24,8 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
   public boolean FULL_PROJECT = false;
   @NonNls public String memoryLimit = "2G";
   public int level = 4;
-  public String config = "";
-  public String autoload = "";
+  public @NlsSafe String config = "";
+  public @NlsSafe String autoload = "";
 
   @Override
   public JComponent createOptionsPanel() {
