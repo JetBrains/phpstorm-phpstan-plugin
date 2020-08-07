@@ -30,8 +30,6 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   @NonNls private static final String PACKAGE = "phpstan/phpstan";
   @NonNls private static final String RELATIVE_PATH = "bin/phpstan" + (SystemInfo.isWindows ? ".bat" : "");
   @NonNls private static final String PHPSTAN_NEON = "phpstan.neon";
-  private static final PhpStanValidationInspection PHP_STAN_VALIDATION_INSPECTION = new PhpStanValidationInspection();
-
 
   public PhpStanComposerConfig() {
     super(PACKAGE, RELATIVE_PATH);
@@ -43,8 +41,8 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   }
 
   @Override
-  public PhpStanValidationInspection getQualityInspection() {
-    return PHP_STAN_VALIDATION_INSPECTION;
+  public String getQualityInspectionShortName() {
+    return PhpStanQualityToolType.INSTANCE.getInspectionId();
   }
   
   @Override
@@ -120,7 +118,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
 
   @NotNull
   @Override
-  protected QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
+  public QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
     return PhpStanConfigurationManager.getInstance(project);
   }
 }
