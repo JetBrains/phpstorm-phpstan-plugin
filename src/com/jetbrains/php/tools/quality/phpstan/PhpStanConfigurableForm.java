@@ -5,6 +5,7 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.Version;
 import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
+import com.jetbrains.php.tools.quality.QualityToolType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,6 +15,11 @@ public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends Qua
 
   public PhpStanConfigurableForm(@NotNull Project project, @NotNull C configuration) {
     super(project, configuration, PHP_STAN, "phpstan");
+  }
+
+  @Override
+  public QualityToolType getQualityToolType() {
+    return PhpStanQualityToolType.INSTANCE;
   }
 
   @Override

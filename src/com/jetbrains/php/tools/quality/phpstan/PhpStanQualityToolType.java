@@ -87,4 +87,13 @@ public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfigu
   public String getInspectionId() {
     return "PhpStanGlobal";
   }
+  
+  @Override
+  public String getInspectionShortName(@NotNull Project project) {
+    final QualityToolValidationGlobalInspection tool = getGlobalTool(project);
+    if (tool != null) {
+      return tool.getShortName();
+    }
+    return getInspection().getShortName();
+  }
 }
