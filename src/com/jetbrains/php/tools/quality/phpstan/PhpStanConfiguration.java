@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.NlsContexts;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Transient;
@@ -62,7 +63,7 @@ public class PhpStanConfiguration implements QualityToolConfiguration {
 
   @Override
   @NotNull
-  public String getPresentableName(@Nullable Project project) {
+  public @NlsContexts.Label String getPresentableName(@Nullable Project project) {
     return getId();
   }
 

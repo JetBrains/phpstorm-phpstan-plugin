@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.phpstan.remote;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.NlsContexts;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Tag;
 import com.jetbrains.php.config.interpreters.PhpInterpretersManagerImpl;
@@ -31,7 +32,7 @@ public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements 
 
   @NotNull
   @Override
-  public String getPresentableName(@Nullable Project project) {
+  public @NlsContexts.Label String getPresentableName(@Nullable Project project) {
     return getDefaultName(PhpInterpretersManagerImpl.getInstance(project).findInterpreterName(getInterpreterId()));
   }
 
