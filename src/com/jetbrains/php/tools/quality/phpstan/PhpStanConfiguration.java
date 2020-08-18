@@ -6,6 +6,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Transient;
 import com.jetbrains.php.tools.quality.QualityToolConfiguration;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,7 +17,6 @@ import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManage
  * Stores configuration needed to run PHPStan in selected environment.
  */
 public class PhpStanConfiguration implements QualityToolConfiguration {
-  private static final String LOCAL = "Local";
   private String myPhpStanPath = "";
   private int myMaxMessagesPerFile = DEFAULT_MAX_MESSAGES_PER_FILE;
   private int myTimeoutMs = 30000;
@@ -69,8 +69,8 @@ public class PhpStanConfiguration implements QualityToolConfiguration {
 
   @Override
   @NotNull
-  public String getId() {
-    return LOCAL;
+  public @Nls String getId() {
+    return PhpStanBundle.message("local");
   }
 
   @Override
@@ -99,10 +99,10 @@ public class PhpStanConfiguration implements QualityToolConfiguration {
       return 1;
     }
 
-    if (StringUtil.equals(getPresentableName(null), LOCAL)) {
+    if (StringUtil.equals(getPresentableName(null), PhpStanBundle.message("local"))) {
       return -1;
     }
-    else if (StringUtil.equals(o.getPresentableName(null), LOCAL)) {
+    else if (StringUtil.equals(o.getPresentableName(null), PhpStanBundle.message("local"))) {
       return 1;
     }
     return StringUtil.compare(getPresentableName(null), o.getPresentableName(null), false);

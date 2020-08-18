@@ -6,7 +6,9 @@ import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Tag;
 import com.jetbrains.php.config.interpreters.PhpInterpretersManagerImpl;
 import com.jetbrains.php.config.interpreters.PhpSdkDependentConfiguration;
+import com.jetbrains.php.tools.quality.phpstan.PhpStanBundle;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfiguration;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,8 +16,6 @@ import static com.intellij.openapi.util.text.StringUtil.isEmpty;
 
 @Tag("phpcs_fixer_by_interpreter")
 public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements PhpSdkDependentConfiguration {
-  private static final String UNDEFINED = "Undefined interpreter";
-  private static final String INTERPRETER = "Interpreter: ";
   private String myInterpreterId;
 
   @Override
@@ -38,14 +38,14 @@ public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements 
 
   @NotNull
   @Override
-  public String getId() {
+  public @Nls String getId() {
     final String interpreterId = getInterpreterId();
-    return isEmpty(interpreterId) ? UNDEFINED : interpreterId;
+    return isEmpty(interpreterId) ? PhpStanBundle.message("undefined.interpreter") : interpreterId;
   }
 
   @NotNull
-  public static String getDefaultName(@Nullable String interpreterName) {
-    return isEmpty(interpreterName) ? UNDEFINED : INTERPRETER + interpreterName;
+  public static @Nls String getDefaultName(@Nullable String interpreterName) {
+    return isEmpty(interpreterName) ? PhpStanBundle.message("undefined.interpreter") : PhpStanBundle.message("interpreter.0", interpreterName);
   }
 
   @Override
