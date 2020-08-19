@@ -68,7 +68,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Level:"/>
+                  <text resource-bundle="messages/PhpStanBundle" key="label.level"/>
                 </properties>
               </component>
               <component id="9a090" class="com.intellij.ui.JBIntSpinner" binding="myJBIntSpinner" custom-create="true">
@@ -92,7 +92,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Configuration file:"/>
+                  <text resource-bundle="messages/PhpStanBundle" key="label.configuration.file"/>
                 </properties>
               </component>
               <component id="d3212" class="com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse" binding="myConfigPathTextField">
@@ -116,7 +116,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Autoload file:"/>
+                  <text resource-bundle="messages/PhpStanBundle" key="label.autoload.file"/>
                 </properties>
               </component>
               <component id="d4f1d" class="com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse" binding="myAutoloadPathTextField">
