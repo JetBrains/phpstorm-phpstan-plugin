@@ -18,7 +18,7 @@
         serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanProjectConfigurationManager"/>
     <globalInspection language="PHP" shortName="PhpStanGlobal"
                       groupPath="PHP"
-                      groupName="Quality tools"
+                      groupKey="inspection.php.group.quality.tools"
                       enabledByDefault="false"
                       level="WEAK WARNING"
                       implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection"
