@@ -2,6 +2,7 @@ package com.jetbrains.php.tools.quality.phpstan.remote;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Tag;
 import com.jetbrains.php.config.interpreters.PhpInterpretersManagerImpl;
@@ -21,7 +22,7 @@ public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements 
   @Override
   @Nullable
   @Attribute("interpreter_id")
-  public String getInterpreterId() {
+  public @NlsSafe String getInterpreterId() {
     return myInterpreterId;
   }
 
