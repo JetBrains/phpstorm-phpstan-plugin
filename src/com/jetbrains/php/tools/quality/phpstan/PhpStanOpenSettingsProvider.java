@@ -14,7 +14,7 @@ public class PhpStanOpenSettingsProvider extends ComposerLogMessageBuilder.Setti
 
   @Override
   public void show(@NotNull Project project) {
-    PhpUiUtil.editConfigurable(project, new QualityToolConfigurableList<PhpStanConfiguration>(project, PhpStanQualityToolType.INSTANCE, null) {
+    PhpUiUtil.editConfigurable(project, new QualityToolConfigurableList<>(project, PhpStanQualityToolType.INSTANCE, null) {
       @Override
       protected QualityToolType<PhpStanConfiguration> getQualityToolType() {
         return PhpStanQualityToolType.INSTANCE;
