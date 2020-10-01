@@ -47,7 +47,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   protected PhpStanMessageProcessor(QualityToolAnnotatorInfo info) {
     super(info);
     myWarningsHighlightLevel = HighlightDisplayLevel.WARNING; // TODO: fix
-    myFilePath = info.getOriginalFile() != null ? info.getOriginalFile().getPath(): null;
+    myFilePath = info.getTempFilePath();
     myPsiFile = info.getPsiFile();
     myProject = info.getProject();
   }
