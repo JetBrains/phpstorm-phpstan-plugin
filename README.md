@@ -11,3 +11,8 @@ This plugin adds dedicated functionality for [PHPStan](https://phpstan.org/) to 
 - Ability to run via remote interpreters such as Docker, WSL, and others
 - Automatic detection of PHPStan settings from composer.json
 - Manual configuration of PHPStan settings in the corresponding inspection options
+
+# Related Articles
+
+- https://blog.jetbrains.com/phpstorm/2020/10/phpstorm-2020-3-eap-2/
+- https://blog.jetbrains.com/phpstorm/2020/07/phpstan-and-psalm-support-coming-to-phpstorm/
