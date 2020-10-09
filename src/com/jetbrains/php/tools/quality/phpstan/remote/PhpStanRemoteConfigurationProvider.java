@@ -28,11 +28,11 @@ import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseMa
 
 public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProvider {
 
-  @NonNls private static final String PHPCS_FIXER_BY_INTERPRETER = "phpcs_fixer_by_interpreter";
+  @NonNls private static final String PHPSTAN_BY_INTERPRETER = "phpstan_by_interpreter";
 
   @Override
   public boolean canLoad(@NotNull String tagName) {
-    return StringUtil.equals(tagName, PHPCS_FIXER_BY_INTERPRETER);
+    return StringUtil.equals(tagName, PHPSTAN_BY_INTERPRETER);
   }
 
   @Nullable

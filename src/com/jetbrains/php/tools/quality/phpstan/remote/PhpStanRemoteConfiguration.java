@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import static com.intellij.openapi.util.text.StringUtil.isEmpty;
 
-@Tag("phpcs_fixer_by_interpreter")
+@Tag("phpstan_by_interpreter")
 public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements PhpSdkDependentConfiguration {
   private String myInterpreterId;
 
