@@ -20,9 +20,21 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidatio
   @Override
   @Nullable
   protected List<String> getOptions(@Nullable String filePath, @NotNull PhpStanValidationInspection inspection, @NotNull Project project) {
+    return emptyList();
+  }
+
+  @Override
+  protected @Nullable List<String> getOptions(@Nullable String filePath,
+                                              @NotNull PhpStanValidationInspection inspection,
+                                              @NotNull Project project,
+                                              boolean isOnTheFly) {
     final PhpStanGlobalInspection tool = (PhpStanGlobalInspection)getQualityToolType().getGlobalTool((project));
     if (tool == null) {
       return emptyList();
+    }
+
+    if (isOnTheFly) {
+      return tool.getCommandLineOptions(singletonList(filePath));
     }
     return tool.getCommandLineOptions(tool.FULL_PROJECT
                                       ? new SmartList<>(filePath, project.getBasePath())
