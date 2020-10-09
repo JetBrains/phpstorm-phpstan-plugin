@@ -11,7 +11,3 @@ This plugin adds dedicated functionality for [PHPStan](https://phpstan.org/) to 
 - Ability to run via remote interpreters such as Docker, WSL, and others
 - Automatic detection of PHPStan settings from composer.json
 - Manual configuration of PHPStan settings in the corresponding inspection options
-  
-# Contributing
-
-If you are introducing a user-visible change, please make sure to create the corresponding issue first and cover the change with a test.
