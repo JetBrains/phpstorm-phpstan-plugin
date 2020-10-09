@@ -7,7 +7,6 @@ import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -53,14 +52,16 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
   public List<String> getCommandLineOptions(@NotNull List<String> filePath) {
     @NonNls ArrayList<String> options = new ArrayList<>();
     options.add("analyze");
-    options.add("--level=" + level);
     if (isNotEmpty(config)) {
       options.add("-c");
       options.add(config);
     }
-    if (isNotEmpty(autoload)) {
-      options.add("-a");
-      options.add(autoload);
+    else {
+      options.add("--level=" + level);
+      if (isNotEmpty(autoload)) {
+        options.add("-a");
+        options.add(autoload);
+      }
     }
     options.add("--memory-limit=" + memoryLimit);
     options.add("--error-format=checkstyle");
