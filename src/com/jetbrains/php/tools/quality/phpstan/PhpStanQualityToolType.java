@@ -6,7 +6,6 @@ import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
 import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.jetbrains.php.tools.quality.*;
-import com.jetbrains.php.tools.quality.phpcs.PhpCSConfigurable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,7 +52,7 @@ public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfigu
 
   @Override
   protected @NotNull Configurable getToolConfigurable(@NotNull Project project) {
-    return new PhpCSConfigurable(project);
+    return new PhpStanConfigurable(project);
   }
 
   @Override
