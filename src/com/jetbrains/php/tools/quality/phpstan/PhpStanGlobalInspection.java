@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.codeInspection.LocalInspectionTool;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.containers.ContainerUtil;
@@ -49,7 +50,7 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     return PHPSTAN_ANNOTATOR_INFO;
   }
 
-  public List<String> getCommandLineOptions(@NotNull List<String> filePath) {
+  public List<String> getCommandLineOptions(@NotNull List<String> filePath, @NotNull Project project) {
     @NonNls ArrayList<String> options = new ArrayList<>();
     options.add("analyze");
     if (isNotEmpty(config)) {
@@ -68,7 +69,13 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     options.add("--no-progress");
     options.add("--no-ansi");
     options.add("--no-interaction");
-    options.addAll(ContainerUtil.filter(filePath, Objects::nonNull));
+    final List<String> filePaths = ContainerUtil.filter(filePath, Objects::nonNull);
+    if (filePaths.isEmpty()) {
+      options.add(project.getBasePath());
+    }
+    else {
+      options.addAll(filePaths);
+    }
     return options;
   }
 }

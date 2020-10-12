@@ -34,13 +34,13 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidatio
     }
 
     if (isOnTheFly) {
-      return tool.getCommandLineOptions(singletonList(filePath));
+      return tool.getCommandLineOptions(singletonList(filePath), project);
     }
     return tool.getCommandLineOptions(tool.FULL_PROJECT
                                       ? new SmartList<>(filePath, project.getBasePath())
                                       : concat(singletonList(filePath), map(
                                         ProjectRootManager.getInstance(project).getContentSourceRoots(),
-                                        VirtualFile::getPath)));
+                                        VirtualFile::getPath)), project);
   }
 
   @Override
