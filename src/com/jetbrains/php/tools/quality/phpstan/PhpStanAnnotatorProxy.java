@@ -67,6 +67,7 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator {
                          @NotNull final QualityToolAnnotatorInfo collectedInfo,
                          @NotNull PhpSdkFileTransfer transfer) throws ExecutionException {
     PhpStanValidationInspection inspection = (PhpStanValidationInspection)collectedInfo.getInspection();
+    messageProcessor.addSubstitution(collectedInfo.getFileName(), collectedInfo.getOriginalFileName());
 
     final PhpStanBlackList blackList = PhpStanBlackList.getInstance(collectedInfo.getProject());
     runToolProcess(collectedInfo, blackList, messageProcessor, collectedInfo.getProject().getBasePath(), transfer,
