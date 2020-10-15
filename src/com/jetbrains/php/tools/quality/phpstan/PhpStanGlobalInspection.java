@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
+import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemote;
 
 public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection {
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PHPSTAN_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_2");
@@ -55,13 +56,13 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     options.add("analyze");
     if (isNotEmpty(config)) {
       options.add("-c");
-      options.add(config);
+      options.add(updateIfRemote(config, project, PhpStanQualityToolType.INSTANCE));
     }
     else {
       options.add("--level=" + level);
       if (isNotEmpty(autoload)) {
         options.add("-a");
-        options.add(autoload);
+        options.add(updateIfRemote(autoload, project, PhpStanQualityToolType.INSTANCE));
       }
     }
     options.add("--memory-limit=" + memoryLimit);
