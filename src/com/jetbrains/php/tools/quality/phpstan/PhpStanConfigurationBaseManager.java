@@ -1,12 +1,11 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.xmlb.XmlSerializer;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationBaseManager;
 import com.jetbrains.php.tools.quality.QualityToolType;
 import org.jdom.Element;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,6 +38,6 @@ public class PhpStanConfigurationBaseManager extends QualityToolConfigurationBas
   }
 
   public static PhpStanConfigurationBaseManager getInstance() {
-    return ServiceManager.getService(PhpStanConfigurationBaseManager.class);
+    return ApplicationManager.getApplication().getService(PhpStanConfigurationBaseManager.class);
   }
 }
