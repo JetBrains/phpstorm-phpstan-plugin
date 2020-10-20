@@ -124,11 +124,6 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     return PhpStanQualityToolType.INSTANCE;
   }
 
-  @Override
-  public boolean processStdErrMessages() {
-    return false;
-  }
-
   static final class PhpStanXmlMessageHandler extends XMLMessageHandler {
 
     private final String myFilePath;
