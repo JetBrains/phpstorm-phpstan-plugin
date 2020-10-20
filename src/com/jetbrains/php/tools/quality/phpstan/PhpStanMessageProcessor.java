@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
+import com.intellij.util.PathUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolMessage;
 import com.jetbrains.php.tools.quality.QualityToolType;
@@ -146,8 +147,8 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     @Override
     protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
       if (FILE_TAG.equals(tagName)) {
-        myFileAttr = attributes.getValue(FILE_NAME_ATTR);
-        myProblemList = myFilePath == null || myFilePath.endsWith(myFileAttr != null ? myFileAttr: "") ? new ArrayList<>() : null;
+        myFileAttr = PathUtil.toSystemIndependentName(attributes.getValue(FILE_NAME_ATTR));
+        myProblemList = myFilePath == null || myFilePath.equals(myFileAttr) ? new ArrayList<>() : null;
       }
       else if (ERROR_TAG.equals(tagName) | WARNING_TAG.equals(tagName)) {
         if (myProblemList != null) {
