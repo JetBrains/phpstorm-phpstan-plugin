@@ -150,7 +150,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
           mySeverity = attributes.getValue(SEVERITY_ATTR).equals(ERROR_TAG) ? ERROR : WARNING;
           myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
           int column = parseLineNumber(attributes.getValue(COLUMN_NUMBER_ATTR));
-          myProblemList.add(new ProblemDescription(mySeverity, myLineNumber, column, attributes.getValue(MESSAGE_ATTR), myFileAttr));
+          myProblemList.add(new ProblemDescription(mySeverity, myLineNumber, column - 1, attributes.getValue(MESSAGE_ATTR), myFileAttr));
         }
       }
     }
