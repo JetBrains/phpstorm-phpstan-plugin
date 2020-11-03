@@ -89,6 +89,6 @@ public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProv
                                             @NotNull PhpStanConfiguration localConfiguration,
                                             @NotNull NullableFunction<String, String> preparePath) {
     super.fillSettingsByDefaultValue(settings, localConfiguration, preparePath);
-    settings.setTimeout(30000);
+    settings.setTimeout(60000);
   }
 }
