@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
 import static com.intellij.util.containers.ContainerUtil.*;
 import static java.util.Collections.singletonList;
 
@@ -37,7 +38,7 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidatio
       return tool.getCommandLineOptions(singletonList(filePath), project);
     }
     return tool.getCommandLineOptions(tool.FULL_PROJECT
-                                      ? new SmartList<>(filePath, project.getBasePath())
+                                      ? isNotEmpty(tool.config) ? emptyList() : new SmartList<>(filePath, project.getBasePath())
                                       : concat(singletonList(filePath), map(
                                         ProjectRootManager.getInstance(project).getContentSourceRoots(),
                                         VirtualFile::getPath)), project);
