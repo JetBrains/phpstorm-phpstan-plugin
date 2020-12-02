@@ -1,0 +1,128 @@
+<?php
+
+/**
+ * @phpstan-param int $a
+ * @phpstan-return string
+ * @phpstan-throws A
+ * @phpstan-use A
+ * @phpstan-implements A
+ * @phpstan-extends A
+ *
+ */
+function a() {
+/** @phpstan-var int $a */
+echo $;
+}
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @phpstan-param
+        PsiElement(DOC_TAG_NAME)('@phpstan-param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: a
+          PsiElement(DOC_VARIABLE)('$a')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @phpstan-return
+        PsiElement(DOC_TAG_NAME)('@phpstan-return')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: string
+          PsiElement(DOC_IDENTIFIER)('string')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocReturnTagImpl: @phpstan-throws
+        PsiElement(DOC_TAG_NAME)('@phpstan-throws')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: A
+          PsiElement(DOC_IDENTIFIER)('A')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-use
+        PsiElement(DOC_TAG_NAME)('@phpstan-use')
+        PsiWhiteSpace(' ')
+        PhpDocRefImpl: %EMPTY%
+          PsiElement(DOC_IDENTIFIER)('A')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-implements
+        PsiElement(DOC_TAG_NAME)('@phpstan-implements')
+        PsiWhiteSpace(' ')
+        PhpDocRefImpl: %EMPTY%
+          PsiElement(DOC_IDENTIFIER)('A')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-extends
+        PsiElement(DOC_TAG_NAME)('@phpstan-extends')
+        PsiWhiteSpace(' ')
+        PhpDocRefImpl: %EMPTY%
+          PsiElement(DOC_IDENTIFIER)('A')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    FunctionImpl: a
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')
+      PsiElement(()('(')
+      Parameter list
+        <empty list>
+      PsiElement())(')')
+      PsiWhiteSpace(' ')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiWhiteSpace('\n')
+        PhpDocCommentImpl
+          PsiElement(DOC_COMMENT_START)('/**')
+          PsiWhiteSpace(' ')
+          PhpDocTagImpl: @phpstan-var
+            PsiElement(DOC_TAG_NAME)('@phpstan-var')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: int
+              PsiElement(DOC_IDENTIFIER)('int')
+            PsiWhiteSpace(' ')
+            PhpDocVarImpl: a
+              PsiElement(DOC_VARIABLE)('$a')
+            PhpPsiElementImpl
+              <empty list>
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_COMMENT_END)('*/')
+        PsiWhiteSpace('\n')
+        Echo
+          PsiElement(echo)('echo')
+          PsiWhiteSpace(' ')
+          VariableImpl: %EMPTY%
+            PsiElement(dollar)('$')
+            PsiErrorElement:Expected: identifier
+              <empty list>
+          PsiElement(semicolon)(';')
+        PsiWhiteSpace('\n')
+        PsiElement(})('}')
