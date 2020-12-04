@@ -12,4 +12,8 @@ public class PhpStanDocParserTest extends PhpParserTestCase {
   public void test$DocTags() throws Throwable {
     doTest();
   }
+
+  public void test$DocMethodsTags() throws Throwable {
+    doTest();
+  }
 }

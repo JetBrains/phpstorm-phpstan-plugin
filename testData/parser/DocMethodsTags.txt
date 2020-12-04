@@ -1,0 +1,188 @@
+<?php
+
+/**
+ * @phpstan-method int|array borp() borp(int $int1, int[] $int2) multiply two integers
+ * @method int|array borp() borp(int $int1, int[] $int2) multiply two integers
+ * @phpstan-methodWrong int|array borp() borp(int $int1, int[] $int2) multiply two integers
+ * @wrong-method int[] borp(int|string $int1, int $int2) multiply two integers
+ */
+class Cart {
+}
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocMethodTagImpl: phpstan-method
+        PsiElement(error silence)('@')
+        PsiElement(identifier)('phpstan-method')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          ClassReferenceImpl: int
+            PsiElement(identifier)('int')
+        PsiElement(bit or)('|')
+        PhpPsiElementImpl
+          PsiElement(array)('array')
+        PsiWhiteSpace(' ')
+        PsiElement(identifier)('borp')
+        PsiElement(()('(')
+        Parameter list
+          <empty list>
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        PhpDocMethodImpl: borp
+          PsiElement(identifier)('borp')
+          PsiElement(()('(')
+          Parameter list
+            ParameterImpl: int1
+              ClassReferenceImpl: int
+                PsiElement(identifier)('int')
+              PsiWhiteSpace(' ')
+              PsiElement(variable)('$int1')
+            PsiElement(comma)(',')
+            PsiWhiteSpace(' ')
+            ParameterImpl: int2
+              ClassReferenceImpl: int
+                PsiElement(identifier)('int')
+              PsiElement([)('[')
+              PsiElement(])(']')
+              PsiWhiteSpace(' ')
+              PsiElement(variable)('$int2')
+          PsiElement())(')')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(identifier)('multiply')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('two')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('integers')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocMethodTagImpl: method
+        PsiElement(error silence)('@')
+        PsiElement(identifier)('method')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          ClassReferenceImpl: int
+            PsiElement(identifier)('int')
+        PsiElement(bit or)('|')
+        PhpPsiElementImpl
+          PsiElement(array)('array')
+        PsiWhiteSpace(' ')
+        PsiElement(identifier)('borp')
+        PsiElement(()('(')
+        Parameter list
+          <empty list>
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        PhpDocMethodImpl: borp
+          PsiElement(identifier)('borp')
+          PsiElement(()('(')
+          Parameter list
+            ParameterImpl: int1
+              ClassReferenceImpl: int
+                PsiElement(identifier)('int')
+              PsiWhiteSpace(' ')
+              PsiElement(variable)('$int1')
+            PsiElement(comma)(',')
+            PsiWhiteSpace(' ')
+            ParameterImpl: int2
+              ClassReferenceImpl: int
+                PsiElement(identifier)('int')
+              PsiElement([)('[')
+              PsiElement(])(']')
+              PsiWhiteSpace(' ')
+              PsiElement(variable)('$int2')
+          PsiElement())(')')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(identifier)('multiply')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('two')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('integers')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-methodWrong
+        PsiElement(DOC_TAG_NAME)('@phpstan-methodWrong')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_PIPE)('|')
+          PsiElement(DOC_IDENTIFIER)('array')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('borp')
+          PsiElement(DOC_LPAREN)('(')
+          PsiElement(DOC_RPAREN)(')')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('borp')
+          PsiElement(DOC_LPAREN)('(')
+          PsiElement(DOC_IDENTIFIER)('int')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_VARIABLE)('$int1')
+          PsiElement(DOC_COMMA)(',')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_LBRACKET)('[')
+          PsiElement(DOC_RBRACKET)(']')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_VARIABLE)('$int2')
+          PsiElement(DOC_RPAREN)(')')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('multiply')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('two')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('integers')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @wrong-method
+        PsiElement(DOC_TAG_NAME)('@wrong-method')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_LBRACKET)('[')
+          PsiElement(DOC_RBRACKET)(']')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('borp')
+          PsiElement(DOC_LPAREN)('(')
+          PsiElement(DOC_IDENTIFIER)('int')
+          PsiElement(DOC_PIPE)('|')
+          PsiElement(DOC_IDENTIFIER)('string')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_VARIABLE)('$int1')
+          PsiElement(DOC_COMMA)(',')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('int')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_VARIABLE)('$int2')
+          PsiElement(DOC_RPAREN)(')')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('multiply')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('two')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('integers')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    PhpClass: Cart
+      PsiElement(class)('class')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('Cart')
+      PsiWhiteSpace(' ')
+      Extends list
+        <empty list>
+      Implements list
+        <empty list>
+      PsiElement({)('{')
+      PsiWhiteSpace('\n')
+      PsiElement(})('}')
