@@ -60,10 +60,10 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     }
     else {
       options.add("--level=" + level);
-      if (isNotEmpty(autoload)) {
-        options.add("-a");
-        options.add(updateIfRemote(autoload, project, PhpStanQualityToolType.INSTANCE));
-      }
+    }
+    if (isNotEmpty(autoload)) {
+      options.add("-a");
+      options.add(updateIfRemote(autoload, project, PhpStanQualityToolType.INSTANCE));
     }
     options.add("--memory-limit=" + memoryLimit);
     options.add("--error-format=checkstyle");
