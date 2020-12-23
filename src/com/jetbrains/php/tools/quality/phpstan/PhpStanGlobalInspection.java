@@ -71,12 +71,7 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     options.add("--no-ansi");
     options.add("--no-interaction");
     final List<String> filePaths = ContainerUtil.filter(filePath, Objects::nonNull);
-    if (filePaths.isEmpty()) {
-      options.add(project.getBasePath());
-    }
-    else {
-      options.addAll(filePaths);
-    }
+    options.addAll(filePaths);
     return options;
   }
 }
