@@ -38,8 +38,8 @@ public class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidatio
       return tool.getCommandLineOptions(singletonList(filePath), project);
     }
     return tool.getCommandLineOptions(tool.FULL_PROJECT
-                                      ? isNotEmpty(tool.config) ? emptyList() : new SmartList<>(filePath, project.getBasePath())
-                                      : concat(singletonList(filePath), map(
+                                      ? new SmartList<>(filePath, project.getBasePath())
+                                      : isNotEmpty(tool.config) ? emptyList() : concat(singletonList(filePath), map(
                                         ProjectRootManager.getInstance(project).getContentSourceRoots(),
                                         VirtualFile::getPath)), project);
   }
