@@ -9,9 +9,10 @@ class Some
      * @phpstan-param string $param
      * @phpstan-return float
      */
-    public function foo($param)
+    public function foo($param, $secondParam)
     {
         <type value="string">$param</type>;
+        <type value="">$secondParam</type>;
         <type value="int">$this->a</type>;
     }
 }
