@@ -16,7 +16,7 @@
     <projectService serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager"/>
     <projectService
         serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanProjectConfigurationManager"/>
-    <globalInspection language="PHP" shortName="PhpStanValidationInspection"
+    <globalInspection language="PHP" shortName="PhpStanGlobal"
                       groupPath="PHP"
                       groupKey="inspection.php.group.quality.tools"
                       enabledByDefault="false"

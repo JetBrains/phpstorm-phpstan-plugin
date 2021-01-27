@@ -84,7 +84,7 @@ public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfigu
 
   @Override
   public String getInspectionId() {
-    return "PhpStanValidationInspection";
+    return "PhpStanGlobal";
   }
   
   @Override
