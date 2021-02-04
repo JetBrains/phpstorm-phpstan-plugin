@@ -15,7 +15,7 @@ import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
 import static com.intellij.util.containers.ContainerUtil.*;
 import static java.util.Collections.singletonList;
 
-public class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidationInspection> {
+public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidationInspection> {
   public final static PhpStanAnnotatorProxy INSTANCE = new PhpStanAnnotatorProxy();
 
   @Override
