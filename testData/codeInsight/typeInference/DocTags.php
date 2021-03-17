@@ -17,4 +17,4 @@ class Some
     }
 }
 
-<type value="float|void">(new Some())->foo(1)</type>;
+<type value="float">(new Some())->foo(1)</type>;
