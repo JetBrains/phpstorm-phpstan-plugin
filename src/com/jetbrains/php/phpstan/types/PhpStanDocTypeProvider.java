@@ -10,17 +10,18 @@ public class PhpStanDocTypeProvider extends PhpCustomDocTagTypeProvider {
     return '\u9949';
   }
   @Override
-  protected @NotNull String getParamTag() {
+  @NotNull
+  public String getParamTag() {
     return "@phpstan-param";
   }
 
   @Override
-  protected @NotNull String getReturnTag() {
+  public @NotNull String getReturnTag() {
     return "@phpstan-return";
   }
 
   @Override
-  protected @NotNull String getVarTag() {
+  public @NotNull String getVarTag() {
     return "@phpstan-var";
   }
 }
