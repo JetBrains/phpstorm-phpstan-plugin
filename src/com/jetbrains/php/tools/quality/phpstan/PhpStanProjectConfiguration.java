@@ -1,6 +1,9 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.openapi.components.*;
+import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.components.StoragePathMacros;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.jetbrains.php.tools.quality.QualityToolProjectConfiguration;
@@ -29,6 +32,6 @@ public class PhpStanProjectConfiguration extends QualityToolProjectConfiguration
   }
 
   public static PhpStanProjectConfiguration getInstance(Project project) {
-    return ServiceManager.getService(project, PhpStanProjectConfiguration.class);
+    return project.getService(PhpStanProjectConfiguration.class);
   }
 }

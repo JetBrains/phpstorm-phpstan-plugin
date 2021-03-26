@@ -1,7 +1,6 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.project.Project;
@@ -16,13 +15,13 @@ public class PhpStanConfigurationManager extends QualityToolConfigurationManager
   public PhpStanConfigurationManager(@Nullable Project project) {
     super(project);
     if (project != null) {
-      myProjectManager = ServiceManager.getService(project, PhpStanConfigurationManager.PhpStanProjectConfigurationManager.class);
+      myProjectManager = project.getService(PhpStanProjectConfigurationManager.class);
     }
     myApplicationManager = ApplicationManager.getApplication().getService(PhpStanAppConfigurationManager.class);
   }
 
   public static PhpStanConfigurationManager getInstance(@NotNull Project project) {
-    return ServiceManager.getService(project, PhpStanConfigurationManager.class);
+    return project.getService(PhpStanConfigurationManager.class);
   }
 
   @State(name = "PhpStan", storages = @Storage("php.xml"))
