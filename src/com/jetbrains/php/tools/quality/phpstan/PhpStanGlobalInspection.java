@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.codeInspection.LocalInspectionTool;
+import com.intellij.codeInspection.ex.ExternalAnnotatorBatchInspection;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
@@ -20,7 +21,7 @@ import java.util.Objects;
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemote;
 
-public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection {
+public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PHPSTAN_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_2");
   public boolean FULL_PROJECT = false;
   @NonNls public String memoryLimit = "2G";

@@ -67,5 +67,10 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
   protected @NotNull QualityToolType getQualityToolType() {
     return PhpStanQualityToolType.INSTANCE;
   }
+
+  @Override
+  public String getPairedBatchInspectionShortName() {
+    return getQualityToolType().getInspectionId();
+  }
 }
 
