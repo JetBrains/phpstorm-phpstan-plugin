@@ -145,7 +145,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
         myFileAttr = PathUtil.toSystemIndependentName(attributes.getValue(FILE_NAME_ATTR));
         myProblemList = myFilePath == null || myFilePath.equals(myFileAttr) ? new ArrayList<>() : null;
       }
-      else if (ERROR_TAG.equals(tagName) | WARNING_TAG.equals(tagName)) {
+      else if (ERROR_TAG.equals(tagName) || WARNING_TAG.equals(tagName)) {
         if (myProblemList != null) {
           mySeverity = attributes.getValue(SEVERITY_ATTR).equals(ERROR_TAG) ? ERROR : WARNING;
           myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
