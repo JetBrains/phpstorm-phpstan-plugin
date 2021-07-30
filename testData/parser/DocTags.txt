@@ -69,7 +69,7 @@ PHP file
       PhpDocTagImpl: @phpstan-implements
         PsiElement(DOC_TAG_NAME)('@phpstan-implements')
         PsiWhiteSpace(' ')
-        PhpDocRefImpl: %EMPTY%
+        PhpDocTypeImpl: A
           PsiElement(DOC_IDENTIFIER)('A')
         PhpPsiElementImpl
           <empty list>
@@ -79,7 +79,7 @@ PHP file
       PhpDocTagImpl: @phpstan-extends
         PsiElement(DOC_TAG_NAME)('@phpstan-extends')
         PsiWhiteSpace(' ')
-        PhpDocRefImpl: %EMPTY%
+        PhpDocTypeImpl: A
           PsiElement(DOC_IDENTIFIER)('A')
         PhpPsiElementImpl
           <empty list>

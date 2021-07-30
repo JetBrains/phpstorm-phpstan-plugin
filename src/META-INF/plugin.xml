@@ -37,10 +37,12 @@
     <docTagParserExtension tagName="phpstan-return" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParamTagParser" />
     <docTagParserExtension tagName="phpstan-throws" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocReturnTagParser" />
     <docTagParserExtension tagName="phpstan-use" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocSeeTagParser" />
-    <docTagParserExtension tagName="phpstan-implements" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocSeeTagParser" />
-    <docTagParserExtension tagName="phpstan-extends" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocSeeTagParser" />
+    <docTagParserExtension tagName="phpstan-implements" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
+    <docTagParserExtension tagName="phpstan-extends" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
+    <docTagParserExtension tagName="phpstan-template" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
     <typeProvider4 implementation="com.jetbrains.php.phpstan.types.PhpStanDocTypeProvider" />
     <arrayShapesProvider implementation="com.jetbrains.php.phpstan.types.shapes.PhpStanDocArrayShapeProvider"/>
+    <docPrefixProvider implementation="com.jetbrains.php.phpstan.types.PhpStanDocPrefixProvider" />
   </extensions>
 
   <extensionPoints>
