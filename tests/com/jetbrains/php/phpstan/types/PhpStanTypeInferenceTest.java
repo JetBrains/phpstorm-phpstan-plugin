@@ -18,4 +18,8 @@ public class PhpStanTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testDocTags() {
     doTypeTest();
   }
+
+  public void testTemplates() {
+    doTypeTest();
+  }
 }
