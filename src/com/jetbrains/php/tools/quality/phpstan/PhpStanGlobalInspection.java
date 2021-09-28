@@ -1,12 +1,14 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.codeInspection.LocalInspectionTool;
+import com.intellij.codeInspection.*;
 import com.intellij.codeInspection.ex.ExternalAnnotatorBatchInspection;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
+import com.intellij.psi.PsiFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
+import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
 import org.jetbrains.annotations.NonNls;
@@ -28,6 +30,18 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
   public int level = 4;
   public @NlsSafe String config = "";
   public @NlsSafe String autoload = "";
+
+  @Override
+  public void inspectionStarted(@NotNull InspectionManager manager,
+                                @NotNull GlobalInspectionContext globalContext,
+                                @NotNull ProblemDescriptionsProcessor problemDescriptionsProcessor) {
+    super.inspectionStarted(manager, globalContext, problemDescriptionsProcessor);
+    final QualityToolAnnotator annotator = getAnnotator();
+    final QualityToolAnnotatorInfo info = annotator.collectAnnotatorInfo(null, null, globalContext.getProject(), false);
+    if (info != null) {
+      manager.getProject().putUserData(ANNOTATOR_INFO, annotator.doAnnotate(info));
+    }
+  }
 
   @Override
   public JComponent createOptionsPanel() {
@@ -74,5 +88,14 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     final List<String> filePaths = ContainerUtil.filter(filePath, Objects::nonNull);
     options.addAll(filePaths);
     return options;
+  }
+
+  @Override
+  public ProblemDescriptor @NotNull [] checkFile(@NotNull PsiFile file,
+                                                 @NotNull GlobalInspectionContext context,
+                                                 @NotNull InspectionManager manager) {
+    ProblemsHolder holder = new ProblemsHolder(manager, file, false);
+    super.checkFile(file, manager, holder, context, null);
+    return holder.getResultsArray();
   }
 }
