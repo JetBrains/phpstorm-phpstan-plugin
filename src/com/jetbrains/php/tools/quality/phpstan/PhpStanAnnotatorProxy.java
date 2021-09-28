@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
+import com.intellij.codeInspection.InspectionProfile;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -19,17 +20,17 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
   public final static PhpStanAnnotatorProxy INSTANCE = new PhpStanAnnotatorProxy();
 
   @Override
-  @Nullable
-  protected List<String> getOptions(@Nullable String filePath, @NotNull PhpStanValidationInspection inspection, @NotNull Project project) {
+  protected List<String> getOptions(@Nullable String filePath, @NotNull PhpStanValidationInspection inspection, @NotNull InspectionProfile profile, @NotNull Project project) {
     return emptyList();
   }
 
   @Override
   protected @Nullable List<String> getOptions(@Nullable String filePath,
                                               @NotNull PhpStanValidationInspection inspection,
+                                              @Nullable InspectionProfile profile,
                                               @NotNull Project project,
                                               boolean isOnTheFly) {
-    final PhpStanGlobalInspection tool = (PhpStanGlobalInspection)getQualityToolType().getGlobalTool((project));
+    final PhpStanGlobalInspection tool = (PhpStanGlobalInspection)getQualityToolType().getGlobalTool(project, profile);
     if (tool == null) {
       return emptyList();
     }
@@ -52,15 +53,12 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
   @NotNull
   @Override
   protected QualityToolAnnotatorInfo<PhpStanValidationInspection> createAnnotatorInfo(@Nullable PsiFile file,
-                                                         PhpStanValidationInspection tool,
-                                                         Project project,
-                                                         QualityToolConfiguration configuration,
-                                                         boolean isOnTheFly) {
-    return new PhpStanQualityToolAnnotatorInfo(file, tool, project, configuration, isOnTheFly);
-  }
-
-  @Override
-  protected void addAdditionalAnnotatorInfo(QualityToolAnnotatorInfo collectedInfo, QualityToolValidationInspection tool) {
+                                                                                      PhpStanValidationInspection tool,
+                                                                                      InspectionProfile inspectionProfile,
+                                                                                      Project project,
+                                                                                      QualityToolConfiguration configuration,
+                                                                                      boolean isOnTheFly) {
+    return new PhpStanQualityToolAnnotatorInfo(file, tool, inspectionProfile, project, configuration, isOnTheFly);
   }
 
   @Override

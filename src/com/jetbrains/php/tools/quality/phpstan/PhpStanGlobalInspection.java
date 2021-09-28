@@ -37,7 +37,8 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
                                 @NotNull ProblemDescriptionsProcessor problemDescriptionsProcessor) {
     super.inspectionStarted(manager, globalContext, problemDescriptionsProcessor);
     final QualityToolAnnotator annotator = getAnnotator();
-    final QualityToolAnnotatorInfo info = annotator.collectAnnotatorInfo(null, null, globalContext.getProject(), false);
+    final QualityToolAnnotatorInfo info =
+      annotator.collectAnnotatorInfo(null, null, globalContext.getProject(), ((InspectionManagerBase)manager).getCurrentProfile(), false);
     if (info != null) {
       manager.getProject().putUserData(ANNOTATOR_INFO, annotator.doAnnotate(info));
     }
