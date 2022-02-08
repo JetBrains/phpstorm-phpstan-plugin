@@ -22,4 +22,8 @@ public class PhpStanTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testTemplates() {
     doTypeTest();
   }
+
+  public void testAliasImportType() {
+    doTypeTest();
+  }
 }

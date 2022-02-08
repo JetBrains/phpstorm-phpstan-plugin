@@ -40,6 +40,7 @@
     <docTagParserExtension tagName="phpstan-implements" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
     <docTagParserExtension tagName="phpstan-extends" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
     <docTagParserExtension tagName="phpstan-template" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
+    <docTagParserExtension tagName="phpstan-type" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTypeTagParser" />
     <docTagParserExtension tagName="phpstan-import-type" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocImportTypeTagParser" />
     <typeProvider4 implementation="com.jetbrains.php.phpstan.types.PhpStanDocTypeProvider" />
     <arrayShapesProvider implementation="com.jetbrains.php.phpstan.types.shapes.PhpStanDocArrayShapeProvider"/>
