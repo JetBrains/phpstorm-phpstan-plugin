@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
-import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemote;
+import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemoteMappingExists;
 
 public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PHPSTAN_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_2");
@@ -72,14 +72,14 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     options.add("analyze");
     if (isNotEmpty(config)) {
       options.add("-c");
-      options.add(updateIfRemote(config, project, PhpStanQualityToolType.INSTANCE));
+      options.add(updateIfRemoteMappingExists(config, project, PhpStanQualityToolType.INSTANCE));
     }
     else {
       options.add("--level=" + level);
     }
     if (isNotEmpty(autoload)) {
       options.add("-a");
-      options.add(updateIfRemote(autoload, project, PhpStanQualityToolType.INSTANCE));
+      options.add(updateIfRemoteMappingExists(autoload, project, PhpStanQualityToolType.INSTANCE));
     }
     options.add("--memory-limit=" + memoryLimit);
     options.add("--error-format=checkstyle");
@@ -87,7 +87,7 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     options.add("--no-ansi");
     options.add("--no-interaction");
     List<String> filePaths = ContainerUtil.filter(filePath, Objects::nonNull);
-    filePaths = ContainerUtil.map(filePaths, it -> updateIfRemote(it, project, PhpStanQualityToolType.INSTANCE));
+    filePaths = ContainerUtil.map(filePaths, it -> updateIfRemoteMappingExists(it, project, PhpStanQualityToolType.INSTANCE));
     options.addAll(filePaths);
     return options;
   }
