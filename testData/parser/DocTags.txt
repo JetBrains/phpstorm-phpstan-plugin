@@ -103,7 +103,7 @@ PHP file
         PhpDocCommentImpl
           PsiElement(DOC_COMMENT_START)('/**')
           PsiWhiteSpace(' ')
-          PhpDocTagImpl: @phpstan-var
+          PhpDocParamTagImpl: @phpstan-var
             PsiElement(DOC_TAG_NAME)('@phpstan-var')
             PsiWhiteSpace(' ')
             PhpDocTypeImpl: int
