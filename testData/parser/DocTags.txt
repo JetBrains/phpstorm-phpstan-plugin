@@ -36,7 +36,7 @@ PHP file
       PsiWhiteSpace('\n ')
       PsiElement(DOC_LEADING_ASTERISK)('*')
       PsiWhiteSpace(' ')
-      PhpDocParamTagImpl: @phpstan-return
+      PhpDocReturnTagImpl: @phpstan-return
         PsiElement(DOC_TAG_NAME)('@phpstan-return')
         PsiWhiteSpace(' ')
         PhpDocTypeImpl: string
@@ -46,7 +46,7 @@ PHP file
       PsiWhiteSpace('\n ')
       PsiElement(DOC_LEADING_ASTERISK)('*')
       PsiWhiteSpace(' ')
-      PhpDocReturnTagImpl: @phpstan-throws
+      PhpDocThrowsTagImpl: @phpstan-throws
         PsiElement(DOC_TAG_NAME)('@phpstan-throws')
         PsiWhiteSpace(' ')
         PhpDocTypeImpl: A
