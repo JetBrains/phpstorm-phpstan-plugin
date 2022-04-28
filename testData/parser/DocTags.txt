@@ -59,7 +59,7 @@ PHP file
       PhpDocTagImpl: @phpstan-use
         PsiElement(DOC_TAG_NAME)('@phpstan-use')
         PsiWhiteSpace(' ')
-        PhpDocRefImpl: %EMPTY%
+        PhpDocTypeImpl: A
           PsiElement(DOC_IDENTIFIER)('A')
         PhpPsiElementImpl
           <empty list>
