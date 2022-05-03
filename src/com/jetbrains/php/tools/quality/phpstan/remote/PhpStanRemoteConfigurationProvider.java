@@ -3,14 +3,13 @@ package com.jetbrains.php.tools.quality.phpstan.remote;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.NullableFunction;
-import com.intellij.util.PathMappingSettings;
 import com.intellij.util.xmlb.XmlSerializer;
 import com.jetbrains.php.config.interpreters.PhpInterpreter;
 import com.jetbrains.php.config.interpreters.PhpInterpretersManagerImpl;
 import com.jetbrains.php.config.interpreters.PhpSdkAdditionalData;
+import com.jetbrains.php.remote.interpreter.PhpRemoteSdkAdditionalData;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterConfigurableForm;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterDialog;
-import com.jetbrains.php.run.remote.PhpRemoteInterpreterManager;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurableForm;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfiguration;
@@ -65,12 +64,8 @@ public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProv
         settings.setInterpreterId(id);
 
         final PhpSdkAdditionalData data = PhpInterpretersManagerImpl.getInstance(project).findInterpreterDataById(id);
-        final PhpRemoteInterpreterManager manager = PhpRemoteInterpreterManager.getInstance();
-        if (manager != null && data != null && project != null) {
-          final PathMappingSettings mappings = manager.createPathMappings(project, data);
-          fillSettingsByDefaultValue(settings, PhpStanConfigurationManager.getInstance(project).getLocalSettings(),
-                                     localPath -> localPath == null ? null : mappings.convertToRemote(localPath));
-        }
+        fillDefaultSettings(project, settings, PhpStanConfigurationManager.getInstance(project).getLocalSettings(), data, data instanceof PhpRemoteSdkAdditionalData);
+
         return settings;
       }
     }
