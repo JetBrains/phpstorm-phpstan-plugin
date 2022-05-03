@@ -45,8 +45,8 @@ public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements 
   }
 
   @NotNull
-  public static @Nls String getDefaultName(@Nullable String interpreterName) {
-    return isEmpty(interpreterName) ? PhpStanBundle.message("undefined.interpreter") : PhpStanBundle.message("interpreter.0", interpreterName);
+  public static @Nls String getDefaultName(@Nls @Nullable String interpreterName) {
+    return isEmpty(interpreterName) ? PhpStanBundle.message("undefined.interpreter") : interpreterName;
   }
 
   @Override
