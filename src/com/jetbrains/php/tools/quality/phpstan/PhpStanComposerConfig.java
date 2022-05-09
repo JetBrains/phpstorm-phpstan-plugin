@@ -67,7 +67,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   }
 
   @Override
-  protected void applySettingsFromComposer(Project project, PhpStanConfiguration configuration) {
+  protected void applyInspectionSettingsFromComposer(Project project, PhpStanConfiguration configuration) {
     final String configPath = ComposerDataService.getInstance(project).getConfigPath();
     final VirtualFile config = LocalFileSystem.getInstance().refreshAndFindFileByPath(configPath);
     if (config == null) return;
