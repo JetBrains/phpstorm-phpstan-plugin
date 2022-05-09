@@ -58,16 +58,27 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     final String ruleset = getRuleset(config);
     if (ruleset == null) return false;
     final VirtualFile customRulesetFile = detectCustomRulesetFile(config.getParent(), ruleset);
-    if (customRulesetFile != null) {
-      return modifyRulesetPhpStanInspectionSetting(project, tool -> applyRuleset(tool, customRulesetFile.getPath()));
-    }
+    final boolean customRulesetChanged = customRulesetFile != null && modifyRulesetPhpStanInspectionSetting(project, tool -> applyRuleset(tool, customRulesetFile.getPath()));
+    
     final String memoryLimit = getMemoryLimit(config);
-    if (memoryLimit != null) {
-      return modifyRulesetPhpStanInspectionSetting(project, tool -> applyMemoryLimit(tool, memoryLimit));
-    }
-    return false;
+    final boolean memoryLimitChanged = memoryLimit != null && modifyRulesetPhpStanInspectionSetting(project, tool -> applyMemoryLimit(tool, memoryLimit));
+    
+    return customRulesetChanged || memoryLimitChanged;
   }
 
+  @Override
+  protected void applySettingsFromComposer(Project project, PhpStanConfiguration configuration) {
+    final String configPath = ComposerDataService.getInstance(project).getConfigPath();
+    final VirtualFile config = LocalFileSystem.getInstance().refreshAndFindFileByPath(configPath);
+    if (config == null) return;
+
+    final String memoryLimit = getMemoryLimit(config);
+    if (memoryLimit != null) {
+      modifyRulesetPhpStanInspectionSetting(project, tool -> applyMemoryLimit(tool, memoryLimit));
+    }
+  }
+
+  @Nullable
   private String getMemoryLimit(VirtualFile config) {
     JsonElement element;
     try {
