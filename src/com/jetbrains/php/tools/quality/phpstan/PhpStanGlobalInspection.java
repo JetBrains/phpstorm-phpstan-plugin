@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -43,14 +42,6 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
       manager.getProject().putUserData(ANNOTATOR_INFO, annotator.doAnnotate(info));
     }
   }
-
-  @Override
-  public JComponent createOptionsPanel() {
-    final PhpStanOptionsPanel optionsPanel = new PhpStanOptionsPanel(this);
-    optionsPanel.init();
-    return optionsPanel.getOptionsPanel();
-  }
-
 
   @Override
   public @Nullable LocalInspectionTool getSharedLocalInspectionTool() {
