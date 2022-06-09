@@ -1,12 +1,12 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.ide.DataManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.JBIntSpinner;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBTextField;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
+import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +22,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   private PhpTextFieldWithSdkBasedBrowse myConfigPathTextField;
   private PhpTextFieldWithSdkBasedBrowse myAutoloadPathTextField;
 
-  public PhpStanOptionsPanel(PhpStanGlobalInspection inspection) {
+  public PhpStanOptionsPanel(PhpStanGlobalInspection inspection, Project project, QualityToolConfigurationComboBox comboBox) {
     myInspection = inspection;
     myFullProjectRunJBCheckBox.setSelected(inspection.FULL_PROJECT);
     myFullProjectRunJBCheckBox.addActionListener(event -> myInspection.FULL_PROJECT = myFullProjectRunJBCheckBox.isSelected());
@@ -36,22 +36,19 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
     });
     myJBIntSpinner.setNumber(inspection.level);
     myJBIntSpinner.addChangeListener(event -> myInspection.level = myJBIntSpinner.getNumber());
-    DataManager.getInstance().getDataContextFromFocusAsync().onSuccess(context -> {
-      Project project = getCurrentProject(context);
-      myConfigPathTextField.setText(inspection.config);
-      myConfigPathTextField
-        .init(project, getSdkAdditionalData(project), PhpStanBundle.message("phpstan.configuration.file"), true, false);
-      myConfigPathTextField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
-        @Override
-        protected void textChanged(@NotNull DocumentEvent e) {
-          myInspection.config = myConfigPathTextField.getText();
-        }
-      });
-
-      myAutoloadPathTextField.setText(inspection.autoload);
-      myAutoloadPathTextField
-        .init(project, getSdkAdditionalData(project), PhpStanBundle.message("phpstan.autoload.file"), true, false);
+    myConfigPathTextField.setText(inspection.config);
+    myConfigPathTextField
+      .init(project, getSdkAdditionalData(project, comboBox), PhpStanBundle.message("phpstan.configuration.file"), true, false);
+    myConfigPathTextField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
+      @Override
+      protected void textChanged(@NotNull DocumentEvent e) {
+        myInspection.config = myConfigPathTextField.getText();
+      }
     });
+
+    myAutoloadPathTextField.setText(inspection.autoload);
+    myAutoloadPathTextField
+      .init(project, getSdkAdditionalData(project, comboBox), PhpStanBundle.message("phpstan.autoload.file"), true, false);
     myAutoloadPathTextField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
       @Override
       protected void textChanged(@NotNull DocumentEvent e) {
