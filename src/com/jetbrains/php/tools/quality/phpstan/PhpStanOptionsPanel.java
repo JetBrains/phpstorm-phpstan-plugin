@@ -1,60 +1,37 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.ui.DocumentAdapter;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.ui.JBIntSpinner;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBTextField;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
 
 public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
-  private final PhpStanGlobalInspection myInspection;
   private JPanel myOptionsPanel;
   private JBCheckBox myFullProjectRunJBCheckBox;
   private JBTextField myMemoryLimitTextField;
   private JBIntSpinner myJBIntSpinner;
   private PhpTextFieldWithSdkBasedBrowse myConfigPathTextField;
   private PhpTextFieldWithSdkBasedBrowse myAutoloadPathTextField;
+  private Project myProject;
 
-  public PhpStanOptionsPanel(PhpStanGlobalInspection inspection, Project project, QualityToolConfigurationComboBox comboBox) {
-    myInspection = inspection;
-    myFullProjectRunJBCheckBox.setSelected(inspection.FULL_PROJECT);
-    myFullProjectRunJBCheckBox.addActionListener(event -> myInspection.FULL_PROJECT = myFullProjectRunJBCheckBox.isSelected());
-
-    myMemoryLimitTextField.setText(inspection.memoryLimit);
-    myMemoryLimitTextField.getDocument().addDocumentListener(new DocumentAdapter() {
-      @Override
-      protected void textChanged(@NotNull DocumentEvent e) {
-        inspection.memoryLimit = myMemoryLimitTextField.getText();
-      }
-    });
-    myJBIntSpinner.setNumber(inspection.level);
-    myJBIntSpinner.addChangeListener(event -> myInspection.level = myJBIntSpinner.getNumber());
-    myConfigPathTextField.setText(inspection.config);
+  public PhpStanOptionsPanel(Project project, QualityToolConfigurationComboBox comboBox) {
+    myProject = project;
+    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(project);
+    myFullProjectRunJBCheckBox.setSelected(configuration.isFullProject());
+    myMemoryLimitTextField.setText(configuration.getMemoryLimit());
+    myJBIntSpinner.setNumber(configuration.getLevel());
+    myConfigPathTextField.setText(configuration.getConfig());
     myConfigPathTextField
       .init(project, getSdkAdditionalData(project, comboBox), PhpStanBundle.message("phpstan.configuration.file"), true, false);
-    myConfigPathTextField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
-      @Override
-      protected void textChanged(@NotNull DocumentEvent e) {
-        myInspection.config = myConfigPathTextField.getText();
-      }
-    });
-
-    myAutoloadPathTextField.setText(inspection.autoload);
+    myAutoloadPathTextField.setText(configuration.getAutoload());
     myAutoloadPathTextField
       .init(project, getSdkAdditionalData(project, comboBox), PhpStanBundle.message("phpstan.autoload.file"), true, false);
-    myAutoloadPathTextField.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
-      @Override
-      protected void textChanged(@NotNull DocumentEvent e) {
-        myInspection.autoload = myAutoloadPathTextField.getText();
-      }
-    });
   }
 
   private void createUIComponents() {
@@ -68,19 +45,32 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
 
   @Override
   public void reset() {
-
+    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(myProject);
+    myFullProjectRunJBCheckBox.setSelected(configuration.isFullProject());
+    myMemoryLimitTextField.setText(configuration.getMemoryLimit());
+    myJBIntSpinner.setNumber(configuration.getLevel());
+    myConfigPathTextField.setText(configuration.getConfig());
+    myAutoloadPathTextField.setText(configuration.getAutoload());
   }
 
   @Override
   public boolean isModified() {
+    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(myProject);
+    if (myFullProjectRunJBCheckBox.isSelected() != configuration.isFullProject()) return true;
+    if (!StringUtil.equals(myMemoryLimitTextField.getText(), configuration.getMemoryLimit())) return true;
+    if (myJBIntSpinner.getNumber() != configuration.getLevel()) return true;
+    if (!StringUtil.equals(myConfigPathTextField.getText(), configuration.getConfig())) return true;
+    if (!StringUtil.equals(myAutoloadPathTextField.getText(), configuration.getAutoload())) return true;
     return false;
   }
 
   @Override
   public void apply() {
-
-  }
-
-  public void init() {
+    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(myProject);
+    configuration.setFullProject(myFullProjectRunJBCheckBox.isSelected());
+    configuration.setMemoryLimit(myMemoryLimitTextField.getText());
+    configuration.setLevel(myJBIntSpinner.getNumber());
+    configuration.setConfig(myConfigPathTextField.getText());
+    configuration.setAutoload(myAutoloadPathTextField.getText());
   }
 }

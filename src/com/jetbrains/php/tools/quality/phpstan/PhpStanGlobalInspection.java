@@ -4,7 +4,6 @@ import com.intellij.codeInspection.*;
 import com.intellij.codeInspection.ex.ExternalAnnotatorBatchInspection;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
-import com.intellij.openapi.util.NlsSafe;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
@@ -24,11 +23,6 @@ import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemot
 
 public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PHPSTAN_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_2");
-  public boolean FULL_PROJECT = false;
-  @NonNls public String memoryLimit = "2G";
-  public int level = 4;
-  public @NlsSafe String config = "";
-  public @NlsSafe String autoload = "";
 
   @Override
   public void inspectionStarted(@NotNull InspectionManager manager,
@@ -60,19 +54,20 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
 
   public List<String> getCommandLineOptions(@NotNull List<String> filePath, @NotNull Project project) {
     @NonNls ArrayList<String> options = new ArrayList<>();
+    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(project);
     options.add("analyze");
-    if (isNotEmpty(config)) {
+    if (isNotEmpty(configuration.getConfig())) {
       options.add("-c");
-      options.add(updateIfRemoteMappingExists(config, project, PhpStanQualityToolType.INSTANCE));
+      options.add(updateIfRemoteMappingExists(configuration.getConfig(), project, PhpStanQualityToolType.INSTANCE));
     }
     else {
-      options.add("--level=" + level);
+      options.add("--level=" + configuration.getLevel());
     }
-    if (isNotEmpty(autoload)) {
+    if (isNotEmpty(configuration.getAutoload())) {
       options.add("-a");
-      options.add(updateIfRemoteMappingExists(autoload, project, PhpStanQualityToolType.INSTANCE));
+      options.add(updateIfRemoteMappingExists(configuration.getAutoload(), project, PhpStanQualityToolType.INSTANCE));
     }
-    options.add("--memory-limit=" + memoryLimit);
+    options.add("--memory-limit=" + configuration.getMemoryLimit());
     options.add("--error-format=checkstyle");
     options.add("--no-progress");
     options.add("--no-ansi");

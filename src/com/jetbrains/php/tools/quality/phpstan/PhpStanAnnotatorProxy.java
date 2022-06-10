@@ -38,9 +38,10 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
     if (isOnTheFly) {
       return tool.getCommandLineOptions(singletonList(filePath), project);
     }
-    return tool.getCommandLineOptions(tool.FULL_PROJECT
+    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(project);
+    return tool.getCommandLineOptions(configuration.isFullProject()
                                       ? new SmartList<>(filePath, project.getBasePath())
-                                      : isNotEmpty(tool.config) ? emptyList() : concat(map(
+                                      : isNotEmpty(configuration.getConfig()) ? emptyList() : concat(map(
                                         ProjectRootManager.getInstance(project).getContentSourceRoots(),
                                         VirtualFile::getPath)), project);
   }

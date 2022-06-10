@@ -52,16 +52,21 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   @Override
   protected boolean applyRulesetFromComposer(@NotNull Project project, PhpStanConfiguration configuration) {
     final String configPath = ComposerDataService.getInstance(project).getConfigPath();
+    PhpStanProjectConfiguration projectConfiguration = PhpStanProjectConfiguration.getInstance(project);
+
     final VirtualFile config = LocalFileSystem.getInstance().refreshAndFindFileByPath(configPath);
     if (config == null) return false;
 
     final String ruleset = getRuleset(config);
     if (ruleset == null) return false;
     final VirtualFile customRulesetFile = detectCustomRulesetFile(config.getParent(), ruleset);
-    final boolean customRulesetChanged = customRulesetFile != null && modifyRulesetPhpStanInspectionSetting(project, tool -> applyRuleset(tool, customRulesetFile.getPath()));
-    
+    final boolean customRulesetChanged = customRulesetFile != null &&
+                                         modifyRulesetPhpStanInspectionSetting(project, tool -> applyRuleset(projectConfiguration,
+                                                                                                             customRulesetFile.getPath()));
+
     final String memoryLimit = getMemoryLimit(config);
-    final boolean memoryLimitChanged = memoryLimit != null && modifyRulesetPhpStanInspectionSetting(project, tool -> applyMemoryLimit(tool, memoryLimit));
+    final boolean memoryLimitChanged =
+      memoryLimit != null && modifyRulesetPhpStanInspectionSetting(project, tool -> applyMemoryLimit(projectConfiguration, memoryLimit));
     
     return customRulesetChanged || memoryLimitChanged;
   }
@@ -74,7 +79,8 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
 
     final String memoryLimit = getMemoryLimit(config);
     if (memoryLimit != null) {
-      modifyRulesetPhpStanInspectionSetting(project, tool -> applyMemoryLimit(tool, memoryLimit));
+      modifyRulesetPhpStanInspectionSetting(project,
+                                            tool -> applyMemoryLimit(PhpStanProjectConfiguration.getInstance(project), memoryLimit));
     }
   }
 
@@ -127,7 +133,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
 
     if (customRulesetFile != null) {
       final String path = customRulesetFile.getPath();
-      return modifyRulesetPhpStanInspectionSetting(project, tool -> applyRuleset(tool, path));
+      return modifyRulesetPhpStanInspectionSetting(project, tool -> applyRuleset(PhpStanProjectConfiguration.getInstance(project), path));
     }
     return false;
   }
@@ -157,11 +163,12 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     return PHP_STAN_OPEN_SETTINGS_PROVIDER;
   }
 
-  private static void applyRuleset(PhpStanGlobalInspection tool, @NlsSafe String customRuleset) {
-    tool.config = customRuleset;
+  private static void applyRuleset(PhpStanProjectConfiguration configuration, @NlsSafe String customRuleset) {
+    configuration.setConfig(customRuleset);
   }
-  private static void applyMemoryLimit(PhpStanGlobalInspection tool, @NlsSafe String memoryLimit) {
-    tool.memoryLimit = memoryLimit;
+
+  private static void applyMemoryLimit(PhpStanProjectConfiguration configuration, @NlsSafe String memoryLimit) {
+    configuration.setMemoryLimit(memoryLimit);
   }
 
   protected boolean modifyRulesetPhpStanInspectionSetting(@NotNull Project project, @NotNull Consumer<PhpStanGlobalInspection> consumer) {
