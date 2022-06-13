@@ -15,8 +15,8 @@ public class PhpStanConfigurable extends QualityToolProjectConfigurableForm impl
   }
 
   @Override
-  protected QualityToolsOptionsPanel getQualityToolOptionPanel(QualityToolConfigurationComboBox configurationBox) {
-    return new PhpStanOptionsPanel(myProject, configurationBox);
+  protected QualityToolsOptionsPanel getQualityToolOptionPanel(QualityToolConfigurationComboBox configurationBox, Runnable validate) {
+    return new PhpStanOptionsPanel(myProject, configurationBox, validate);
   }
 
   @Override
