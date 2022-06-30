@@ -24,6 +24,7 @@
                       implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection"
                       key="inspection.php.stan.global.display.name" bundle="messages.PhpStanBundle"/>
     <externalAnnotator language="PHP" implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanAnnotatorProxy"/>
+    <postStartupActivity implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanSettingsTransferStartupActivity"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.jetbrains.php">

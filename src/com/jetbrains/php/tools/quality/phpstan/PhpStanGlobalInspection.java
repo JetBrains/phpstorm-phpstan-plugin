@@ -4,6 +4,7 @@ import com.intellij.codeInspection.*;
 import com.intellij.codeInspection.ex.ExternalAnnotatorBatchInspection;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
@@ -22,6 +23,12 @@ import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemoteMappingExists;
 
 public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
+  @NonNls public String memoryLimit = "2G";
+  public int level = 4;
+  public @NlsSafe String config = "";
+  public @NlsSafe String autoload = "";
+  public boolean transferred = false;
+
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PHPSTAN_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_2");
 
   @Override
