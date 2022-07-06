@@ -9,6 +9,7 @@ import com.intellij.ui.components.JBTextField;
 import com.jetbrains.php.config.interpreters.PhpInterpreter;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
+import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,8 +29,13 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   private JBIntSpinner myJBIntSpinner;
   private PhpTextFieldWithSdkBasedBrowse myConfigPathTextField;
   private PhpTextFieldWithSdkBasedBrowse myAutoloadPathTextField;
-  public PhpStanOptionsPanel(Project project, QualityToolConfigurationComboBox comboBox, Runnable validate) {
-    super(project, validate);
+  private final QualityToolConfigurationComboBox myComboBox;
+
+  public PhpStanOptionsPanel(Project project,
+                             QualityToolConfigurationComboBox comboBox,
+                             Runnable validate) {
+    super(project, validate, PhpStanQualityToolType.INSTANCE);
+    myComboBox = comboBox;
     PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(project);
     myFullProjectRunJBCheckBox.setSelected(configuration.isFullProject());
     myMemoryLimitTextField.setText(configuration.getMemoryLimit());
@@ -90,7 +96,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
 
   @Override
   protected @Nullable String validatePath() {
-    PhpInterpreter interpreter = getSelectedInterpreter();
+    PhpInterpreter interpreter = getSelectedInterpreter(myProject, myComboBox);
     if (interpreter != null && interpreter.isRemote()) {
       //TODO: validate remote path?
       return null;
