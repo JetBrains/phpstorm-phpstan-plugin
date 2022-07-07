@@ -20,14 +20,15 @@ public class PhpStanSettingsTransferStartupActivity implements StartupActivity {
 
     PhpStanGlobalInspection tool =
       (PhpStanGlobalInspection)PhpStanQualityToolType.INSTANCE.getGlobalTool(project,
-                                                                         InspectionProfileManager.getInstance().getCurrentProfile());
+                                                                         InspectionProfileManager.getInstance(project).getCurrentProfile());
     PhpStanProjectConfiguration instance = PhpStanProjectConfiguration.getInstance(project);
-    if (tool != null && !tool.transferred) {
+    if (tool != null && !instance.isTransferred()) {
       instance.setConfig(tool.config);
       instance.setAutoload(tool.autoload);
       instance.setLevel(tool.level);
       instance.setMemoryLimit(tool.memoryLimit);
-      tool.transferred = true;
+      instance.setFullProject(tool.FULL_PROJECT);
+      instance.setTransferred(true);
     }
   }
 }

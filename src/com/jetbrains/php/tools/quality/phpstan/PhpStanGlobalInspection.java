@@ -23,12 +23,11 @@ import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemoteMappingExists;
 
 public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
+  public boolean FULL_PROJECT = false;
   @NonNls public String memoryLimit = "2G";
   public int level = 4;
   public @NlsSafe String config = "";
   public @NlsSafe String autoload = "";
-  public boolean transferred = false;
-
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PHPSTAN_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_2");
 
   @Override
