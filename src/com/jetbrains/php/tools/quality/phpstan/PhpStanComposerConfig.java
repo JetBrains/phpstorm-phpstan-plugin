@@ -52,7 +52,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   @Override
   protected boolean applyRulesetFromComposer(@NotNull Project project, PhpStanConfiguration configuration) {
     final String configPath = ComposerDataService.getInstance(project).getConfigPath();
-    PhpStanProjectConfiguration projectConfiguration = PhpStanProjectConfiguration.getInstance(project);
+    PhpStanOptionsConfiguration projectConfiguration = PhpStanOptionsConfiguration.getInstance(project);
 
     final VirtualFile config = LocalFileSystem.getInstance().refreshAndFindFileByPath(configPath);
     if (config == null) return false;
@@ -80,7 +80,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     final String memoryLimit = getMemoryLimit(config);
     if (memoryLimit != null) {
       modifyRulesetPhpStanInspectionSetting(project,
-                                            tool -> applyMemoryLimit(PhpStanProjectConfiguration.getInstance(project), memoryLimit));
+                                            tool -> applyMemoryLimit(PhpStanOptionsConfiguration.getInstance(project), memoryLimit));
     }
   }
 
@@ -133,7 +133,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
 
     if (customRulesetFile != null) {
       final String path = customRulesetFile.getPath();
-      return modifyRulesetPhpStanInspectionSetting(project, tool -> applyRuleset(PhpStanProjectConfiguration.getInstance(project), path));
+      return modifyRulesetPhpStanInspectionSetting(project, tool -> applyRuleset(PhpStanOptionsConfiguration.getInstance(project), path));
     }
     return false;
   }
@@ -163,11 +163,11 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     return PHP_STAN_OPEN_SETTINGS_PROVIDER;
   }
 
-  private static void applyRuleset(PhpStanProjectConfiguration configuration, @NlsSafe String customRuleset) {
+  private static void applyRuleset(PhpStanOptionsConfiguration configuration, @NlsSafe String customRuleset) {
     configuration.setConfig(customRuleset);
   }
 
-  private static void applyMemoryLimit(PhpStanProjectConfiguration configuration, @NlsSafe String memoryLimit) {
+  private static void applyMemoryLimit(PhpStanOptionsConfiguration configuration, @NlsSafe String memoryLimit) {
     configuration.setMemoryLimit(memoryLimit);
   }
 

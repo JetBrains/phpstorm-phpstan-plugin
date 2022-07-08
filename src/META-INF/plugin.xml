@@ -13,6 +13,7 @@
         serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanAppConfigurationManager"/>
     <projectService serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanBlackList"/>
     <projectService serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanProjectConfiguration"/>
+    <projectService serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanOptionsConfiguration"/>
     <projectService serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager"/>
     <projectService
         serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanProjectConfigurationManager"/>

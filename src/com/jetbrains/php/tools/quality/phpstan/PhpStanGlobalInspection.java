@@ -60,7 +60,7 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
 
   public List<String> getCommandLineOptions(@NotNull List<String> filePath, @NotNull Project project) {
     @NonNls ArrayList<String> options = new ArrayList<>();
-    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(project);
+    PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(project);
     options.add("analyze");
     if (isNotEmpty(configuration.getConfig())) {
       options.add("-c");

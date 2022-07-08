@@ -9,7 +9,6 @@ import com.intellij.ui.components.JBTextField;
 import com.jetbrains.php.config.interpreters.PhpInterpreter;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
-import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,7 +35,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
                              Runnable validate) {
     super(project, validate, PhpStanQualityToolType.INSTANCE);
     myComboBox = comboBox;
-    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(project);
+    PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(project);
     myFullProjectRunJBCheckBox.setSelected(configuration.isFullProject());
     myMemoryLimitTextField.setText(configuration.getMemoryLimit());
     myJBIntSpinner.setNumber(configuration.getLevel());
@@ -65,7 +64,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
 
   @Override
   public void reset() {
-    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(myProject);
+    PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(myProject);
     myFullProjectRunJBCheckBox.setSelected(configuration.isFullProject());
     myMemoryLimitTextField.setText(configuration.getMemoryLimit());
     myJBIntSpinner.setNumber(configuration.getLevel());
@@ -75,7 +74,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
 
   @Override
   public boolean isModified() {
-    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(myProject);
+    PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(myProject);
     if (myFullProjectRunJBCheckBox.isSelected() != configuration.isFullProject()) return true;
     if (!StringUtil.equals(myMemoryLimitTextField.getText(), configuration.getMemoryLimit())) return true;
     if (myJBIntSpinner.getNumber() != configuration.getLevel()) return true;
@@ -86,7 +85,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
 
   @Override
   public void apply() {
-    PhpStanProjectConfiguration configuration = PhpStanProjectConfiguration.getInstance(myProject);
+    PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(myProject);
     configuration.setFullProject(myFullProjectRunJBCheckBox.isSelected());
     configuration.setMemoryLimit(myMemoryLimitTextField.getText());
     configuration.setLevel(myJBIntSpinner.getNumber());
