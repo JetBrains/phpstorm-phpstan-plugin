@@ -17,7 +17,7 @@ class A {
 
 $a = "a";
 $b = 5;
-<type value="int|mixed|string">$c</type> = (new A())->mirror($a, $b);
+<type value="int|string">$c</type> = (new A())->mirror($a, $b);
 
 namespace BB;
 
@@ -62,7 +62,7 @@ class ChildPartial extends Base
 {
 }
 
-<type value="\BB\P|mixed">(new Child())->first</type>;
-<type value="\BB\P1|mixed">(new Child())->second</type>;
-<type value="\BB\P|mixed">(new ChildPartial())->first</type>;
-<type value="mixed">(new ChildPartial())->second</type>;
+<type value="\BB\P">(new Child())->first</type>;
+<type value="\BB\P1">(new Child())->second</type>;
+<type value="\BB\P">(new ChildPartial())->first</type>;
+<type value="">(new ChildPartial())->second</type>;
