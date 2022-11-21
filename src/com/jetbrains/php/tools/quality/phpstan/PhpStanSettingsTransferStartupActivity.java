@@ -5,6 +5,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.startup.StartupActivity;
 import com.intellij.profile.codeInspection.InspectionProfileManager;
+import com.intellij.util.PlatformUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class PhpStanSettingsTransferStartupActivity implements StartupActivity {
@@ -14,7 +15,7 @@ public class PhpStanSettingsTransferStartupActivity implements StartupActivity {
       return;
     }
     Application app = ApplicationManager.getApplication();
-    if (app.isUnitTestMode() || app.isHeadlessEnvironment()) {
+    if (app.isUnitTestMode() || app.isHeadlessEnvironment() || !PlatformUtils.isPhpStorm()) {
       return;
     }
 
