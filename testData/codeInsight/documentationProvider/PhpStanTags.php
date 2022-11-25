@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @phpstan-return Foo
+ * @phpstan-param $a int cshdcygdc
+ * @phpstan-var $b array<int, Foo>
+ * @phpstan-throws Exception
+ * @phpstan-template T of Foo with description
+ */
+function fo<caret>o(int $a, $b) {
+
+}
+
+class Foo {
+
+}
