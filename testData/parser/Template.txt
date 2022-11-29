@@ -1,6 +1,7 @@
 <?php
 /**
  * @phpstan-template T of F
+ * @phpstan-template-covariant M of F Description
  * @phpstan T
  */
 function f() {
@@ -28,6 +29,22 @@ PHP file
           PsiElement(DOC_IDENTIFIER)('F')
         PhpPsiElementImpl
           <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-template-covaria...
+        PsiElement(DOC_TAG_NAME)('@phpstan-template-covariant')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(DOC_IDENTIFIER)('M')
+          PsiWhiteSpace(' ')
+          PsiElement(DOC_IDENTIFIER)('of')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: F
+          PsiElement(DOC_IDENTIFIER)('F')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(DOC_IDENTIFIER)('Description')
       PsiWhiteSpace('\n ')
       PsiElement(DOC_LEADING_ASTERISK)('*')
       PsiWhiteSpace(' ')
