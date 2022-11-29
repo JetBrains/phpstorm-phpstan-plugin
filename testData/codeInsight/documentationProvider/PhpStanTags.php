@@ -3,7 +3,7 @@
 /**
  * @phpstan-return Foo
  * @phpstan-param $a int cshdcygdc
- * @phpstan-var $b array<int, Foo>
+ * @phpstan-param $b array<int, Foo>
  * @phpstan-throws Exception
  * @phpstan-template T of Foo with description
  */
