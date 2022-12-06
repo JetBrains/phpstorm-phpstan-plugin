@@ -78,7 +78,6 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     options.add("--no-progress");
     options.add("--no-ansi");
     options.add("--no-interaction");
-    options.add("--xdebug");
     List<String> filePaths = ContainerUtil.filter(filePath, Objects::nonNull);
     filePaths = ContainerUtil.map(filePaths, it -> updateIfRemoteMappingExists(it, project, PhpStanQualityToolType.INSTANCE));
     options.addAll(filePaths);

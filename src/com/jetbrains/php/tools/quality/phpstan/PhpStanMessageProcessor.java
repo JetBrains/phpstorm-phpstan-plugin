@@ -54,6 +54,11 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   }
 
   @Override
+  protected boolean show(@NotNull String message) {
+    return !message.contains("The Xdebug PHP extension is active, but \"--xdebug\" is not used");
+  }
+
+  @Override
   protected void processMessage(InputSource source) throws SAXException, IOException {
     PhpStanXmlMessageHandler messageHandler = (PhpStanXmlMessageHandler)getXmlMessageHandler(myFilePath);
     mySAXParser.parse(source, messageHandler);

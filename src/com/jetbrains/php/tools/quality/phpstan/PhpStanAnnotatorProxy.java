@@ -71,5 +71,10 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
   public String getPairedBatchInspectionShortName() {
     return getQualityToolType().getInspectionId();
   }
+
+  @Override
+  protected boolean showMessage(@NotNull String message) {
+    return !message.contains("The Xdebug PHP extension is active, but \"--xdebug\" is not used");
+  }
 }
 
