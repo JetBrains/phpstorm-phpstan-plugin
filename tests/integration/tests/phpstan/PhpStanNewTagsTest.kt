@@ -52,7 +52,7 @@ class PhpStanNewTagsTest : PhpCodeInsightFixtureTestCase() {
         }
       }
     }
-    val tagsFile = FileUtil.createTempFile("psalm-tags", "null")
+    val tagsFile = FileUtil.createTempFile("phpstan-tags.txt", "null")
     tagsFile.writeText(annotations.joinToString("\n"))
     println("##teamcity[publishArtifacts '${tagsFile.absolutePath}']")
   }
