@@ -7,6 +7,8 @@
  * @phpstan-use A
  * @phpstan-implements A
  * @phpstan-extends A
+ * @phpstan-param-out int $a
+ * @param-out string $s
  *
  */
 function a() {
@@ -81,6 +83,32 @@ PHP file
         PsiWhiteSpace(' ')
         PhpDocTypeImpl: A
           PsiElement(DOC_IDENTIFIER)('A')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @phpstan-param-out
+        PsiElement(DOC_TAG_NAME)('@phpstan-param-out')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: a
+          PsiElement(DOC_VARIABLE)('$a')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param-out
+        PsiElement(DOC_TAG_NAME)('@param-out')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: string
+          PsiElement(DOC_IDENTIFIER)('string')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: s
+          PsiElement(DOC_VARIABLE)('$s')
         PhpPsiElementImpl
           <empty list>
       PsiWhiteSpace('\n ')
