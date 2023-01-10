@@ -26,4 +26,8 @@ public class PhpStanDocParserTest extends PhpParserTestCase {
   public void test$Inheritance() throws Throwable {
     doTest();
   }
+
+  public void test$Method() throws Throwable {
+    doTest();
+  }
 }
