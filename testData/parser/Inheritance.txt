@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @phpstan-require-extends B
+ * @phpstan-require-implements A
+ */
+trait C {
+
+}
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-require-extends
+        PsiElement(DOC_TAG_NAME)('@phpstan-require-extends')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: B
+          PsiElement(DOC_IDENTIFIER)('B')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-require-implemen...
+        PsiElement(DOC_TAG_NAME)('@phpstan-require-implements')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: A
+          PsiElement(DOC_IDENTIFIER)('A')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    PhpClass: C
+      PsiElement(trait)('trait')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('C')
+      PsiWhiteSpace(' ')
+      Extends list
+        <empty list>
+      Implements list
+        <empty list>
+      PsiElement({)('{')
+      PsiWhiteSpace('\n\n')
+      PsiElement(})('}')
