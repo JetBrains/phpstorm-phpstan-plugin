@@ -4,6 +4,7 @@
  * @phpstan-template-covariant M of F Description
  * @phpstan-template-contravariant L
  * @phpstan T
+ * @phpstan-template-use MyClass<T>
  */
 function f() {
 }
@@ -64,6 +65,21 @@ PHP file
         PsiWhiteSpace(' ')
         PhpPsiElementImpl
           PsiElement(DOC_IDENTIFIER)('T')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-template-use
+        PsiElement(DOC_TAG_NAME)('@phpstan-template-use')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: MyClass
+          PsiElement(DOC_IDENTIFIER)('MyClass')
+          PhpPsiElementImpl
+            PsiElement(DOC_LAB)('<')
+            PhpDocTypeImpl: T
+              PsiElement(DOC_IDENTIFIER)('T')
+            PsiElement(DOC_RAB)('>')
+        PhpPsiElementImpl
+          <empty list>
       PsiWhiteSpace('\n ')
       PsiElement(DOC_COMMENT_END)('*/')
     PsiWhiteSpace('\n')
