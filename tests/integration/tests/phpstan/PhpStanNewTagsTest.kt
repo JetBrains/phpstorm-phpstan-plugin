@@ -36,7 +36,15 @@ class PhpStanNewTagsTest : PhpCodeInsightFixtureTestCase() {
   }
 
   override fun tearDown() {
-    FileUtil.deleteRecursively(phpstanFolder.toPath())
+    try {
+      FileUtil.deleteRecursively(phpstanFolder.toPath())
+    }
+    catch (e: Throwable) {
+      addSuppressedException(e)
+    }
+    finally {
+      super.tearDown()
+    }
   }
 
   fun testNewTags() {
