@@ -2,6 +2,7 @@
 /**
  * @phpstan-template T of F
  * @phpstan-template-covariant M of F Description
+ * @phpstan-template-contravariant L
  * @phpstan T
  */
 function f() {
@@ -45,6 +46,16 @@ PHP file
         PsiWhiteSpace(' ')
         PhpPsiElementImpl
           PsiElement(DOC_IDENTIFIER)('Description')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-template-contrav...
+        PsiElement(DOC_TAG_NAME)('@phpstan-template-contravariant')
+        PsiWhiteSpace(' ')
+        PhpPsiElementImpl
+          PsiElement(DOC_IDENTIFIER)('L')
+        PhpPsiElementImpl
+          <empty list>
       PsiWhiteSpace('\n ')
       PsiElement(DOC_LEADING_ASTERISK)('*')
       PsiWhiteSpace(' ')
