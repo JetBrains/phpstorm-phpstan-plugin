@@ -9,7 +9,7 @@
  * @phpstan-extends A
  * @phpstan-param-out int $a
  * @param-out string $s
- *
+ * @phpstan-scope-this Exception
  */
 function a() {
 /** @phpstan-var int $a */
@@ -113,6 +113,14 @@ PHP file
           <empty list>
       PsiWhiteSpace('\n ')
       PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-scope-this
+        PsiElement(DOC_TAG_NAME)('@phpstan-scope-this')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: Exception
+          PsiElement(DOC_IDENTIFIER)('Exception')
+        PhpPsiElementImpl
+          <empty list>
       PsiWhiteSpace('\n ')
       PsiElement(DOC_COMMENT_END)('*/')
     PsiWhiteSpace('\n')
