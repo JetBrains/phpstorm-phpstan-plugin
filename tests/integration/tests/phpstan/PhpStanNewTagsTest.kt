@@ -37,18 +37,6 @@ class PhpStanNewTagsTest : PhpCodeInsightFixtureTestCase() {
     downloadAndUnpackZip(zipUrl, phpstanFolder)
   }
 
-  override fun tearDown() {
-    try {
-      //FileUtil.deleteRecursively(phpstanFolder.toPath())
-    }
-    catch (e: Throwable) {
-      addSuppressedException(e)
-    }
-    finally {
-      super.tearDown()
-    }
-  }
-
   fun testNewTags() {
     myFixture.copyFileToProject("phpstan-src-1.10.x/src/PhpDoc/PhpDocNodeResolver.php")
     val classWithAnnotations = PhpIndex.getInstance(project).getClassesByFQN("PHPStan\\PhpDoc\\PhpDocNodeResolver").first()
@@ -63,7 +51,7 @@ class PhpStanNewTagsTest : PhpCodeInsightFixtureTestCase() {
       }
     }
     val resultFileName = "phpstan-tags.txt"
-    val resultFile = FileUtil.createTempFile(resultFileName, "")
+    val resultFile = (phpstanFolder.toPath() / resultFileName).toFile()
     resultFile.writeText(annotations.joinToString("\n"))
     println("##teamcity[publishArtifacts '${resultFile.absolutePath}']")
     val pathToPreviousResults = (phpstanFolder.toPath() / "previousResults" / resultFileName).toFile()
