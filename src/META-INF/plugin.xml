@@ -45,6 +45,7 @@
     <docTagParserExtension tagName="phpstan-type" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTypeTagParser" />
     <docTagParserExtension tagName="phpstan-import-type" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocImportTypeTagParser" />
     <docTagParserExtension tagName="phpstan-template-covariant" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTemplateParser" />
+    <docTagParserExtension tagName="phpstan-template-contravariant" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTemplateParser" />
     <docTagParserExtension tagName="phpstan-param-out" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParamTagParser"/>
     <docTagParserExtension tagName="param-out" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParamTagParser"/>
     <docTagParserExtension tagName="phpstan-require-extends" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
