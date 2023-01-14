@@ -30,4 +30,8 @@ public class PhpStanDocParserTest extends PhpParserTestCase {
   public void test$Method() throws Throwable {
     doTest();
   }
+
+  public void test$Type() throws Throwable {
+    doTest();
+  }
 }
