@@ -1,0 +1,100 @@
+<?php
+
+/**
+ * @phpstan-check-type-exact $foo = int
+ */
+$foo = 1;
+/**
+ * @phpstan-check-type $bar = int
+ * @phpstan-type PhoneType = array{phone: string}
+ */
+$bar = 1;
+
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-check-type-exact
+        PsiElement(DOC_TAG_NAME)('@phpstan-check-type-exact')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: foo
+          PsiElement(DOC_VARIABLE)('$foo')
+        PsiWhiteSpace(' ')
+        PsiElement(DOC_TEXT)('=')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    Statement
+      AssignmentExpressionImpl: $foo = 1
+        VariableImpl: foo
+          PsiElement(variable)('$foo')
+        PsiWhiteSpace(' ')
+        PsiElement(assign)('=')
+        PsiWhiteSpace(' ')
+        PhpExpressionImpl: 1
+          PsiElement(integer)('1')
+      PsiElement(semicolon)(';')
+    PsiWhiteSpace('\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-check-type
+        PsiElement(DOC_TAG_NAME)('@phpstan-check-type')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: bar
+          PsiElement(DOC_VARIABLE)('$bar')
+        PsiWhiteSpace(' ')
+        PsiElement(DOC_TEXT)('=')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: int
+          PsiElement(DOC_IDENTIFIER)('int')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocTagImpl: @phpstan-type
+        PsiElement(DOC_TAG_NAME)('@phpstan-type')
+        PsiWhiteSpace(' ')
+        PsiElement(DOC_IDENTIFIER)('PhoneType')
+        PsiWhiteSpace(' ')
+        PsiElement(DOC_TEXT)('=')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: array
+          PsiElement(DOC_IDENTIFIER)('array')
+          PhpPsiElementImpl
+            PsiElement(DOC_LBRACE)('{')
+            PsiElement(DOC_IDENTIFIER)('phone')
+            PsiElement(DOC_TEXT)(':')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: string
+              PsiElement(DOC_IDENTIFIER)('string')
+            PsiElement(DOC_RBRACE)('}')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    Statement
+      AssignmentExpressionImpl: $bar = 1
+        VariableImpl: bar
+          PsiElement(variable)('$bar')
+        PsiWhiteSpace(' ')
+        PsiElement(assign)('=')
+        PsiWhiteSpace(' ')
+        PhpExpressionImpl: 1
+          PsiElement(integer)('1')
+      PsiElement(semicolon)(';')
