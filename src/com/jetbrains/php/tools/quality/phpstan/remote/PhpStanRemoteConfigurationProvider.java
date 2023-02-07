@@ -44,8 +44,7 @@ public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProv
   @Override
   public QualityToolConfigurableForm<PhpStanRemoteConfiguration> createConfigurationForm(@NotNull Project project,
                                                                                             @NotNull PhpStanConfiguration settings) {
-    if (settings instanceof PhpStanRemoteConfiguration) {
-      final PhpStanRemoteConfiguration remoteConfiguration = (PhpStanRemoteConfiguration)settings;
+    if (settings instanceof PhpStanRemoteConfiguration remoteConfiguration) {
       final PhpStanConfigurableForm<PhpStanRemoteConfiguration> delegate =
         new PhpStanConfigurableForm<>(project, remoteConfiguration);
       return new QualityToolByInterpreterConfigurableForm<>(project, remoteConfiguration, delegate);
