@@ -10,6 +10,7 @@
  * @phpstan-param-out int $a
  * @param-out string $s
  * @phpstan-scope-this Exception
+ * @phpstan-param !null $c
  */
 function a() {
 /** @phpstan-var int $a */
@@ -119,6 +120,20 @@ PHP file
         PsiWhiteSpace(' ')
         PhpDocTypeImpl: Exception
           PsiElement(DOC_IDENTIFIER)('Exception')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @phpstan-param
+        PsiElement(DOC_TAG_NAME)('@phpstan-param')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: %EMPTY%
+          PsiElement(DOC_TEXT)('!')
+          PsiElement(DOC_IDENTIFIER)('null')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: c
+          PsiElement(DOC_VARIABLE)('$c')
         PhpPsiElementImpl
           <empty list>
       PsiWhiteSpace('\n ')
