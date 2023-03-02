@@ -47,4 +47,8 @@ public class PhpStanDocumentationProviderTest extends PhpCodeInsightFixtureTestC
   public void testVarTag() {
     doTestRenderedDoc();
   }
+
+  public void testCustomPhpStanTags() {
+    doTestRenderedDoc();
+  }
 }

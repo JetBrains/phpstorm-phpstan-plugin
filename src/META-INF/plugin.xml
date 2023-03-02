@@ -51,6 +51,12 @@
     <docTagParserExtension tagName="phpstan-template-contravariant" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTemplateParser" />
     <docTagParserExtension tagName="phpstan-param-out" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParamTagParser"/>
     <docTagParserExtension tagName="param-out" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParamTagParser"/>
+    <docTagParserExtension tagName="phpstan-assert" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocAssertTagParser" />
+    <docTagParserExtension tagName="phpstan-assert-if-true" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocAssertTagParser" />
+    <docTagParserExtension tagName="phpstan-assert-if-false" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocAssertTagParser" />
+    <docTagParserExtension tagName="phpstan-if-this-is" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
+    <docTagParserExtension tagName="phpstan-this-out" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
+    <docTagParserExtension tagName="phpstan-self-out" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
     <docTagParserExtension tagName="phpstan-require-extends" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
     <docTagParserExtension tagName="phpstan-require-implements" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
     <docTagParserExtension tagName="phpstan-scope-this" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />

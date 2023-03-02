@@ -23,6 +23,10 @@ public class PhpStanDocParserTest extends PhpParserTestCase {
     doTest();
   }
 
+  public void test$Assert() throws Throwable {
+    doTest();
+  }
+
   public void test$Inheritance() throws Throwable {
     doTest();
   }
