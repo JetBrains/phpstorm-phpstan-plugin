@@ -247,7 +247,7 @@ PHP file
         PhpDocTagImpl: @template
           PsiElement(DOC_TAG_NAME)('@template')
           PsiWhiteSpace(' ')
-          PhpPsiElementImpl
+          PhpDocTemplateParameterImpl: NewT
             PsiElement(DOC_IDENTIFIER)('NewT')
           PhpPsiElementImpl
             <empty list>

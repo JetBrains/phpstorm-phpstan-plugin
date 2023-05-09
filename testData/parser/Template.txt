@@ -22,7 +22,7 @@ PHP file
       PhpDocTagImpl: @phpstan-template
         PsiElement(DOC_TAG_NAME)('@phpstan-template')
         PsiWhiteSpace(' ')
-        PhpPsiElementImpl
+        PhpDocTemplateParameterImpl: T
           PsiElement(DOC_IDENTIFIER)('T')
           PsiWhiteSpace(' ')
           PsiElement(DOC_IDENTIFIER)('of')
@@ -37,7 +37,7 @@ PHP file
       PhpDocTagImpl: @phpstan-template-covaria...
         PsiElement(DOC_TAG_NAME)('@phpstan-template-covariant')
         PsiWhiteSpace(' ')
-        PhpPsiElementImpl
+        PhpDocTemplateParameterImpl: M
           PsiElement(DOC_IDENTIFIER)('M')
           PsiWhiteSpace(' ')
           PsiElement(DOC_IDENTIFIER)('of')
@@ -53,7 +53,7 @@ PHP file
       PhpDocTagImpl: @phpstan-template-contrav...
         PsiElement(DOC_TAG_NAME)('@phpstan-template-contravariant')
         PsiWhiteSpace(' ')
-        PhpPsiElementImpl
+        PhpDocTemplateParameterImpl: L
           PsiElement(DOC_IDENTIFIER)('L')
         PhpPsiElementImpl
           <empty list>
