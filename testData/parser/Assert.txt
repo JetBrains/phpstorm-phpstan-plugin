@@ -244,7 +244,7 @@ PHP file
         PsiWhiteSpace('\n    ')
         PsiElement(DOC_LEADING_ASTERISK)('*')
         PsiWhiteSpace(' ')
-        PhpDocTagImpl: @template
+        PhpDocTemplateTagImpl: @template
           PsiElement(DOC_TAG_NAME)('@template')
           PsiWhiteSpace(' ')
           PhpDocTemplateParameterImpl: NewT
