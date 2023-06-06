@@ -3,6 +3,7 @@ package com.jetbrains.php.tools.quality.phpstan;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
@@ -175,7 +176,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     VirtualFile projectDir = project.getBaseDir();
     if (projectDir == null) return false;
 
-    final PsiDirectory file = PsiManager.getInstance(project).findDirectory(projectDir);
+    PsiDirectory file = ReadAction.compute(() -> PsiManager.getInstance(project).findDirectory(projectDir));
     if (file != null) {
       Key<PhpStanGlobalInspection> key = Key.create(PhpStanQualityToolType.INSTANCE.getInspectionId());
       InspectionProfileManager.getInstance(project).getCurrentProfile().modifyToolSettings(key, file, consumer);
