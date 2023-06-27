@@ -16,7 +16,7 @@ public class PhpStanComposerConfigTest extends QualityToolsComposerConfigTest {
   @NotNull
   @Override
   protected String getPath() {
-    return "bin/phpstan" + (SystemInfo.isWindows ? ".bat" : "");
+    return  myFixture.getTempDirPath() + "/vendor/bin/phpstan" + (SystemInfo.isWindows ? ".bat" : "");
   }
 
   @NotNull
