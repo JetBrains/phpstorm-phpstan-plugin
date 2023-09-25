@@ -41,11 +41,6 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   }
 
   @Override
-  protected ComposerLogMessageBuilder.Settings getQualityToolsInspectionSettings() {
-    return null;
-  }
-
-  @Override
   public String getQualityInspectionShortName() {
     return PhpStanQualityToolType.INSTANCE.getInspectionId();
   }

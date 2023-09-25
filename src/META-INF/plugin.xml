@@ -26,10 +26,15 @@
                       key="inspection.php.stan.global.display.name" bundle="messages.PhpStanBundle"/>
     <externalAnnotator language="PHP" implementationClass="com.jetbrains.php.tools.quality.phpstan.PhpStanAnnotatorProxy"/>
     <postStartupActivity implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanSettingsTransferStartupActivity"/>
+    <projectConfigurable instance="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurable"
+                         bundle="messages.PhpStanBundle"
+                         key="configurable.quality.tool.phpstan"
+                         id="settings.php.quality.tools.phpstan"
+                         parentId="settings.php.quality.tools"
+                         groupWeight="15"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.jetbrains.php">
-    <tools.projectConfigurableForm instance="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurable"/>
     <composerConfigClient implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanComposerConfig"/>
     <tools.quality.type implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanQualityToolType"/>
     <openSettingsProvider implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanOpenSettingsProvider"/>

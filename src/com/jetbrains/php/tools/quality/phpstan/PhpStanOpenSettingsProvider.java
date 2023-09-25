@@ -1,10 +1,8 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
+import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
 import com.jetbrains.php.composer.actions.log.ComposerLogMessageBuilder;
-import com.jetbrains.php.tools.quality.QualityToolConfigurableList;
-import com.jetbrains.php.tools.quality.QualityToolType;
-import com.jetbrains.php.ui.PhpUiUtil;
 import org.jetbrains.annotations.NotNull;
 
 public class PhpStanOpenSettingsProvider extends ComposerLogMessageBuilder.Settings {
@@ -14,11 +12,6 @@ public class PhpStanOpenSettingsProvider extends ComposerLogMessageBuilder.Setti
 
   @Override
   public void show(@NotNull Project project) {
-    PhpUiUtil.editConfigurable(project, new QualityToolConfigurableList<>(project, PhpStanQualityToolType.INSTANCE, null) {
-      @Override
-      protected QualityToolType<PhpStanConfiguration> getQualityToolType() {
-        return PhpStanQualityToolType.INSTANCE;
-      }
-    });
+    ShowSettingsUtil.getInstance().showSettingsDialog(project, PhpStanBundle.message("configurable.quality.tool.phpstan"));
   }
 }
