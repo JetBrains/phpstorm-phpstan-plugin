@@ -38,4 +38,12 @@ public class PhpStanDocParserTest extends PhpParserTestCase {
   public void test$Type() throws Throwable {
     doTest();
   }
+
+  public void test$InplaceCovariantGeneric() throws Throwable {
+    doTest();
+  }
+
+  public void test$InplaceContravariantGeneric() throws Throwable {
+    doTest();
+  }
 }

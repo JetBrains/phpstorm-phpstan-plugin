@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @param $p Foo<covariant Bar>
+ */
+function name($p) {}
+---
+PHP file
+  PsiElement(Non Lazy Group statement)
+    PsiElement(php opening tag)('<?php')
+    PsiWhiteSpace('\n\n')
+    PhpDocCommentImpl
+      PsiElement(DOC_COMMENT_START)('/**')
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_LEADING_ASTERISK)('*')
+      PsiWhiteSpace(' ')
+      PhpDocParamTagImpl: @param
+        PsiElement(DOC_TAG_NAME)('@param')
+        PsiWhiteSpace(' ')
+        PhpDocVarImpl: p
+          PsiElement(DOC_VARIABLE)('$p')
+        PsiWhiteSpace(' ')
+        PhpDocTypeImpl: Foo
+          PsiElement(DOC_IDENTIFIER)('Foo')
+          PhpPsiElementImpl
+            PsiElement(DOC_LAB)('<')
+            PsiElement(DOC_IDENTIFIER)('covariant')
+            PsiWhiteSpace(' ')
+            PhpDocTypeImpl: Bar
+              PsiElement(DOC_IDENTIFIER)('Bar')
+            PsiElement(DOC_RAB)('>')
+        PhpPsiElementImpl
+          <empty list>
+      PsiWhiteSpace('\n ')
+      PsiElement(DOC_COMMENT_END)('*/')
+    PsiWhiteSpace('\n')
+    FunctionImpl: name
+      PsiElement(function)('function')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('name')
+      PsiElement(()('(')
+      Parameter list
+        ParameterImpl: p
+          PsiElement(variable)('$p')
+      PsiElement())(')')
+      PsiWhiteSpace(' ')
+      PsiElement(Group statement)
+        PsiElement({)('{')
+        PsiElement(})('}')
