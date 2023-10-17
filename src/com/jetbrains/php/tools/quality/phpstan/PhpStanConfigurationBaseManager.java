@@ -1,6 +1,5 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.xmlb.XmlSerializer;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationBaseManager;
@@ -35,9 +34,5 @@ public class PhpStanConfigurationBaseManager extends QualityToolConfigurationBas
   @Nullable
   protected PhpStanConfiguration loadLocal(Element element) {
     return XmlSerializer.deserialize(element, PhpStanConfiguration.class);
-  }
-
-  public static PhpStanConfigurationBaseManager getInstance() {
-    return ApplicationManager.getApplication().getService(PhpStanConfigurationBaseManager.class);
   }
 }
