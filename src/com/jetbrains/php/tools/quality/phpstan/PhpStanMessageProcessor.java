@@ -64,7 +64,9 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     mySAXParser.parse(source, messageHandler);
     if (messageHandler.isStatusValid()) {
       if (myPsiFile != null) {
-        for (ProblemDescription problem : messageHandler.getProblemList()) {
+        List<ProblemDescription> list = messageHandler.getProblemList();
+        if (list == null) return;
+        for (ProblemDescription problem : list) {
           if (myProject.isDisposed()) return;
           final Document document = PsiDocumentManager.getInstance(myPsiFile.getProject()).getDocument(myPsiFile);
           QualityToolMessage qualityToolMessage;
