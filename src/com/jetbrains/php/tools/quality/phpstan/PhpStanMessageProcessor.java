@@ -148,7 +148,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
       if (FILE_TAG.equals(tagName)) {
         myFileAttr = PathUtil.toSystemIndependentName(attributes.getValue(FILE_NAME_ATTR));
-        myProblemList = myFilePath == null || myFilePath.endsWith(myFileAttr) ? new ArrayList<>() : null;
+        myProblemList = myFilePath == null || myFilePath.endsWith(myFileAttr == null ? "": myFileAttr) ? new ArrayList<>() : null;
       }
       else if (ERROR_TAG.equals(tagName) || WARNING_TAG.equals(tagName)) {
         if (myProblemList != null) {
