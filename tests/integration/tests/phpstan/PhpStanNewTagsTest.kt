@@ -52,7 +52,7 @@ class PhpStanNewTagsTest : PhpCodeInsightFixtureTestCase() {
     }
     val resultFileName = "phpstan-tags.txt"
     val resultFile = (phpstanFolder.toPath() / resultFileName).toFile()
-    resultFile.writeText(annotations.joinToString("\n"))
+    resultFile.writeText(annotations.sorted().joinToString("\n"))
     println("##teamcity[publishArtifacts '${resultFile.absolutePath}']")
     val pathToPreviousResults = (phpstanFolder.toPath() / "previousResults" / resultFileName).toFile()
     if(pathToPreviousResults.exists()){
