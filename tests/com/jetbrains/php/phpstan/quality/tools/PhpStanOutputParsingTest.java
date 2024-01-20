@@ -19,12 +19,6 @@ public class PhpStanOutputParsingTest extends PhpHeavyCodeInsightFixtureTestCase
     return "output";
   }
 
-  @NotNull
-  @Override
-  protected String getFileBeforeExtension() {
-    return "php";
-  }
-
   @Override
   protected String getBasePath() {
     return "/phpstorm/phpstan/testData/output";
