@@ -34,11 +34,7 @@
                          groupWeight="15"/>
   </extensions>
 
-  <extensions defaultExtensionNs="com.jetbrains.php">
-    <composerConfigClient implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanComposerConfig"/>
-    <tools.quality.type implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanQualityToolType"/>
-    <openSettingsProvider implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanOpenSettingsProvider"/>
-
+  <extensions defaultExtensionNs="com.intellij.php">
     <docTagParserExtension tagName="phpstan-var" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocVarTagParser" />
     <docTagParserExtension tagName="phpstan-param" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParamTagParser" />
     <docTagParserExtension tagName="phpstan-return" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocReturnTagParser" />
@@ -68,6 +64,11 @@
     <docTagParserExtension tagName="phpstan-property" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocPropertyTagParser" />
     <docTagParserExtension tagName="phpstan-property-read" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocPropertyTagParser" />
     <docTagParserExtension tagName="phpstan-property-write" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocPropertyTagParser" />
+  </extensions>
+  <extensions defaultExtensionNs="com.jetbrains.php">
+    <composerConfigClient implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanComposerConfig"/>
+    <tools.quality.type implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanQualityToolType"/>
+    <openSettingsProvider implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanOpenSettingsProvider"/>
     <typeProvider4 implementation="com.jetbrains.php.phpstan.types.PhpStanDocTypeProvider" />
     <arrayShapesProvider implementation="com.jetbrains.php.phpstan.types.shapes.PhpStanDocArrayShapeProvider"/>
     <docPrefixProvider implementation="com.jetbrains.php.phpstan.types.PhpStanDocPrefixProvider" />
