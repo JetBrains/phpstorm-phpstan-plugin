@@ -75,6 +75,7 @@
   </extensions>
 
   <extensionPoints>
+    <!--suppress PluginXmlValidity -->
     <extensionPoint qualifiedName="com.jetbrains.php.tools.quality.PhpStan.PhpStanConfigurationProvider"
                     interface="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationProvider"/>
   </extensionPoints>
