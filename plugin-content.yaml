@@ -1,0 +1,3 @@
+- name: lib/phpstan.jar
+  modules:
+  - name: intellij.phpstan
