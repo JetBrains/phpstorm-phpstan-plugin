@@ -34,45 +34,10 @@
                          groupWeight="15"/>
     <completion.contributor language="PHP" implementationClass="com.jetbrains.php.phpstan.completion.PhpStanCompletionContributor"/>
   </extensions>
-
-  <extensions defaultExtensionNs="com.intellij.php">
-    <docTagParserExtension tagName="phpstan-var" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocVarTagParser" />
-    <docTagParserExtension tagName="phpstan-param" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParamTagParser" />
-    <docTagParserExtension tagName="phpstan-return" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocReturnTagParser" />
-    <docTagParserExtension tagName="phpstan-throws" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocThrowsParser" />
-    <docTagParserExtension tagName="phpstan-use" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
-    <docTagParserExtension tagName="phpstan-implements" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
-    <docTagParserExtension tagName="phpstan-extends" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
-    <docTagParserExtension tagName="phpstan-template-use" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
-    <docTagParserExtension tagName="phpstan-template" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTemplateParser" />
-    <docTagParserExtension tagName="phpstan-type" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTypeTagParser" />
-    <docTagParserExtension tagName="phpstan-check-type" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTypeTagParser" />
-    <docTagParserExtension tagName="phpstan-check-type-exact" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTypeTagParser" />
-    <docTagParserExtension tagName="phpstan-import-type" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocImportTypeTagParser" />
-    <docTagParserExtension tagName="phpstan-template-covariant" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTemplateParser" />
-    <docTagParserExtension tagName="phpstan-template-contravariant" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocTemplateParser" />
-    <docTagParserExtension tagName="phpstan-param-out" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParamTagParser"/>
-    <docTagParserExtension tagName="param-out" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParamTagParser"/>
-    <docTagParserExtension tagName="phpstan-assert" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocAssertTagParser" />
-    <docTagParserExtension tagName="phpstan-assert-if-true" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocAssertTagParser" />
-    <docTagParserExtension tagName="phpstan-assert-if-false" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocAssertTagParser" />
-    <docTagParserExtension tagName="phpstan-if-this-is" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
-    <docTagParserExtension tagName="phpstan-this-out" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
-    <docTagParserExtension tagName="phpstan-self-out" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
-    <docTagParserExtension tagName="phpstan-require-extends" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
-    <docTagParserExtension tagName="phpstan-require-implements" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
-    <docTagParserExtension tagName="phpstan-scope-this" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanExtendsTagParser" />
-    <docTagParserExtension tagName="phpstan-property" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocPropertyTagParser" />
-    <docTagParserExtension tagName="phpstan-property-read" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocPropertyTagParser" />
-    <docTagParserExtension tagName="phpstan-property-write" implementationClass="com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocPropertyTagParser" />
-  </extensions>
   <extensions defaultExtensionNs="com.jetbrains.php">
     <composerConfigClient implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanComposerConfig"/>
     <tools.quality.type implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanQualityToolType"/>
     <openSettingsProvider implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanOpenSettingsProvider"/>
-    <typeProvider4 implementation="com.jetbrains.php.phpstan.types.PhpStanDocTypeProvider" />
-    <arrayShapesProvider implementation="com.jetbrains.php.phpstan.types.shapes.PhpStanDocArrayShapeProvider"/>
-    <docPrefixProvider implementation="com.jetbrains.php.phpstan.types.PhpStanDocPrefixProvider" />
   </extensions>
 
   <extensionPoints>
