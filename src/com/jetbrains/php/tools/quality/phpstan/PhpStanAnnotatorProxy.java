@@ -6,7 +6,10 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.SmartList;
-import com.jetbrains.php.tools.quality.*;
+import com.jetbrains.php.tools.quality.QualityToolAnnotator;
+import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
+import com.jetbrains.php.tools.quality.QualityToolConfiguration;
+import com.jetbrains.php.tools.quality.QualityToolMessageProcessor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +23,8 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
   public final static PhpStanAnnotatorProxy INSTANCE = new PhpStanAnnotatorProxy();
 
   @Override
-  protected List<String> getOptions(@Nullable String filePath, @NotNull PhpStanValidationInspection inspection, @NotNull InspectionProfile profile, @NotNull Project project) {
+  protected List<String> getOptions(@Nullable String filePath, @NotNull PhpStanValidationInspection inspection, 
+                                    @Nullable InspectionProfile profile, @NotNull Project project) {
     return emptyList();
   }
 
@@ -47,7 +51,7 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
   }
 
   @Override
-  protected QualityToolMessageProcessor createMessageProcessor(@NotNull QualityToolAnnotatorInfo collectedInfo) {
+  protected QualityToolMessageProcessor createMessageProcessor(@NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> collectedInfo) {
     return new PhpStanMessageProcessor(collectedInfo);
   }
 
@@ -63,7 +67,7 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
   }
 
   @Override
-  protected @NotNull QualityToolType getQualityToolType() {
+  protected @NotNull PhpStanQualityToolType getQualityToolType() {
     return PhpStanQualityToolType.INSTANCE;
   }
 

@@ -35,7 +35,7 @@ public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfigu
   }
 
   @Override
-  protected @NotNull QualityToolValidationInspection getInspection() {
+  protected @NotNull PhpStanValidationInspection getInspection() {
     return new PhpStanValidationInspection();
   }
 
@@ -77,7 +77,7 @@ public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfigu
     if (profile == null) {
       profile = InspectionProjectProfileManager.getInstance(project).getCurrentProfile();
     }
-    final InspectionToolWrapper inspectionTool = profile.getInspectionTool(getInspectionId(), project);
+    final InspectionToolWrapper<?, ?> inspectionTool = profile.getInspectionTool(getInspectionId(), project);
     if (inspectionTool == null) {
       return null;
     }

@@ -7,7 +7,6 @@ import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.containers.ContainerUtil;
-import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
@@ -35,8 +34,8 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
                                 @NotNull GlobalInspectionContext globalContext,
                                 @NotNull ProblemDescriptionsProcessor problemDescriptionsProcessor) {
     super.inspectionStarted(manager, globalContext, problemDescriptionsProcessor);
-    final QualityToolAnnotator annotator = getAnnotator();
-    final QualityToolAnnotatorInfo info =
+    final PhpStanAnnotatorProxy annotator = getAnnotator();
+    final QualityToolAnnotatorInfo<PhpStanValidationInspection> info =
       annotator.collectAnnotatorInfo(null, null, globalContext.getProject(), ((InspectionManagerBase)manager).getCurrentProfile(), false);
     if (info != null) {
       manager.getProject().putUserData(ANNOTATOR_INFO, annotator.doAnnotate(info));
@@ -49,7 +48,7 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
   }
 
   @Override
-  protected @NotNull QualityToolAnnotator getAnnotator() {
+  protected @NotNull PhpStanAnnotatorProxy getAnnotator() {
     return PhpStanAnnotatorProxy.INSTANCE;
   }
 

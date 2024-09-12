@@ -9,7 +9,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.PathUtil;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolMessage;
-import com.jetbrains.php.tools.quality.QualityToolType;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +44,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   final PsiFile myPsiFile;
   final Project myProject;
 
-  protected PhpStanMessageProcessor(QualityToolAnnotatorInfo info) {
+  protected PhpStanMessageProcessor(QualityToolAnnotatorInfo<?> info) {
     super(info);
     myWarningsHighlightLevel = HighlightDisplayLevel.WARNING; // TODO: fix
     myFilePath = info.getTempFilePath();
@@ -128,7 +127,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   }
 
   @Override
-  protected QualityToolType getQualityToolType() {
+  protected PhpStanQualityToolType getQualityToolType() {
     return PhpStanQualityToolType.INSTANCE;
   }
 
