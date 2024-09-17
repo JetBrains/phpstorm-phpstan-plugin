@@ -32,6 +32,7 @@
                          id="settings.php.quality.tools.phpstan"
                          parentId="settings.php.quality.tools"
                          groupWeight="15"/>
+    <completion.contributor language="PHP" implementationClass="com.jetbrains.php.phpstan.completion.PhpStanCompletionContributor"/>
   </extensions>
 
   <extensions defaultExtensionNs="com.intellij.php">
