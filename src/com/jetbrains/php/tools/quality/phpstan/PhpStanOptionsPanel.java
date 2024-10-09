@@ -54,7 +54,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   }
 
   private void createUIComponents() {
-    myJBIntSpinner = new JBIntSpinner(4, 0, 8);
+    myJBIntSpinner = new JBIntSpinner(4, 0, 9);
   }
 
   @Override
