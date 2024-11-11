@@ -1,0 +1,63 @@
+### auto-generated section `build intellij.phpstan` start
+load("@rules_jvm//:jvm.bzl", "jvm_resources")
+load("@rules_jvm//:rules.bzl", "jvm_library")
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
+
+jvm_resources(
+  name = "phpstan_resources",
+  files = glob(["resources/**/*"]),
+  strip_prefix = "resources"
+)
+
+jvm_library(
+  name = "phpstan",
+  module_name = "intellij.phpstan",
+  visibility = ["//visibility:public"],
+  srcs = glob(["src/**/*.kt", "src/**/*.java"], allow_empty = True, exclude = ["**/module-info.java"]),
+  javac_opts = "@rules_jvm//:j17",
+  kotlinc_opts = "@rules_jvm//:k17",
+  deps = [
+    "//phpstorm/php:php-impl",
+    "@community//platform/core-api:core",
+    "@community//platform/analysis-impl",
+    "@community//platform/projectModel-api:projectModel",
+    "@community//platform/analysis-api:analysis",
+    "@community//platform/platform-api:ide",
+    "@community//platform/util/jdom",
+    "@lib//:gson",
+    "@community//platform/core-impl",
+    "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter",
+    "@community//platform/platform-impl:ide-impl",
+    "@community//platform/core-ui",
+    "//phpstorm/php-openapi:php",
+    "@community//platform/platform-util-io:ide-util-io",
+  ],
+  runtime_deps = [":phpstan_resources"]
+)
+
+kt_jvm_test(
+  name = "phpstan_test",
+  visibility = ["//visibility:public"],
+  srcs = glob(["tests/**/*.kt", "tests/**/*.java"], allow_empty = True, exclude = ["**/module-info.java"]),
+  javac_opts = "@rules_jvm//:j17",
+  kotlinc_opts = "@rules_jvm//:k17",
+  associates = [":phpstan"],
+  deps = [
+    "//phpstorm/php:php-impl",
+    "@community//platform/core-api:core",
+    "@community//platform/analysis-impl",
+    "@community//platform/projectModel-api:projectModel",
+    "@community//platform/analysis-api:analysis",
+    "@community//platform/platform-api:ide",
+    "@community//platform/util/jdom",
+    "@lib//:gson",
+    "@community//platform/core-impl",
+    "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter",
+    "@community//platform/platform-impl:ide-impl",
+    "@community//platform/core-ui",
+    "//phpstorm/php-openapi:php",
+    "@community//platform/platform-util-io:ide-util-io",
+  ],
+  runtime_deps = [":phpstan_resources"]
+)
+### auto-generated section `build intellij.phpstan` end
