@@ -16,7 +16,7 @@ import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManage
 /**
  * Stores configuration needed to run PHPStan in selected environment.
  */
-public class PhpStanConfiguration implements QualityToolConfiguration {
+public class PhpStanConfiguration extends QualityToolConfiguration {
   private String myPhpStanPath = "";
   private int myMaxMessagesPerFile = DEFAULT_MAX_MESSAGES_PER_FILE;
   private int myTimeoutMs = 30000;
