@@ -30,7 +30,8 @@ public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfigu
   }
 
   @Override
-  protected @NotNull QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
+  @NotNull
+  public QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
     return PhpStanConfigurationManager.getInstance(project);
   }
 

@@ -11,10 +11,9 @@ import com.jetbrains.php.remote.interpreter.PhpRemoteSdkAdditionalData;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterConfigurableForm;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterDialog;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
-import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurableForm;
-import com.jetbrains.php.tools.quality.phpstan.PhpStanConfiguration;
-import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager;
-import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationProvider;
+import com.jetbrains.php.tools.quality.phpcs.PhpCSConfiguration;
+import com.jetbrains.php.tools.quality.phpcs.PhpCSQualityToolType;
+import com.jetbrains.php.tools.quality.phpstan.*;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
+import static com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterDialog.getLocalOrDefaultInterpreterConfiguration;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProvider {
@@ -54,8 +54,8 @@ public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProv
 
   @Override
   public PhpStanConfiguration createNewInstance(@Nullable Project project, @NotNull List<PhpStanConfiguration> existingSettings) {
-    final QualityToolByInterpreterDialog<PhpStanConfiguration, PhpStanRemoteConfiguration>
-      dialog = new QualityToolByInterpreterDialog<>(project, existingSettings, PHP_STAN, PhpStanRemoteConfiguration.class);
+    var dialog =
+      new QualityToolByInterpreterDialog<>(project, existingSettings, PHP_STAN, PhpStanConfiguration.class, PhpStanQualityToolType.INSTANCE);
     if (dialog.showAndGet()) {
       final String id = PhpInterpretersManagerImpl.getInstance(project).findInterpreterId(dialog.getSelectedInterpreterName());
       if (isNotEmpty(id)) {
@@ -63,10 +63,11 @@ public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProv
         settings.setInterpreterId(id);
 
         final PhpSdkAdditionalData data = PhpInterpretersManagerImpl.getInstance(project).findInterpreterDataById(id);
-        fillDefaultSettings(project, settings, PhpStanConfigurationManager.getInstance(project).getLocalSettings(), data, data instanceof PhpRemoteSdkAdditionalData);
+        fillDefaultSettings(project, settings, PhpStanConfigurationManager.getInstance(project).getOrCreateLocalSettings(), data, data instanceof PhpRemoteSdkAdditionalData);
 
         return settings;
       }
+      return (PhpStanConfiguration)getLocalOrDefaultInterpreterConfiguration(dialog.getSelectedInterpreterName(), project, PhpStanQualityToolType.INSTANCE);
     }
     return null;
   }
