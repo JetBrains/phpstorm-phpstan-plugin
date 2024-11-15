@@ -34,4 +34,8 @@ public class PhpStanTypeInferenceTest extends PhpTypeInferenceTestCase {
   public void testNestedConditionalTypes() {
     doTypeTest();
   }
+
+  public void testConditionalTypesWithGenerics() {
+    doTypeTest();
+  }
 }
