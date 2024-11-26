@@ -58,6 +58,7 @@ public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements 
     PhpStanRemoteConfiguration settings = new PhpStanRemoteConfiguration();
     settings.myInterpreterId = myInterpreterId;
     settings.setCreatedAsDefaultInterpreterConfiguration(this.isCreatedAsDefaultInterpreterConfiguration());
+    settings.setDeletedFromTheList(this.isDeletedFromTheList());
     clone(settings);
     return settings;
   }
