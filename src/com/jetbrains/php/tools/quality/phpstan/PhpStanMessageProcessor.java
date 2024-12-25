@@ -28,16 +28,16 @@ import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.WARNIN
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection.PHPSTAN_ANNOTATOR_INFO;
 
 public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
-  private final static String ERROR_TAG = "error";
-  private final static String FILE_TAG = "file";
-  @NonNls private final static String WARNING_MESSAGE_START = "<file";
-  @NonNls private final static String WARNING_MESSAGE_END = "</file>";
-  private final static String WARNING_TAG = "warning";
-  @NonNls private final static String LINE_NUMBER_ATTR = "line";
-  @NonNls private final static String COLUMN_NUMBER_ATTR = "column";
-  private final static String MESSAGE_ATTR = "message";
-  @NonNls private final static String SEVERITY_ATTR = "severity";
-  private final static String FILE_NAME_ATTR = "name";
+  private static final String ERROR_TAG = "error";
+  private static final String FILE_TAG = "file";
+  private static final @NonNls String WARNING_MESSAGE_START = "<file";
+  private static final @NonNls String WARNING_MESSAGE_END = "</file>";
+  private static final String WARNING_TAG = "warning";
+  private static final @NonNls String LINE_NUMBER_ATTR = "line";
+  private static final @NonNls String COLUMN_NUMBER_ATTR = "column";
+  private static final String MESSAGE_ATTR = "message";
+  private static final @NonNls String SEVERITY_ATTR = "severity";
+  private static final String FILE_NAME_ATTR = "name";
   private final Set<ProblemDescription> lineMessages = new HashSet<>();
   private final HighlightDisplayLevel myWarningsHighlightLevel;
   final String myFilePath;
@@ -113,16 +113,13 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     return line.indexOf(WARNING_MESSAGE_END);
   }
 
-  @NonNls
-  @Nullable
   @Override
-  protected String getMessagePrefix() {
+  protected @NonNls @Nullable String getMessagePrefix() {
     return "phpstan";
   }
 
-  @Nullable
   @Override
-  protected HighlightDisplayLevel severityToDisplayLevel(@NotNull QualityToolMessage.Severity severity) {
+  protected @Nullable HighlightDisplayLevel severityToDisplayLevel(@NotNull QualityToolMessage.Severity severity) {
     return WARNING.equals(severity) ? myWarningsHighlightLevel : null;
   }
 

@@ -23,7 +23,7 @@ import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemot
 
 public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
   public boolean FULL_PROJECT = false;
-  @NonNls public String memoryLimit = "2G";
+  public @NonNls String memoryLimit = "2G";
   public int level = 4;
   public @NlsSafe String config = "";
   public @NlsSafe String autoload = "";

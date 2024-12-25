@@ -15,9 +15,8 @@ import org.jetbrains.annotations.Nullable;
 public class PhpStanProjectConfiguration extends QualityToolProjectConfiguration<PhpStanConfiguration>
   implements PersistentStateComponent<PhpStanProjectConfiguration> {
 
-  @Nullable
   @Override
-  public PhpStanProjectConfiguration getState() {
+  public @Nullable PhpStanProjectConfiguration getState() {
     return this;
   }
 

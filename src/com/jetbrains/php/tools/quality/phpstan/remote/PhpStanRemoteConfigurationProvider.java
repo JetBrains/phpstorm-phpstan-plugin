@@ -11,8 +11,6 @@ import com.jetbrains.php.remote.interpreter.PhpRemoteSdkAdditionalData;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterConfigurableForm;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterDialog;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
-import com.jetbrains.php.tools.quality.phpcs.PhpCSConfiguration;
-import com.jetbrains.php.tools.quality.phpcs.PhpCSQualityToolType;
 import com.jetbrains.php.tools.quality.phpstan.*;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
@@ -27,23 +25,21 @@ import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseMa
 
 public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProvider {
 
-  @NonNls private static final String PHPSTAN_BY_INTERPRETER = "phpstan_by_interpreter";
+  private static final @NonNls String PHPSTAN_BY_INTERPRETER = "phpstan_by_interpreter";
 
   @Override
   public boolean canLoad(@NotNull String tagName) {
     return StringUtil.equals(tagName, PHPSTAN_BY_INTERPRETER);
   }
 
-  @Nullable
   @Override
-  public PhpStanConfiguration load(@NotNull Element element) {
+  public @Nullable PhpStanConfiguration load(@NotNull Element element) {
     return XmlSerializer.deserialize(element, PhpStanRemoteConfiguration.class);
   }
 
-  @Nullable
   @Override
-  public QualityToolConfigurableForm<PhpStanRemoteConfiguration> createConfigurationForm(@NotNull Project project,
-                                                                                            @NotNull PhpStanConfiguration settings) {
+  public @Nullable QualityToolConfigurableForm<PhpStanRemoteConfiguration> createConfigurationForm(@NotNull Project project,
+                                                                                                   @NotNull PhpStanConfiguration settings) {
     if (settings instanceof PhpStanRemoteConfiguration remoteConfiguration) {
       final PhpStanConfigurableForm<PhpStanRemoteConfiguration> delegate =
         new PhpStanConfigurableForm<>(project, remoteConfiguration);

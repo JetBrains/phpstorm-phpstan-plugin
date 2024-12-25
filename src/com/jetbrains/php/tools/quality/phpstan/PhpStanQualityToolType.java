@@ -18,9 +18,8 @@ public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfigu
   private PhpStanQualityToolType() {
   }
 
-  @NotNull
   @Override
-  public String getDisplayName() {
+  public @NotNull String getDisplayName() {
     return PHP_STAN;
   }
 
@@ -30,8 +29,7 @@ public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfigu
   }
 
   @Override
-  @NotNull
-  public QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
+  public @NotNull QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
     return PhpStanConfigurationManager.getInstance(project);
   }
 
@@ -61,9 +59,8 @@ public final class PhpStanQualityToolType extends QualityToolType<PhpStanConfigu
     return PhpStanProjectConfiguration.getInstance(project);
   }
 
-  @NotNull
   @Override
-  protected PhpStanConfiguration createConfiguration() {
+  protected @NotNull PhpStanConfiguration createConfiguration() {
     return new PhpStanConfiguration();
   }
 

@@ -20,7 +20,7 @@ import static com.intellij.util.containers.ContainerUtil.*;
 import static java.util.Collections.singletonList;
 
 public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidationInspection> {
-  public final static PhpStanAnnotatorProxy INSTANCE = new PhpStanAnnotatorProxy();
+  public static final PhpStanAnnotatorProxy INSTANCE = new PhpStanAnnotatorProxy();
 
   @Override
   protected List<String> getOptions(@Nullable String filePath, @NotNull PhpStanValidationInspection inspection, 
@@ -55,14 +55,13 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
     return new PhpStanMessageProcessor(collectedInfo);
   }
 
-  @NotNull
   @Override
-  protected QualityToolAnnotatorInfo<PhpStanValidationInspection> createAnnotatorInfo(@Nullable PsiFile file,
-                                                                                      PhpStanValidationInspection tool,
-                                                                                      InspectionProfile inspectionProfile,
-                                                                                      Project project,
-                                                                                      QualityToolConfiguration configuration,
-                                                                                      boolean isOnTheFly) {
+  protected @NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> createAnnotatorInfo(@Nullable PsiFile file,
+                                                                                               PhpStanValidationInspection tool,
+                                                                                               InspectionProfile inspectionProfile,
+                                                                                               Project project,
+                                                                                               QualityToolConfiguration configuration,
+                                                                                               boolean isOnTheFly) {
     return new PhpStanQualityToolAnnotatorInfo(file, tool, inspectionProfile, project, configuration, isOnTheFly);
   }
 

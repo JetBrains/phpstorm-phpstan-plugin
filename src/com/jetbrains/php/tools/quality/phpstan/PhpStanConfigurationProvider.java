@@ -12,8 +12,7 @@ public abstract class PhpStanConfigurationProvider extends QualityToolConfigurat
   private static final ExtensionPointName<PhpStanConfigurationProvider> EP_NAME =
     ExtensionPointName.create("com.jetbrains.php.tools.quality.PhpStan.PhpStanConfigurationProvider");
 
-  @Nullable
-  public static PhpStanConfigurationProvider getInstances() {
+  public static @Nullable PhpStanConfigurationProvider getInstances() {
     List<PhpStanConfigurationProvider> extensions = EP_NAME.getExtensionList();
     if (extensions.size() > 1) {
       LOG.error("Several providers for remote PHPStan configuration was found");

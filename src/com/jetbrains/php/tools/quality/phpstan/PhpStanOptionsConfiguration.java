@@ -14,10 +14,10 @@ import org.jetbrains.annotations.Nullable;
 @State(name = "PhpStanOptionsConfiguration", storages = @Storage("php.xml"))
 public class PhpStanOptionsConfiguration extends QualityToolsOptionsConfiguration implements PersistentStateComponent<PhpStanOptionsConfiguration> {
   private boolean fullProject = false;
-  @NonNls private String memoryLimit = "2G";
+  private @NonNls String memoryLimit = "2G";
   private int level = 4;
-  @NlsSafe private String config = "";
-  @NlsSafe private String autoload = "";
+  private @NlsSafe String config = "";
+  private @NlsSafe String autoload = "";
 
   public boolean isFullProject() {
     return fullProject;
@@ -59,9 +59,8 @@ public class PhpStanOptionsConfiguration extends QualityToolsOptionsConfiguratio
     this.autoload = autoload;
   }
 
-  @Nullable
   @Override
-  public PhpStanOptionsConfiguration getState() {
+  public @Nullable PhpStanOptionsConfiguration getState() {
     return this;
   }
 

@@ -22,9 +22,8 @@ public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements 
   private String myInterpreterId;
 
   @Override
-  @Nullable
   @Attribute("interpreter_id")
-  public @NlsSafe String getInterpreterId() {
+  public @Nullable @NlsSafe String getInterpreterId() {
     return myInterpreterId;
   }
 
@@ -33,23 +32,20 @@ public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements 
     myInterpreterId = interpreterId;
   }
 
-  @NotNull
   @Override
-  public @NlsContexts.Label String getPresentableName(@Nullable Project project) {
+  public @NotNull @NlsContexts.Label String getPresentableName(@Nullable Project project) {
     if (isCreatedAsDefaultInterpreterConfiguration()) return PhpBundle.message("quality.tools.label.by.default.project.interpreter");
     return getDefaultName(PhpInterpretersManagerImpl.getInstance(project).findInterpreterName(getInterpreterId()));
   }
 
-  @NotNull
   @Override
-  public @Nls String getId() {
+  public @NotNull @Nls String getId() {
     if (isCreatedAsDefaultInterpreterConfiguration()) return DEFAULT_INTERPRETER_CONFIGURATION_ID;
     final String interpreterId = getInterpreterId();
     return isEmpty(interpreterId) ? PhpStanBundle.message("undefined.interpreter") : interpreterId;
   }
 
-  @NotNull
-  public static @Nls String getDefaultName(@Nls @Nullable String interpreterName) {
+  public static @NotNull @Nls String getDefaultName(@Nls @Nullable String interpreterName) {
     return isEmpty(interpreterName) ? PhpStanBundle.message("undefined.interpreter") : interpreterName;
   }
 

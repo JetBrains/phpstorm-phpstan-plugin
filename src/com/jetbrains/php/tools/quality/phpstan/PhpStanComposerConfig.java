@@ -32,9 +32,9 @@ import static com.jetbrains.php.composer.ComposerConfigUtils.parseJson;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanOpenSettingsProvider.PHP_STAN_OPEN_SETTINGS_PROVIDER;
 
 public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanConfiguration, PhpStanValidationInspection> {
-  @NonNls private static final String PACKAGE = "phpstan/phpstan";
-  @NonNls private static final String RELATIVE_PATH = "bin/phpstan" + (SystemInfo.isWindows ? ".bat" : "");
-  @NonNls private static final String PHPSTAN_NEON = "phpstan.neon";
+  private static final @NonNls String PACKAGE = "phpstan/phpstan";
+  private static final @NonNls String RELATIVE_PATH = "bin/phpstan" + (SystemInfo.isWindows ? ".bat" : "");
+  private static final @NonNls String PHPSTAN_NEON = "phpstan.neon";
 
   public PhpStanComposerConfig() {
     super(PACKAGE, RELATIVE_PATH);
@@ -80,8 +80,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     }
   }
 
-  @Nullable
-  private String getMemoryLimit(VirtualFile config) {
+  private @Nullable String getMemoryLimit(VirtualFile config) {
     JsonElement element;
     try {
       element = parseJson(config);
@@ -180,9 +179,8 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     return false;
   }
 
-  @NotNull
   @Override
-  public QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
+  public @NotNull QualityToolConfigurationManager<PhpStanConfiguration> getConfigurationManager(@NotNull Project project) {
     return PhpStanConfigurationManager.getInstance(project);
   }
 }

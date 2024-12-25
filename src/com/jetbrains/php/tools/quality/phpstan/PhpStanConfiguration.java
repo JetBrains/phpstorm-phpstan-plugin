@@ -1,7 +1,5 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.NlsContexts;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Transient;
@@ -33,9 +31,8 @@ public class PhpStanConfiguration extends QualityToolConfiguration {
   }
 
   @SuppressWarnings("UnusedDeclaration")
-  @Nullable
   @Attribute("tool_path")
-  public String getSerializedToolPath() {
+  public @Nullable String getSerializedToolPath() {
     return serialize(myPhpStanPath);
   }
 
@@ -62,14 +59,12 @@ public class PhpStanConfiguration extends QualityToolConfiguration {
   }
 
   @Override
-  @NotNull
-  public @Nls String getId() {
+  public @NotNull @Nls String getId() {
     return PhpStanBundle.message("local");
   }
 
   @Override
-  @Nullable
-  public String getInterpreterId() {
+  public @Nullable String getInterpreterId() {
     return null;
   }
 
