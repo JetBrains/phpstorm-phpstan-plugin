@@ -8,8 +8,7 @@ import com.jetbrains.php.completion.PhpTraitDocTagCompletionProvider;
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 import static com.jetbrains.php.lang.documentation.phpdoc.lexer.PhpDocTokenTypes.DOC_TAG_NAME;
 
-public class PhpStanCompletionContributor extends CompletionContributor implements DumbAware {
-
+public final class PhpStanCompletionContributor extends CompletionContributor implements DumbAware {
   private static final String[] ADDITIONAL_TRAIT_DOC_TAG_COMPLETIONS = {
     "phpstan-require-extends",
     "phpstan-require-implements"
