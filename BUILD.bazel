@@ -7,12 +7,6 @@ jvm_resources(
   strip_prefix = "resources"
 )
 
-jvm_resources(
-  name = "phpstan_resources_1",
-  files = glob(["src/META-INF/**/*"]),
-  strip_prefix = "src"
-)
-
 jvm_library(
   name = "phpstan",
   module_name = "intellij.phpstan",
@@ -35,10 +29,7 @@ jvm_library(
     "//phpstorm/php-openapi:php",
     "@community//platform/platform-util-io:ide-util-io",
   ],
-  runtime_deps = [
-    ":phpstan_resources",
-    ":phpstan_resources_1",
-  ]
+  runtime_deps = [":phpstan_resources"]
 )
 
 jvm_library(
@@ -66,10 +57,7 @@ jvm_library(
     "//phpstorm/php-openapi:php",
     "@community//platform/platform-util-io:ide-util-io",
   ],
-  runtime_deps = [
-    ":phpstan_resources",
-    ":phpstan_resources_1",
-  ]
+  runtime_deps = [":phpstan_resources"]
 )
 
 jvm_test(
