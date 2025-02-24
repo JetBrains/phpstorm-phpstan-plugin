@@ -7,6 +7,12 @@ jvm_resources(
   strip_prefix = "resources"
 )
 
+jvm_resources(
+  name = "phpstan_test_resources",
+  files = glob(["testData/**/*"]),
+  strip_prefix = "testData"
+)
+
 jvm_library(
   name = "phpstan",
   module_name = "intellij.phpstan",
@@ -57,7 +63,10 @@ jvm_library(
     "//phpstorm/php-openapi:php",
     "@community//platform/platform-util-io:ide-util-io",
   ],
-  runtime_deps = [":phpstan_resources"]
+  runtime_deps = [
+    ":phpstan_resources",
+    ":phpstan_test_resources",
+  ]
 )
 
 jvm_test(
