@@ -1,4 +1,4 @@
-<idea-plugin>
+<idea-plugin allow-bundled-update="true">
   <name>PHPStan Support</name>
   <id>com.intellij.php.tools.quality.phpstan</id>
   <description>Plugin provides PHPStan static analysis tool support</description>
