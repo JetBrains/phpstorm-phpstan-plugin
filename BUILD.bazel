@@ -53,6 +53,8 @@ jvm_library(
     "@community//platform/projectModel-api:projectModel",
     "@community//platform/analysis-api:analysis",
     "@community//platform/platform-api:ide",
+    "@community//platform/testFramework",
+    "@community//platform/testFramework:testFramework_test_lib",
     "@community//platform/util/jdom",
     "@lib//:gson",
     "//phpstorm/php-frontback-openapi:php-frontback",
