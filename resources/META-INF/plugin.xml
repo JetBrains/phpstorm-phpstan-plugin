@@ -5,7 +5,7 @@
   <vendor>JetBrains</vendor>
   <depends>com.jetbrains.php</depends>
   <depends>com.intellij.modules.ultimate</depends>
-  <category>Other Tools</category>
+  <category>PHP Tools</category>
   <resource-bundle>messages.PhpStanBundle</resource-bundle>
   <depends optional="true" config-file="phpstan-remote-plugin.xml">org.jetbrains.plugins.phpstorm-remote-interpreter</depends>
   <extensions defaultExtensionNs="com.intellij">
