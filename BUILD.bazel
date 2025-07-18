@@ -1,6 +1,5 @@
 ### auto-generated section `build intellij.phpstan` start
-load("@community//build:tests-options.bzl", "jps_test")
-load("@rules_jvm//:jvm.bzl", "jvm_library", "jvm_resources", "jvm_test")
+load("@rules_jvm//:jvm.bzl", "jvm_library", "jvm_resources")
 
 jvm_resources(
   name = "phpstan_resources",
@@ -72,9 +71,13 @@ jvm_library(
     ":phpstan_test_resources",
   ]
 )
+### auto-generated section `build intellij.phpstan` end
+
+### auto-generated section `test intellij.phpstan` start
+load("@community//build:tests-options.bzl", "jps_test")
 
 jps_test(
   name = "phpstan_test",
   runtime_deps = [":phpstan_test_lib"]
 )
-### auto-generated section `build intellij.phpstan` end
+### auto-generated section `test intellij.phpstan` end
