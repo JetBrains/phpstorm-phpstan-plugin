@@ -27,7 +27,8 @@ PHP file
             PsiElement(identifier)('int')
         PsiElement(bit or)('|')
         PhpPsiElementImpl
-          PsiElement(array)('array')
+          ClassReferenceImpl: array
+            PsiElement(array)('array')
         PsiWhiteSpace(' ')
         PsiElement(identifier)('borp')
         PsiElement(()('(')
@@ -75,7 +76,8 @@ PHP file
             PsiElement(identifier)('int')
         PsiElement(bit or)('|')
         PhpPsiElementImpl
-          PsiElement(array)('array')
+          ClassReferenceImpl: array
+            PsiElement(array)('array')
         PsiWhiteSpace(' ')
         PsiElement(identifier)('borp')
         PsiElement(()('(')
