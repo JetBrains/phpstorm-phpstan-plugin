@@ -66,10 +66,7 @@ jvm_library(
     "//phpstorm/php-openapi:php",
     "@community//platform/platform-util-io:ide-util-io",
   ],
-  runtime_deps = [
-    ":phpstan_resources",
-    ":phpstan_test_resources",
-  ]
+  runtime_deps = [":phpstan_test_resources"]
 )
 ### auto-generated section `build intellij.phpstan` end
 
