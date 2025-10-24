@@ -1,6 +1,7 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
+import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
@@ -67,7 +68,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
         if (list == null) return;
         for (ProblemDescription problem : list) {
           if (myProject.isDisposed()) return;
-          final Document document = PsiDocumentManager.getInstance(myPsiFile.getProject()).getDocument(myPsiFile);
+          Document document = ReadAction.compute(() -> PsiDocumentManager.getInstance(myPsiFile.getProject()).getDocument(myPsiFile));
           QualityToolMessage qualityToolMessage;
           if (document != null && problem.getLineNumber() - 1 > 0 && problem.getLineNumber() - 1 < document.getLineCount()) {
             qualityToolMessage = new QualityToolMessage(this, TextRange
