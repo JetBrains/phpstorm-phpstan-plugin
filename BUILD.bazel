@@ -36,6 +36,7 @@ jvm_library(
     "@community//platform/core-ui",
     "//phpstorm/php-openapi:php",
     "@community//platform/platform-util-io:ide-util-io",
+    "@community//platform/forms_rt:java-guiForms-rt",
   ]
 )
 
@@ -66,6 +67,7 @@ jvm_library(
     "@community//platform/core-ui",
     "//phpstorm/php-openapi:php",
     "@community//platform/platform-util-io:ide-util-io",
+    "@community//platform/forms_rt:java-guiForms-rt",
   ]
 )
 ### auto-generated section `build intellij.phpstan` end
