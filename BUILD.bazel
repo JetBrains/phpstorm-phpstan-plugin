@@ -37,6 +37,8 @@ jvm_library(
     "//phpstorm/php-openapi:php",
     "@community//platform/platform-util-io:ide-util-io",
     "@community//platform/forms_rt:java-guiForms-rt",
+    "//webcore/impl",
+    "@community//libraries/snakeyaml",
   ]
 )
 
@@ -68,6 +70,8 @@ jvm_library(
     "//phpstorm/php-openapi:php",
     "@community//platform/platform-util-io:ide-util-io",
     "@community//platform/forms_rt:java-guiForms-rt",
+    "//webcore/impl",
+    "@community//libraries/snakeyaml",
   ]
 )
 ### auto-generated section `build intellij.phpstan` end

@@ -28,5 +28,7 @@
     <orderEntry type="module" module-name="intellij.php" />
     <orderEntry type="module" module-name="intellij.platform.ide.util.io" />
     <orderEntry type="module" module-name="intellij.java.guiForms.rt" />
+    <orderEntry type="module" module-name="intellij.platform.webide.impl" />
+    <orderEntry type="module" module-name="intellij.libraries.snakeyaml" />
   </component>
 </module>
