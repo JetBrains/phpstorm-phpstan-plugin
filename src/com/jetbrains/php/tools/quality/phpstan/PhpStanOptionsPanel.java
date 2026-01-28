@@ -14,6 +14,8 @@ import com.jetbrains.php.config.interpreters.PhpInterpreter;
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse;
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox;
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel;
+import com.jetbrains.php.tools.quality.ui.QualityToolRateLimitPanel;
+import com.jetbrains.php.tools.quality.ui.QualityToolRateLimitUI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,6 +38,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   private final JBCheckBox myFullProjectRunJBCheckBox;
   private final JBTextField myMemoryLimitTextField;
   private final JBIntSpinner myJBIntSpinner;
+  private final QualityToolRateLimitPanel myRateLimitPanel;
   private final PhpTextFieldWithSdkBasedBrowse myConfigPathTextField;
   private final PhpTextFieldWithSdkBasedBrowse myAutoloadPathTextField;
   private final QualityToolConfigurationComboBox myComboBox;
@@ -55,7 +58,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
       myOptionsPanel = new JPanel();
       myOptionsPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 5, 0, 0), -1, -1));
       final JPanel panel1 = new JPanel();
-      panel1.setLayout(new GridLayoutManager(6, 4, new Insets(5, 5, 0, 0), -1, -1));
+      panel1.setLayout(new GridLayoutManager(7, 4, new Insets(5, 5, 0, 0), -1, -1));
       panel1.setAlignmentY(0.5f);
       myOptionsPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                                                      GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -68,7 +71,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
                                                                  GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
                                                                  null, null, 0, false));
       final Spacer spacer1 = new Spacer();
-      panel1.add(spacer1, new GridConstraints(5, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1,
+      panel1.add(spacer1, new GridConstraints(6, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1,
                                               GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
       final JPanel panel2 = new JPanel();
       panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
@@ -133,6 +136,11 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
                                                               GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                                                               GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                                                               null, null, null, 0, false));
+      myRateLimitPanel = new QualityToolRateLimitPanel();
+      panel1.add(myRateLimitPanel, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE,
+                                                       GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                                                       GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null,
+                                                       null, null, 0, false));
       final Spacer spacer2 = new Spacer();
       myOptionsPanel.add(spacer2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1,
                                                       GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -141,6 +149,8 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
     myFullProjectRunJBCheckBox.setSelected(configuration.isFullProject());
     myMemoryLimitTextField.setText(configuration.getMemoryLimit());
     myJBIntSpinner.setNumber(configuration.getLevel());
+    myRateLimitPanel.configure(QualityToolRateLimitUI.DEFAULT_UI);
+    myRateLimitPanel.reset(configuration.getRateLimitSettings());
     myConfigPathTextField.setText(configuration.getConfig());
     myConfigPathTextField
       .init(project, getSdkAdditionalData(project, comboBox), PhpStanBundle.message("phpstan.configuration.file"), true, false);
@@ -238,6 +248,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
     myFullProjectRunJBCheckBox.setSelected(configuration.isFullProject());
     myMemoryLimitTextField.setText(configuration.getMemoryLimit());
     myJBIntSpinner.setNumber(configuration.getLevel());
+    myRateLimitPanel.reset(configuration.getRateLimitSettings());
     myConfigPathTextField.setText(configuration.getConfig());
     myAutoloadPathTextField.setText(configuration.getAutoload());
   }
@@ -248,6 +259,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
     if (myFullProjectRunJBCheckBox.isSelected() != configuration.isFullProject()) return true;
     if (!StringUtil.equals(myMemoryLimitTextField.getText(), configuration.getMemoryLimit())) return true;
     if (myJBIntSpinner.getNumber() != configuration.getLevel()) return true;
+    if (myRateLimitPanel.isModified(configuration.getRateLimitSettings())) return true;
     if (!StringUtil.equals(myConfigPathTextField.getText(), configuration.getConfig())) return true;
     if (!StringUtil.equals(myAutoloadPathTextField.getText(), configuration.getAutoload())) return true;
     return false;
@@ -259,6 +271,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
     configuration.setFullProject(myFullProjectRunJBCheckBox.isSelected());
     configuration.setMemoryLimit(myMemoryLimitTextField.getText());
     configuration.setLevel(myJBIntSpinner.getNumber());
+    myRateLimitPanel.applyTo(configuration.getRateLimitSettings());
     configuration.setConfig(myConfigPathTextField.getText());
     configuration.setAutoload(myAutoloadPathTextField.getText());
   }
@@ -276,4 +289,5 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
     }
     return null;
   }
+
 }

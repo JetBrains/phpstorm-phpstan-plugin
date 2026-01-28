@@ -6,7 +6,8 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.SmartList;
-import com.jetbrains.php.tools.quality.QualityToolAnnotator;
+import com.jetbrains.php.tools.quality.QualityToolRateLimitSettings;
+import com.jetbrains.php.tools.quality.RateLimitedQualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolConfiguration;
 import com.jetbrains.php.tools.quality.QualityToolMessageProcessor;
@@ -21,7 +22,7 @@ import static com.intellij.util.containers.ContainerUtil.emptyList;
 import static com.intellij.util.containers.ContainerUtil.map;
 import static java.util.Collections.singletonList;
 
-public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidationInspection> {
+public final class PhpStanAnnotatorProxy extends RateLimitedQualityToolAnnotator<PhpStanValidationInspection> {
   public static final PhpStanAnnotatorProxy INSTANCE = new PhpStanAnnotatorProxy();
 
   @Override
@@ -73,6 +74,11 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
   }
 
   @Override
+  protected @NotNull QualityToolRateLimitSettings getRateLimitSettings(@NotNull Project project) {
+    return PhpStanOptionsConfiguration.getInstance(project).getRateLimitSettings();
+  }
+
+  @Override
   public String getPairedBatchInspectionShortName() {
     return getQualityToolType().getInspectionId();
   }
@@ -82,4 +88,3 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
     return !message.contains("The Xdebug PHP extension is active, but \"--xdebug\" is not used");
   }
 }
-
