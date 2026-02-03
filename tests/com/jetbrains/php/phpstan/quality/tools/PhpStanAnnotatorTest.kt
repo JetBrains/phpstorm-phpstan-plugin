@@ -4,7 +4,11 @@ import com.intellij.profile.codeInspection.InspectionProfileManager
 import com.intellij.psi.PsiFile
 import com.intellij.testFramework.builders.ModuleFixtureBuilder
 import com.intellij.testFramework.fixtures.CodeInsightFixtureTestCase
-import com.jetbrains.php.tools.quality.phpstan.*
+import com.jetbrains.php.tools.quality.phpstan.PhpStanAnnotatorProxy
+import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager
+import com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection
+import com.jetbrains.php.tools.quality.phpstan.PhpStanMessageProcessor
+import com.jetbrains.php.tools.quality.phpstan.PhpStanQualityToolAnnotatorInfo
 
 class PhpStanAnnotatorTest : CodeInsightFixtureTestCase<ModuleFixtureBuilder<*>>() {
   override fun setUp() {

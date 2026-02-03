@@ -16,7 +16,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
-import static com.intellij.util.containers.ContainerUtil.*;
+import static com.intellij.util.containers.ContainerUtil.concat;
+import static com.intellij.util.containers.ContainerUtil.emptyList;
+import static com.intellij.util.containers.ContainerUtil.map;
 import static java.util.Collections.singletonList;
 
 public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidationInspection> {
