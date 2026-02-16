@@ -64,6 +64,12 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
   }
 
   public List<String> getCommandLineOptions(@NotNull List<String> filePath, @NotNull Project project) {
+    return getCommandLineOptions(filePath, project, null);
+  }
+
+  public List<String> getCommandLineOptions(@NotNull List<String> filePath,
+                                            @NotNull Project project,
+                                            @Nullable String originalFilePath) {
     @NonNls ArrayList<String> options = new ArrayList<>();
     PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(project);
     options.add("analyze");
@@ -85,7 +91,15 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     options.add("--no-interaction");
     List<String> filePaths = ContainerUtil.filter(filePath, Objects::nonNull);
     filePaths = ContainerUtil.map(filePaths, it -> updateIfRemoteMappingExists(it, project, PhpStanQualityToolType.INSTANCE));
-    options.addAll(filePaths);
+    if (originalFilePath != null && filePaths.size() == 1) {
+      options.add("--tmp-file");
+      options.add(filePaths.getFirst());
+      options.add("--instead-of");
+      options.add(updateIfRemoteMappingExists(originalFilePath, project, PhpStanQualityToolType.INSTANCE));
+    }
+    else {
+      options.addAll(filePaths);
+    }
     return options;
   }
 

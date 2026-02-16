@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 @State(name = "PhpStanOptionsConfiguration", storages = @Storage("php.xml"))
 public class PhpStanOptionsConfiguration extends QualityToolsOptionsConfiguration implements PersistentStateComponent<PhpStanOptionsConfiguration> {
   private boolean fullProject = false;
+  private boolean editorMode = true;
   private @NonNls String memoryLimit = "2G";
   private int level = 4;
   private @NlsSafe String config = "";
@@ -25,6 +26,14 @@ public class PhpStanOptionsConfiguration extends QualityToolsOptionsConfiguratio
 
   public void setFullProject(boolean fullProject) {
     this.fullProject = fullProject;
+  }
+
+  public boolean isEditorMode() {
+    return editorMode;
+  }
+
+  public void setEditorMode(boolean editorMode) {
+    this.editorMode = editorMode;
   }
 
   public String getMemoryLimit() {
