@@ -37,6 +37,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   private final JPanel myOptionsPanel;
   private final JBCheckBox myFullProjectRunJBCheckBox;
   private final JBTextField myMemoryLimitTextField;
+  private final JBCheckBox myEditorModeJBCheckBox;
   private final JBIntSpinner myJBIntSpinner;
   private final QualityToolRateLimitPanel myRateLimitPanel;
   private final PhpTextFieldWithSdkBasedBrowse myConfigPathTextField;
@@ -70,12 +71,18 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
       panel1.add(myFullProjectRunJBCheckBox, new GridConstraints(0, 0, 1, 4, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE,
                                                                  GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
                                                                  null, null, 0, false));
+      myEditorModeJBCheckBox = new JBCheckBox();
+      this.$$$loadButtonText$$$(myEditorModeJBCheckBox,
+                                this.$$$getMessageFromBundle$$$("messages/PhpStanBundle", "phpstan.checkbox.editor.mode"));
+      panel1.add(myEditorModeJBCheckBox, new GridConstraints(1, 0, 1, 4, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE,
+                                                             GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null,
+                                                             null, 0, false));
       final Spacer spacer1 = new Spacer();
       panel1.add(spacer1, new GridConstraints(6, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1,
                                               GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
       final JPanel panel2 = new JPanel();
       panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
-      panel1.add(panel2, new GridConstraints(4, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+      panel1.add(panel2, new GridConstraints(5, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                                              GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                                              GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null,
                                              0, false));
@@ -91,7 +98,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
                                                              null, null, null, 0, false));
       final JPanel panel3 = new JPanel();
       panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-      panel1.add(panel3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+      panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                                              GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                                              GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null,
                                              0, false));
@@ -106,7 +113,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
                                                      null, null, 0, false));
       final JPanel panel4 = new JPanel();
       panel4.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-      panel1.add(panel4, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+      panel1.add(panel4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                                              GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                                              GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null,
                                              0, false));
@@ -122,7 +129,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
                                                             null, null, null, 0, false));
       final JPanel panel5 = new JPanel();
       panel5.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-      panel1.add(panel5, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+      panel1.add(panel5, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                                              GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                                              GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null,
                                              0, false));
@@ -147,6 +154,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
     }
     PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(project);
     myFullProjectRunJBCheckBox.setSelected(configuration.isFullProject());
+    myEditorModeJBCheckBox.setSelected(configuration.isEditorMode());
     myMemoryLimitTextField.setText(configuration.getMemoryLimit());
     myJBIntSpinner.setNumber(configuration.getLevel());
     myRateLimitPanel.configure(QualityToolRateLimitUI.DEFAULT_UI);
@@ -246,6 +254,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   public void reset() {
     PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(myProject);
     myFullProjectRunJBCheckBox.setSelected(configuration.isFullProject());
+    myEditorModeJBCheckBox.setSelected(configuration.isEditorMode());
     myMemoryLimitTextField.setText(configuration.getMemoryLimit());
     myJBIntSpinner.setNumber(configuration.getLevel());
     myRateLimitPanel.reset(configuration.getRateLimitSettings());
@@ -257,6 +266,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   public boolean isModified() {
     PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(myProject);
     if (myFullProjectRunJBCheckBox.isSelected() != configuration.isFullProject()) return true;
+    if (myEditorModeJBCheckBox.isSelected() != configuration.isEditorMode()) return true;
     if (!StringUtil.equals(myMemoryLimitTextField.getText(), configuration.getMemoryLimit())) return true;
     if (myJBIntSpinner.getNumber() != configuration.getLevel()) return true;
     if (myRateLimitPanel.isModified(configuration.getRateLimitSettings())) return true;
@@ -269,6 +279,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
   public void apply() {
     PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(myProject);
     configuration.setFullProject(myFullProjectRunJBCheckBox.isSelected());
+    configuration.setEditorMode(myEditorModeJBCheckBox.isSelected());
     configuration.setMemoryLimit(myMemoryLimitTextField.getText());
     configuration.setLevel(myJBIntSpinner.getNumber());
     myRateLimitPanel.applyTo(configuration.getRateLimitSettings());
