@@ -1,3 +1,6 @@
+- name: lib/modules/intellij.phpstan.remoteInterpreter.jar
+  contentModules:
+  - name: intellij.phpstan.remoteInterpreter
 - name: lib/phpstan.jar
   modules:
   - name: intellij.phpstan

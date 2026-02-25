@@ -1,6 +1,0 @@
-<idea-plugin>
-  <extensions defaultExtensionNs="com.jetbrains.php">
-    <tools.quality.PhpStan.PhpStanConfigurationProvider
-      implementation="com.jetbrains.php.tools.quality.phpstan.remote.PhpStanRemoteConfigurationProvider"/>
-  </extensions>
-</idea-plugin>

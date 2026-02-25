@@ -3,11 +3,16 @@
   <id>com.intellij.php.tools.quality.phpstan</id>
   <description>Plugin provides PHPStan static analysis tool support</description>
   <vendor>JetBrains</vendor>
-  <depends>com.jetbrains.php</depends>
-  <depends>com.intellij.modules.ultimate</depends>
   <category>PHP Tools</category>
   <resource-bundle>messages.PhpStanBundle</resource-bundle>
-  <depends optional="true" config-file="phpstan-remote-plugin.xml">org.jetbrains.plugins.phpstorm-remote-interpreter</depends>
+
+  <dependencies>
+    <plugin id="com.jetbrains.php"/>
+    <plugin id="com.intellij.modules.ultimate"/>
+  </dependencies>
+  <content>
+    <module name="intellij.phpstan.remoteInterpreter"/>
+  </content>
   <extensions defaultExtensionNs="com.intellij">
     <applicationService
         serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanAppConfigurationManager"/>

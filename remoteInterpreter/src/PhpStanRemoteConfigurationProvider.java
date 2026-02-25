@@ -1,4 +1,4 @@
-package com.jetbrains.php.tools.quality.phpstan.remote;
+package com.intellij.phpstan.remoteInterpreter;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;

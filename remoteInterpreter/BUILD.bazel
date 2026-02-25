@@ -1,0 +1,53 @@
+### auto-generated section `build intellij.phpstan.remoteInterpreter` start
+load("@rules_jvm//:jvm.bzl", "jvm_library", "resourcegroup")
+
+resourcegroup(
+  name = "remoteInterpreter_resources",
+  srcs = glob(["resources/**/*"]),
+  strip_prefix = "resources"
+)
+
+jvm_library(
+  name = "remoteInterpreter",
+  module_name = "intellij.phpstan.remoteInterpreter",
+  visibility = ["//visibility:public"],
+  srcs = glob(["src/**/*.kt", "src/**/*.java", "src/**/*.form"], allow_empty = True),
+  resources = [":remoteInterpreter_resources"],
+  deps = [
+    "//phpstorm/phpstan",
+    "@community//platform/util",
+    "@community//platform/core-api:core",
+    "//phpstorm/php:php-impl",
+    "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter",
+    "@community//platform/projectModel-api:projectModel",
+    "@community//platform/projectModel-impl",
+    "@community//platform/platform-api:ide",
+    "@community//platform/util/jdom",
+  ]
+)
+
+jvm_library(
+  name = "remoteInterpreter_test_lib",
+  module_name = "intellij.phpstan.remoteInterpreter",
+  visibility = ["//visibility:public"],
+  srcs = glob([], allow_empty = True),
+  runtime_deps = [
+    ":remoteInterpreter",
+    "//phpstorm/phpstan:phpstan_test_lib",
+    "@community//platform/util:util_test_lib",
+    "@community//platform/core-api:core_test_lib",
+    "//phpstorm/php:php-impl_test_lib",
+    "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter_test_lib",
+    "@community//platform/projectModel-api:projectModel_test_lib",
+    "@community//platform/projectModel-impl:projectModel-impl_test_lib",
+    "@community//platform/platform-api:ide_test_lib",
+    "@community//platform/util/jdom:jdom_test_lib",
+  ]
+)
+### auto-generated section `build intellij.phpstan.remoteInterpreter` end
+
+### auto-generated section `iml intellij.phpstan.remoteInterpreter` start
+exports_files([
+  "intellij.phpstan.remoteInterpreter.iml",
+], visibility = ["//visibility:public"])
+### auto-generated section `iml intellij.phpstan.remoteInterpreter` end
