@@ -13,8 +13,11 @@ import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseMa
 
 public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends QualityToolConfigurableForm<C> {
 
+  private final C myPhpStanConfiguration;
+
   public PhpStanConfigurableForm(@NotNull Project project, @NotNull C configuration) {
     super(project, configuration, PHP_STAN, "phpstan");
+    myPhpStanConfiguration = configuration;
   }
 
   @Override
@@ -29,10 +32,15 @@ public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends Qua
 
   @Override
   public @NotNull Pair<Boolean, String> validateMessage(@NonNls String message) {
-    final Version version = extractVersion(message.trim().replaceFirst("PHPStan.* ([\\d.]*).*", "$1").trim());
+    final String versionString = PhpStanVersionSupport.extractVersionFromOutput(message);
+    final Version version = versionString != null ? extractVersion(versionString) : null;
     if (version == null || !message.contains(PHP_STAN)) {
+      // Clear version on validation failure
+      myPhpStanConfiguration.setVersion(null);
       return Pair.create(false, PhpBundle.message("quality.tool.can.not.determine.version", message));
     }
+    // Store the version for editor mode support detection
+    myPhpStanConfiguration.setVersion(versionString);
     return Pair.create(true, "OK, " + message);
   }
 }

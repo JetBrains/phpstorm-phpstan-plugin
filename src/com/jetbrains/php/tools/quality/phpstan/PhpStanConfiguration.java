@@ -18,6 +18,7 @@ public class PhpStanConfiguration extends QualityToolConfiguration {
   private String myPhpStanPath = "";
   private int myMaxMessagesPerFile = DEFAULT_MAX_MESSAGES_PER_FILE;
   private int myTimeoutMs = 30000;
+  private @Nullable String myVersion = null;
 
   @Override
   @Transient
@@ -58,6 +59,34 @@ public class PhpStanConfiguration extends QualityToolConfiguration {
     myTimeoutMs = timeout;
   }
 
+  /**
+   * Gets the detected PHPStan version.
+   * Used to determine if editor mode (--tmp-file/--instead-of) is supported.
+   */
+  @Transient
+  public @Nullable String getVersion() {
+    return myVersion;
+  }
+
+  /**
+   * Sets the detected PHPStan version.
+   * Called during tool validation when the version is extracted from PHPStan output.
+   */
+  public void setVersion(@Nullable String version) {
+    myVersion = version;
+  }
+
+  @SuppressWarnings("UnusedDeclaration")
+  @Attribute("version")
+  public @Nullable String getSerializedVersion() {
+    return myVersion;
+  }
+
+  @SuppressWarnings("UnusedDeclaration")
+  public void setSerializedVersion(@Nullable String version) {
+    myVersion = version;
+  }
+
   @Override
   public @NotNull @Nls String getId() {
     return PhpStanBundle.message("local");
@@ -79,6 +108,7 @@ public class PhpStanConfiguration extends QualityToolConfiguration {
     settings.myPhpStanPath = myPhpStanPath;
     settings.myMaxMessagesPerFile = myMaxMessagesPerFile;
     settings.myTimeoutMs = myTimeoutMs;
+    settings.myVersion = myVersion;
     return settings;
   }
 
