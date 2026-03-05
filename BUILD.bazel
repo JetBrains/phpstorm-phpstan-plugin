@@ -39,6 +39,9 @@ jvm_library(
     "@community//platform/forms_rt:java-guiForms-rt",
     "//webcore/impl",
     "@community//libraries/snakeyaml",
+    "@community//platform/util/concurrency",
+    "@community//jps/model-api:model",
+    "@community//platform/execution",
   ]
 )
 
@@ -87,6 +90,12 @@ jvm_library(
     "//webcore/impl:impl_test_lib",
     "@community//libraries/snakeyaml",
     "@community//libraries/snakeyaml:snakeyaml_test_lib",
+    "@community//platform/util/concurrency",
+    "@community//platform/util/concurrency:concurrency_test_lib",
+    "@community//jps/model-api:model",
+    "@community//jps/model-api:model_test_lib",
+    "@community//platform/execution",
+    "@community//platform/execution:execution_test_lib",
   ],
   runtime_deps = [
     "@community//platform/platform-impl:ide-impl_test_lib",
