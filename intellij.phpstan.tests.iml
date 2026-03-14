@@ -34,6 +34,8 @@
     <orderEntry type="module" module-name="intellij.platform.jps.model" scope="TEST" />
     <orderEntry type="module" module-name="intellij.platform.execution" scope="TEST" />
     <orderEntry type="module" module-name="intellij.phpstan" scope="TEST" />
+    <orderEntry type="module" module-name="intellij.php.impl.tests" scope="TEST" />
+    <orderEntry type="module" module-name="intellij.php.frontback.impl.tests" scope="TEST" />
   </component>
   <component name="TestModuleProperties" production-module="intellij.phpstan" />
 </module>
