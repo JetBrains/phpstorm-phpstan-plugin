@@ -104,6 +104,12 @@ jvm_library(
 )
 ### auto-generated section `build intellij.phpstan` end
 
+### auto-generated section `iml intellij.phpstan` start
+exports_files([
+  "intellij.phpstan.iml",
+], visibility = ["//visibility:public"])
+### auto-generated section `iml intellij.phpstan` end
+
 ### auto-generated section `test intellij.phpstan` start
 load("@community//build:tests-options.bzl", "jps_test")
 
