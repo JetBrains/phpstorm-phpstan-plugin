@@ -23,6 +23,7 @@ jvm_library(
     "@community//platform/projectModel-impl",
     "@community//platform/platform-api:ide",
     "@community//platform/util/jdom",
+    "@community//platform/util/concurrency",
   ]
 )
 
@@ -42,6 +43,7 @@ jvm_library(
     "@community//platform/projectModel-impl:projectModel-impl_test_lib",
     "@community//platform/platform-api:ide_test_lib",
     "@community//platform/util/jdom:jdom_test_lib",
+    "@community//platform/util/concurrency:concurrency_test_lib",
   ]
 )
 ### auto-generated section `build intellij.phpstan.remoteInterpreter` end
