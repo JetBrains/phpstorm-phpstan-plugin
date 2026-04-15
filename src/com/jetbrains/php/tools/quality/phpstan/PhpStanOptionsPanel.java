@@ -57,7 +57,7 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
       // >>> IMPORTANT!! <<<
       // DO NOT EDIT OR ADD ANY CODE HERE!
       myOptionsPanel = new JPanel();
-      myOptionsPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 5, 0, 0), -1, -1));
+      myOptionsPanel.setLayout(new GridLayoutManager(3, 1, new Insets(0, 5, 0, 0), -1, -1));
       final JPanel panel1 = new JPanel();
       panel1.setLayout(new GridLayoutManager(7, 4, new Insets(5, 5, 0, 0), -1, -1));
       panel1.setAlignmentY(0.5f);
@@ -144,12 +144,12 @@ public class PhpStanOptionsPanel extends QualityToolsOptionsPanel {
                                                               GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                                                               null, null, null, 0, false));
       myRateLimitPanel = new QualityToolRateLimitPanel();
-      panel1.add(myRateLimitPanel, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE,
-                                                       GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                                                       GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null,
-                                                       null, null, 0, false));
+      myOptionsPanel.add(myRateLimitPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                                                               GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                                                               GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                                                               null, null, null, 0, false));
       final Spacer spacer2 = new Spacer();
-      myOptionsPanel.add(spacer2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1,
+      myOptionsPanel.add(spacer2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1,
                                                       GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
     }
     PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(project);
