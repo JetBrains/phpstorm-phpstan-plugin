@@ -29,6 +29,7 @@ jvm_library(
 
 jvm_library(
   name = "remoteInterpreter_test_lib",
+  testonly = True,
   module_name = "intellij.phpstan.remoteInterpreter",
   visibility = ["//visibility:public"],
   srcs = glob([], allow_empty = True),
