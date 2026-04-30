@@ -42,6 +42,11 @@
                          groupWeight="15"/>
     <completion.contributor language="PHP" implementationClass="com.jetbrains.php.phpstan.completion.PhpStanCompletionContributor"/>
     <webcore.phpFrameworkExclusionProvider implementation="com.jetbrains.php.tools.quality.phpstan.exclusion.PhpStanExclusionProvider"/>
+    <applicationSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanAppConfigurationManager"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanProjectConfigurationManager"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanBlackList"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanOptionsConfiguration"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanProjectConfiguration"/>
   </extensions>
   <extensions defaultExtensionNs="com.jetbrains.php">
     <composerConfigClient implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanComposerConfig"/>
