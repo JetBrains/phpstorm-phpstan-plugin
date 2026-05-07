@@ -1,18 +1,13 @@
 ### auto-generated section `build intellij.phpstan` start
-load("@rules_jvm//:jvm.bzl", "jvm_library", "resourcegroup")
-
-resourcegroup(
-  name = "phpstan_resources",
-  srcs = glob(["resources/**/*"]),
-  strip_prefix = "resources"
-)
+load("@rules_jvm//:jvm.bzl", "jvm_library")
 
 jvm_library(
   name = "phpstan",
   module_name = "intellij.phpstan",
   visibility = ["//visibility:public"],
   srcs = glob(["src/**/*.kt", "src/**/*.java", "src/**/*.form"], allow_empty = True),
-  resources = [":phpstan_resources"],
+  resources = glob(["resources/**/*"]),
+  resource_strip_prefix = "resources",
   deps = [
     "//phpstorm/php:php-impl",
     "@community//platform/core-api:core",
@@ -84,12 +79,6 @@ exports_files([
 ### auto-generated section `iml intellij.phpstan` end
 
 ### auto-generated section `build intellij.phpstan.tests` start
-resourcegroup(
-  name = "phpstan-tests_test_resources",
-  srcs = glob(["testData/**/*"]),
-  strip_prefix = "testData"
-)
-
 jvm_library(
   name = "phpstan-tests",
   module_name = "intellij.phpstan.tests",
@@ -102,7 +91,8 @@ jvm_library(
   testonly = True,
   visibility = ["//visibility:public"],
   srcs = glob(["tests/**/*.kt", "tests/**/*.java", "tests/**/*.form"], allow_empty = True),
-  resources = [":phpstan-tests_test_resources"],
+  resources = glob(["testData/**/*"]),
+  resource_strip_prefix = "testData",
   associates = [
     "//phpstorm/phpstan",
     "//phpstorm/phpstan:phpstan_test_lib",
