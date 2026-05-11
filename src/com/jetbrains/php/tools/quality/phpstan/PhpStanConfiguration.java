@@ -1,7 +1,6 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.NlsContexts;
+import com.intellij.openapi.util.Version;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Transient;
@@ -16,10 +15,20 @@ import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManage
 /**
  * Stores configuration needed to run PHPStan in selected environment.
  */
-public class PhpStanConfiguration implements QualityToolConfiguration {
+public class PhpStanConfiguration extends QualityToolConfiguration {
   private String myPhpStanPath = "";
   private int myMaxMessagesPerFile = DEFAULT_MAX_MESSAGES_PER_FILE;
   private int myTimeoutMs = 30000;
+  private @Nullable String myVersion = null;
+
+  @Transient
+  public @Nullable Version getVersion() {
+    return myVersion;
+  }
+
+  public void setVersion(@Nullable Version version) {
+    myVersion = version;
+  }
 
   @Override
   @Transient
@@ -33,9 +42,8 @@ public class PhpStanConfiguration implements QualityToolConfiguration {
   }
 
   @SuppressWarnings("UnusedDeclaration")
-  @Nullable
   @Attribute("tool_path")
-  public String getSerializedToolPath() {
+  public @Nullable String getSerializedToolPath() {
     return serialize(myPhpStanPath);
   }
 
@@ -61,15 +69,41 @@ public class PhpStanConfiguration implements QualityToolConfiguration {
     myTimeoutMs = timeout;
   }
 
+  /**
+   * Gets the detected PHPStan version.
+   * Used to determine if editor mode (--tmp-file/--instead-of) is supported.
+   */
+  @Transient
+  public @Nullable String getVersion() {
+    return myVersion;
+  }
+
+  /**
+   * Sets the detected PHPStan version.
+   * Called during tool validation when the version is extracted from PHPStan output.
+   */
+  public void setVersion(@Nullable String version) {
+    myVersion = version;
+  }
+
+  @SuppressWarnings("UnusedDeclaration")
+  @Attribute("version")
+  public @Nullable String getSerializedVersion() {
+    return myVersion;
+  }
+
+  @SuppressWarnings("UnusedDeclaration")
+  public void setSerializedVersion(@Nullable String version) {
+    myVersion = version;
+  }
+
   @Override
-  @NotNull
-  public @Nls String getId() {
+  public @NotNull @Nls String getId() {
     return PhpStanBundle.message("local");
   }
 
   @Override
-  @Nullable
-  public String getInterpreterId() {
+  public @Nullable String getInterpreterId() {
     return null;
   }
 
@@ -84,6 +118,7 @@ public class PhpStanConfiguration implements QualityToolConfiguration {
     settings.myPhpStanPath = myPhpStanPath;
     settings.myMaxMessagesPerFile = myMaxMessagesPerFile;
     settings.myTimeoutMs = myTimeoutMs;
+    settings.myVersion = myVersion;
     return settings;
   }
 

@@ -18,21 +18,18 @@ public class PhpStanConfigurationBaseManager extends QualityToolConfigurationBas
     return PhpStanQualityToolType.INSTANCE;
   }
 
-  @NotNull
   @Override
-  protected String getOldStyleToolPathName() {
+  protected @NotNull String getOldStyleToolPathName() {
     return PHP_STAN_PATH;
   }
 
-  @NotNull
   @Override
-  protected String getConfigurationRootName() {
+  protected @NotNull String getConfigurationRootName() {
     return ROOT_NAME;
   }
 
   @Override
-  @Nullable
-  protected PhpStanConfiguration loadLocal(Element element) {
+  protected @Nullable PhpStanConfiguration loadLocal(Element element) {
     return XmlSerializer.deserialize(element, PhpStanConfiguration.class);
   }
 }

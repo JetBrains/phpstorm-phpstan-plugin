@@ -27,7 +27,8 @@ PHP file
             PsiElement(identifier)('int')
         PsiElement(bit or)('|')
         PhpPsiElementImpl
-          PsiElement(array)('array')
+          ClassReferenceImpl: array
+            PsiElement(array)('array')
         PsiWhiteSpace(' ')
         PsiElement(identifier)('borp')
         PsiElement(()('(')
@@ -40,17 +41,19 @@ PHP file
           PsiElement(()('(')
           Parameter list
             ParameterImpl: int1
-              ClassReferenceImpl: int
-                PsiElement(identifier)('int')
+              PhpPsiElementImpl
+                ClassReferenceImpl: int
+                  PsiElement(identifier)('int')
               PsiWhiteSpace(' ')
               PsiElement(variable)('$int1')
             PsiElement(comma)(',')
             PsiWhiteSpace(' ')
             ParameterImpl: int2
-              ClassReferenceImpl: int
-                PsiElement(identifier)('int')
-              PsiElement([)('[')
-              PsiElement(])(']')
+              PhpPsiElementImpl
+                ClassReferenceImpl: int
+                  PsiElement(identifier)('int')
+                PsiElement([)('[')
+                PsiElement(])(']')
               PsiWhiteSpace(' ')
               PsiElement(variable)('$int2')
           PsiElement())(')')
@@ -73,7 +76,8 @@ PHP file
             PsiElement(identifier)('int')
         PsiElement(bit or)('|')
         PhpPsiElementImpl
-          PsiElement(array)('array')
+          ClassReferenceImpl: array
+            PsiElement(array)('array')
         PsiWhiteSpace(' ')
         PsiElement(identifier)('borp')
         PsiElement(()('(')
@@ -86,17 +90,19 @@ PHP file
           PsiElement(()('(')
           Parameter list
             ParameterImpl: int1
-              ClassReferenceImpl: int
-                PsiElement(identifier)('int')
+              PhpPsiElementImpl
+                ClassReferenceImpl: int
+                  PsiElement(identifier)('int')
               PsiWhiteSpace(' ')
               PsiElement(variable)('$int1')
             PsiElement(comma)(',')
             PsiWhiteSpace(' ')
             ParameterImpl: int2
-              ClassReferenceImpl: int
-                PsiElement(identifier)('int')
-              PsiElement([)('[')
-              PsiElement(])(']')
+              PhpPsiElementImpl
+                ClassReferenceImpl: int
+                  PsiElement(identifier)('int')
+                PsiElement([)('[')
+                PsiElement(])(']')
               PsiWhiteSpace(' ')
               PsiElement(variable)('$int2')
           PsiElement())(')')

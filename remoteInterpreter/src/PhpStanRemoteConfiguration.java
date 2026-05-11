@@ -1,10 +1,11 @@
-package com.jetbrains.php.tools.quality.phpstan.remote;
+package com.intellij.phpstan.remoteInterpreter;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Tag;
+import com.jetbrains.php.PhpBundle;
 import com.jetbrains.php.config.interpreters.PhpInterpretersManagerImpl;
 import com.jetbrains.php.config.interpreters.PhpSdkDependentConfiguration;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanBundle;
@@ -14,15 +15,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.intellij.openapi.util.text.StringUtil.isEmpty;
+import static com.jetbrains.php.tools.quality.QualityToolProjectConfiguration.DEFAULT_INTERPRETER_CONFIGURATION_ID;
 
 @Tag("phpstan_by_interpreter")
 public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements PhpSdkDependentConfiguration {
   private String myInterpreterId;
 
   @Override
-  @Nullable
   @Attribute("interpreter_id")
-  public @NlsSafe String getInterpreterId() {
+  public @Nullable @NlsSafe String getInterpreterId() {
     return myInterpreterId;
   }
 
@@ -31,21 +32,20 @@ public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements 
     myInterpreterId = interpreterId;
   }
 
-  @NotNull
   @Override
-  public @NlsContexts.Label String getPresentableName(@Nullable Project project) {
+  public @NotNull @NlsContexts.Label String getPresentableName(@Nullable Project project) {
+    if (isCreatedAsDefaultInterpreterConfiguration()) return PhpBundle.message("quality.tools.label.by.default.project.interpreter");
     return getDefaultName(PhpInterpretersManagerImpl.getInstance(project).findInterpreterName(getInterpreterId()));
   }
 
-  @NotNull
   @Override
-  public @Nls String getId() {
+  public @NotNull @Nls String getId() {
+    if (isCreatedAsDefaultInterpreterConfiguration()) return DEFAULT_INTERPRETER_CONFIGURATION_ID;
     final String interpreterId = getInterpreterId();
     return isEmpty(interpreterId) ? PhpStanBundle.message("undefined.interpreter") : interpreterId;
   }
 
-  @NotNull
-  public static @Nls String getDefaultName(@Nls @Nullable String interpreterName) {
+  public static @NotNull @Nls String getDefaultName(@Nls @Nullable String interpreterName) {
     return isEmpty(interpreterName) ? PhpStanBundle.message("undefined.interpreter") : interpreterName;
   }
 
@@ -53,6 +53,8 @@ public class PhpStanRemoteConfiguration extends PhpStanConfiguration implements 
   public PhpStanRemoteConfiguration clone() {
     PhpStanRemoteConfiguration settings = new PhpStanRemoteConfiguration();
     settings.myInterpreterId = myInterpreterId;
+    settings.setCreatedAsDefaultInterpreterConfiguration(this.isCreatedAsDefaultInterpreterConfiguration());
+    settings.setDeletedFromTheList(this.isDeletedFromTheList());
     clone(settings);
     return settings;
   }

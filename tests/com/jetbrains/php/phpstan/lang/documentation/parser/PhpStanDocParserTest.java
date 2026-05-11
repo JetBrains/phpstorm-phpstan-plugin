@@ -1,7 +1,6 @@
 package com.jetbrains.php.phpstan.lang.documentation.parser;
 
 import com.jetbrains.php.lang.parser.BasicPhpParserTestCase;
-import org.jetbrains.annotations.NotNull;
 
 public class PhpStanDocParserTest extends BasicPhpParserTestCase {
   public static final String TEST_DATA_HOME = "/phpstorm/phpstan/testData/";

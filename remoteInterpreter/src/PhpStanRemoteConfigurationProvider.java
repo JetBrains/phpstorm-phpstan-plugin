@@ -1,4 +1,4 @@
-package com.jetbrains.php.tools.quality.phpstan.remote;
+package com.intellij.phpstan.remoteInterpreter;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
@@ -15,6 +15,7 @@ import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurableForm;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfiguration;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationProvider;
+import com.jetbrains.php.tools.quality.phpstan.PhpStanQualityToolType;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -23,27 +24,26 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
+import static com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterDialog.getLocalOrDefaultInterpreterConfiguration;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseManager.PHP_STAN;
 
 public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProvider {
 
-  @NonNls private static final String PHPSTAN_BY_INTERPRETER = "phpstan_by_interpreter";
+  private static final @NonNls String PHPSTAN_BY_INTERPRETER = "phpstan_by_interpreter";
 
   @Override
   public boolean canLoad(@NotNull String tagName) {
     return StringUtil.equals(tagName, PHPSTAN_BY_INTERPRETER);
   }
 
-  @Nullable
   @Override
-  public PhpStanConfiguration load(@NotNull Element element) {
+  public @Nullable PhpStanConfiguration load(@NotNull Element element) {
     return XmlSerializer.deserialize(element, PhpStanRemoteConfiguration.class);
   }
 
-  @Nullable
   @Override
-  public QualityToolConfigurableForm<PhpStanRemoteConfiguration> createConfigurationForm(@NotNull Project project,
-                                                                                            @NotNull PhpStanConfiguration settings) {
+  public @Nullable QualityToolConfigurableForm<PhpStanRemoteConfiguration> createConfigurationForm(@NotNull Project project,
+                                                                                                   @NotNull PhpStanConfiguration settings) {
     if (settings instanceof PhpStanRemoteConfiguration remoteConfiguration) {
       final PhpStanConfigurableForm<PhpStanRemoteConfiguration> delegate =
         new PhpStanConfigurableForm<>(project, remoteConfiguration);
@@ -54,8 +54,8 @@ public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProv
 
   @Override
   public PhpStanConfiguration createNewInstance(@Nullable Project project, @NotNull List<PhpStanConfiguration> existingSettings) {
-    final QualityToolByInterpreterDialog<PhpStanConfiguration, PhpStanRemoteConfiguration>
-      dialog = new QualityToolByInterpreterDialog<>(project, existingSettings, PHP_STAN, PhpStanRemoteConfiguration.class);
+    var dialog =
+      new QualityToolByInterpreterDialog<>(project, existingSettings, PHP_STAN, PhpStanConfiguration.class, PhpStanQualityToolType.INSTANCE);
     if (dialog.showAndGet()) {
       final String id = PhpInterpretersManagerImpl.getInstance(project).findInterpreterId(dialog.getSelectedInterpreterName());
       if (isNotEmpty(id)) {
@@ -63,10 +63,11 @@ public class PhpStanRemoteConfigurationProvider extends PhpStanConfigurationProv
         settings.setInterpreterId(id);
 
         final PhpSdkAdditionalData data = PhpInterpretersManagerImpl.getInstance(project).findInterpreterDataById(id);
-        fillDefaultSettings(project, settings, PhpStanConfigurationManager.getInstance(project).getLocalSettings(), data, data instanceof PhpRemoteSdkAdditionalData);
+        fillDefaultSettings(project, settings, PhpStanConfigurationManager.getInstance(project).getOrCreateLocalSettings(), data, data instanceof PhpRemoteSdkAdditionalData);
 
         return settings;
       }
+      return (PhpStanConfiguration)getLocalOrDefaultInterpreterConfiguration(dialog.getSelectedInterpreterName(), project, PhpStanQualityToolType.INSTANCE);
     }
     return null;
   }

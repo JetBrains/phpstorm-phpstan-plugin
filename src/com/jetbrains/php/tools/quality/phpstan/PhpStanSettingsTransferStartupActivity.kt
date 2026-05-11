@@ -6,7 +6,7 @@ import com.intellij.openapi.startup.ProjectActivity
 import com.intellij.profile.codeInspection.InspectionProfileManager
 import com.intellij.util.PlatformUtils
 
-class PhpStanSettingsTransferStartupActivity : ProjectActivity {
+private class PhpStanSettingsTransferStartupActivity : ProjectActivity {
   override suspend fun execute(project: Project) {
     if (project.isDefault) return
     val app = ApplicationManager.getApplication()

@@ -9,9 +9,8 @@ import static com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationBaseMa
 @SuppressWarnings("InspectionDescriptionNotFoundInspection")
 public class PhpStanValidationInspection extends QualityToolValidationInspection<PhpStanValidationInspection> {
 
-  @NotNull
   @Override
-  protected PhpStanAnnotatorProxy getAnnotator() {
+  protected @NotNull PhpStanAnnotatorProxy getAnnotator() {
     return PhpStanAnnotatorProxy.INSTANCE;
   }
 
