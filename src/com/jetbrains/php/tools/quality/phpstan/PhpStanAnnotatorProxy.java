@@ -21,6 +21,8 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +34,11 @@ import static java.util.Collections.singletonList;
 
 public final class PhpStanAnnotatorProxy extends RateLimitedQualityToolAnnotator<PhpStanValidationInspection> {
   public static final PhpStanAnnotatorProxy INSTANCE = new PhpStanAnnotatorProxy();
+  
+  // Map to store original file paths for PHPStan editor mode support
+  // Key: temp file path, Value: original file path
+  // See: https://phpstan.org/user-guide/editor-mode
+  private static final Map<String, String> ORIGINAL_FILE_PATHS = new ConcurrentHashMap<>();
   private static final Logger LOG = Logger.getInstance(PhpStanAnnotatorProxy.class);
 
   private static final Version EDITOR_MODE_VERSION_1X = new Version(1, 12, 27);
@@ -91,6 +98,24 @@ public final class PhpStanAnnotatorProxy extends RateLimitedQualityToolAnnotator
                                         ProjectRootManager.getInstance(project).getContentSourceRoots(),
                                         VirtualFile::getPath)), project);
   }
+  
+  /**
+   * Finds the original file path from a temp file path.
+   * Temp files preserve the relative path structure after the temp folder.
+   */
+  private @Nullable String findOriginalFilePath(@Nullable String tempFilePath) {
+    if (tempFilePath == null) return null;
+    
+    // Look for the original path in our map
+    // The key is the relative path which should be present in both paths
+    for (Map.Entry<String, String> entry : ORIGINAL_FILE_PATHS.entrySet()) {
+      String relativePath = entry.getKey();
+      if (tempFilePath.endsWith(relativePath) || tempFilePath.contains("/" + relativePath) || tempFilePath.contains("\\" + relativePath)) {
+        return entry.getValue();
+      }
+    }
+    return null;
+  }
 
   @Override
   protected QualityToolMessageProcessor createMessageProcessor(@NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> collectedInfo) {
@@ -104,6 +129,29 @@ public final class PhpStanAnnotatorProxy extends RateLimitedQualityToolAnnotator
                                                                                                Project project,
                                                                                                QualityToolConfiguration configuration,
                                                                                                boolean isOnTheFly) {
+    // Store original file path for PHPStan editor mode (--tmp-file / --instead-of)
+    if (file != null && file.getVirtualFile() != null) {
+      String originalPath = file.getVirtualFile().getPath();
+      String basePath = project.getBasePath();
+      
+      // Calculate relative path from project base
+      String relativePath = originalPath;
+      if (basePath != null && originalPath.startsWith(basePath)) {
+        relativePath = originalPath.substring(basePath.length());
+        if (relativePath.startsWith("/") || relativePath.startsWith("\\")) {
+          relativePath = relativePath.substring(1);
+        }
+      } else {
+        // If not under project, just use the filename as a fallback key
+        relativePath = file.getName();
+      }
+      
+      // Store mapping: relative path -> original absolute path
+      ORIGINAL_FILE_PATHS.put(relativePath, originalPath);
+      
+      // Also store by filename as a fallback
+      ORIGINAL_FILE_PATHS.put(file.getName(), originalPath);
+    }
     return new PhpStanQualityToolAnnotatorInfo(file, tool, inspectionProfile, project, configuration, isOnTheFly);
   }
 
