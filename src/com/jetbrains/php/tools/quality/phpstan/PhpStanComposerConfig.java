@@ -27,7 +27,9 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.util.List;
 
-import static com.intellij.openapi.util.text.StringUtil.*;
+import static com.intellij.openapi.util.text.StringUtil.split;
+import static com.intellij.openapi.util.text.StringUtil.startsWith;
+import static com.intellij.openapi.util.text.StringUtil.trimStart;
 import static com.jetbrains.php.composer.ComposerConfigUtils.parseJson;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanOpenSettingsProvider.PHP_STAN_OPEN_SETTINGS_PROVIDER;
 

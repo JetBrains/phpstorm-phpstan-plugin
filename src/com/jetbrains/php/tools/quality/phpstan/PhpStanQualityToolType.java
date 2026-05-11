@@ -5,7 +5,13 @@ import com.intellij.codeInspection.ex.InspectionToolWrapper;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
 import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
-import com.jetbrains.php.tools.quality.*;
+import com.jetbrains.php.tools.quality.QualityToolBlackList;
+import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
+import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
+import com.jetbrains.php.tools.quality.QualityToolConfigurationProvider;
+import com.jetbrains.php.tools.quality.QualityToolProjectConfiguration;
+import com.jetbrains.php.tools.quality.QualityToolType;
+import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

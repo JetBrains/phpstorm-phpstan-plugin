@@ -3,11 +3,19 @@
   <id>com.intellij.php.tools.quality.phpstan</id>
   <description>Plugin provides PHPStan static analysis tool support</description>
   <vendor>JetBrains</vendor>
-  <depends>com.jetbrains.php</depends>
-  <depends>com.intellij.modules.ultimate</depends>
   <category>PHP Tools</category>
   <resource-bundle>messages.PhpStanBundle</resource-bundle>
-  <depends optional="true" config-file="phpstan-remote-plugin.xml">org.jetbrains.plugins.phpstorm-remote-interpreter</depends>
+
+  <dependencies>
+    <plugin id="com.jetbrains.php"/>
+    <plugin id="com.intellij.modules.ultimate"/>
+    <!-- region Generated dependencies - run `Generate Product Layouts` to regenerate -->
+    <module name="intellij.platform.webide.impl"/>
+    <!-- endregion -->
+  </dependencies>
+  <content>
+    <module name="intellij.phpstan.remoteInterpreter"/>
+  </content>
   <extensions defaultExtensionNs="com.intellij">
     <applicationService
         serviceImplementation="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanAppConfigurationManager"/>
@@ -33,6 +41,12 @@
                          parentId="settings.php.quality.tools"
                          groupWeight="15"/>
     <completion.contributor language="PHP" implementationClass="com.jetbrains.php.phpstan.completion.PhpStanCompletionContributor"/>
+    <webcore.phpFrameworkExclusionProvider implementation="com.jetbrains.php.tools.quality.phpstan.exclusion.PhpStanExclusionProvider"/>
+    <applicationSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanAppConfigurationManager"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanProjectConfigurationManager"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanBlackList"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanOptionsConfiguration"/>
+    <projectSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanProjectConfiguration"/>
   </extensions>
   <extensions defaultExtensionNs="com.jetbrains.php">
     <composerConfigClient implementation="com.jetbrains.php.tools.quality.phpstan.PhpStanComposerConfig"/>

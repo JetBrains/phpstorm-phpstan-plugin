@@ -1,0 +1,11 @@
+<idea-plugin>
+  <dependencies>
+    <plugin id="com.intellij.php.tools.quality.phpstan"/>
+    <plugin id="com.jetbrains.php"/>
+    <plugin id="org.jetbrains.plugins.phpstorm-remote-interpreter"/>
+  </dependencies>
+  <extensions defaultExtensionNs="com.jetbrains.php">
+    <tools.quality.PhpStan.PhpStanConfigurationProvider
+      implementation="com.intellij.phpstan.remoteInterpreter.PhpStanRemoteConfigurationProvider"/>
+  </extensions>
+</idea-plugin>

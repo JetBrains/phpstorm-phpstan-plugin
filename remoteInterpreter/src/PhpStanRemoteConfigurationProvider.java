@@ -1,4 +1,4 @@
-package com.jetbrains.php.tools.quality.phpstan.remote;
+package com.intellij.phpstan.remoteInterpreter;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
@@ -11,7 +11,11 @@ import com.jetbrains.php.remote.interpreter.PhpRemoteSdkAdditionalData;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterConfigurableForm;
 import com.jetbrains.php.remote.tools.quality.QualityToolByInterpreterDialog;
 import com.jetbrains.php.tools.quality.QualityToolConfigurableForm;
-import com.jetbrains.php.tools.quality.phpstan.*;
+import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurableForm;
+import com.jetbrains.php.tools.quality.phpstan.PhpStanConfiguration;
+import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager;
+import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationProvider;
+import com.jetbrains.php.tools.quality.phpstan.PhpStanQualityToolType;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;

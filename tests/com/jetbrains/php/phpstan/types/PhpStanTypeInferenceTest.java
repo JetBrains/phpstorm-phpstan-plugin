@@ -1,6 +1,7 @@
 package com.jetbrains.php.phpstan.types;
 
 import com.jetbrains.php.codeInsight.PhpTypeInferenceTestCase;
+import com.jetbrains.php.config.PhpLanguageLevel;
 import com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParserTest;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,5 +38,13 @@ public class PhpStanTypeInferenceTest extends PhpTypeInferenceTestCase {
 
   public void testConditionalTypesWithGenerics() {
     doTypeTest();
+  }
+
+  public void testValueOfBackedEnumInParamArray() {
+    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP810, () -> doTypeTest());
+  }
+
+  public void testValueOfBackedEnumInReturnArray() {
+    doLanguageLevelTest(getProject(), PhpLanguageLevel.PHP810, () -> doTypeTest());
   }
 }

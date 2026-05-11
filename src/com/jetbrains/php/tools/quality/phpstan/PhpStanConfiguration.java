@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
+import com.intellij.openapi.util.Version;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Transient;
@@ -19,6 +20,15 @@ public class PhpStanConfiguration extends QualityToolConfiguration {
   private int myMaxMessagesPerFile = DEFAULT_MAX_MESSAGES_PER_FILE;
   private int myTimeoutMs = 30000;
   private @Nullable String myVersion = null;
+
+  @Transient
+  public @Nullable Version getVersion() {
+    return myVersion;
+  }
+
+  public void setVersion(@Nullable Version version) {
+    myVersion = version;
+  }
 
   @Override
   @Transient
