@@ -137,8 +137,8 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
     if (cached != null) return cached;
 
     try {
-      ProcessOutput output = QualityToolProcessCreator.getToolOutput(project, annotatorInfo.getInterpreterId(), annotatorInfo.getToolPath(),
-        5000, PhpStanConfigurationBaseManager.PHP_STAN, null, "--version", "--no-ansi"
+      ProcessOutput output = QualityToolProcessCreator.getToolOutputInBackground(project, annotatorInfo.getInterpreterId(), annotatorInfo.getToolPath(),
+        5000, "--version", "--no-ansi"
       );
       String stdout = output.getStdout().trim();
       Version detected = parseVersionFromOutput(stdout);
