@@ -92,10 +92,12 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     List<String> filePaths = ContainerUtil.filter(filePath, Objects::nonNull);
     filePaths = ContainerUtil.map(filePaths, it -> updateIfRemoteMappingExists(it, project, PhpStanQualityToolType.INSTANCE));
     if (originalFilePath != null && filePaths.size() == 1) {
+      String mappedOriginal = updateIfRemoteMappingExists(originalFilePath, project, PhpStanQualityToolType.INSTANCE);
       options.add("--tmp-file");
       options.add(filePaths.getFirst());
       options.add("--instead-of");
-      options.add(updateIfRemoteMappingExists(originalFilePath, project, PhpStanQualityToolType.INSTANCE));
+      options.add(mappedOriginal);
+      options.add(mappedOriginal);
     }
     else {
       options.addAll(filePaths);
