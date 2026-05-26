@@ -76,8 +76,6 @@ jvm_library(
         "@community//platform/analysis-api:analysis_test_lib",
         "@community//platform/platform-api:ide_test_lib",
         "@community//platform/remote-core:remote-core_test_lib",
-        "@community//platform/testFramework",
-        "@community//platform/testFramework:testFramework_test_lib",
         "@community//platform/util/jdom:jdom_test_lib",
         "@community//platform/util:util-ui_test_lib",
         "@community//libraries/gson:gson_test_lib",
