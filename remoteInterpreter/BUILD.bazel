@@ -1,51 +1,69 @@
-### auto-generated section `build intellij.phpstan.remoteInterpreter` start
 load("@rules_jvm//:jvm.bzl", "jvm_library")
 
+### auto-generated section `build intellij.phpstan.remoteInterpreter` start
+
 jvm_library(
-  name = "remoteInterpreter",
-  module_name = "intellij.phpstan.remoteInterpreter",
-  visibility = ["//visibility:public"],
-  srcs = glob(["src/**/*.kt", "src/**/*.java", "src/**/*.form"], allow_empty = True),
-  resources = glob(["resources/**/*"]),
-  resource_strip_prefix = "resources",
-  deps = [
-    "//phpstorm/phpstan",
-    "@community//platform/util",
-    "@community//platform/core-api:core",
-    "//phpstorm/php:php-impl",
-    "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter",
-    "@community//platform/projectModel-api:projectModel",
-    "@community//platform/projectModel-impl",
-    "@community//platform/platform-api:ide",
-    "@community//platform/util/jdom",
-    "@community//platform/util/concurrency",
-  ]
+    name = "remoteInterpreter",
+    srcs = glob(
+        [
+            "src/**/*.kt",
+            "src/**/*.java",
+            "src/**/*.form",
+        ],
+        allow_empty = True,
+    ),
+    module_name = "intellij.phpstan.remoteInterpreter",
+    resource_strip_prefix = "resources",
+    resources = glob(
+        ["resources/**/*"],
+    ),
+    visibility = ["//visibility:public"],
+    deps = [
+        # do not sort,
+        "//phpstorm/phpstan",
+        "@community//platform/util",
+        "@community//platform/core-api:core",
+        "//phpstorm/php:php-impl",
+        "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter",
+        "@community//platform/projectModel-api:projectModel",
+        "@community//platform/projectModel-impl",
+        "@community//platform/platform-api:ide",
+        "@community//platform/util/jdom",
+        "@community//platform/util/concurrency",
+    ],
 )
 
 jvm_library(
-  name = "remoteInterpreter_test_lib",
-  testonly = True,
-  module_name = "intellij.phpstan.remoteInterpreter",
-  visibility = ["//visibility:public"],
-  srcs = glob([], allow_empty = True),
-  runtime_deps = [
-    ":remoteInterpreter",
-    "//phpstorm/phpstan:phpstan_test_lib",
-    "@community//platform/util:util_test_lib",
-    "@community//platform/core-api:core_test_lib",
-    "//phpstorm/php:php-impl_test_lib",
-    "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter_test_lib",
-    "@community//platform/projectModel-api:projectModel_test_lib",
-    "@community//platform/projectModel-impl:projectModel-impl_test_lib",
-    "@community//platform/platform-api:ide_test_lib",
-    "@community//platform/util/jdom:jdom_test_lib",
-    "@community//platform/util/concurrency:concurrency_test_lib",
-  ]
+    name = "remoteInterpreter_test_lib",
+    testonly = True,
+    srcs = glob(
+        [],
+        allow_empty = True,
+    ),
+    module_name = "intellij.phpstan.remoteInterpreter",
+    visibility = ["//visibility:public"],
+    runtime_deps = [
+        # do not sort,
+        ":remoteInterpreter",
+        "//phpstorm/phpstan:phpstan_test_lib",
+        "@community//platform/util:util_test_lib",
+        "@community//platform/core-api:core_test_lib",
+        "//phpstorm/php:php-impl_test_lib",
+        "//phpstorm/phpstorm-remote-interpreter:php-remoteInterpreter_test_lib",
+        "@community//platform/projectModel-api:projectModel_test_lib",
+        "@community//platform/projectModel-impl:projectModel-impl_test_lib",
+        "@community//platform/platform-api:ide_test_lib",
+        "@community//platform/util/jdom:jdom_test_lib",
+        "@community//platform/util/concurrency:concurrency_test_lib",
+    ],
 )
 ### auto-generated section `build intellij.phpstan.remoteInterpreter` end
 
 ### auto-generated section `iml intellij.phpstan.remoteInterpreter` start
-exports_files([
-  "intellij.phpstan.remoteInterpreter.iml",
-], visibility = ["//visibility:public"])
+exports_files(
+    [
+        "intellij.phpstan.remoteInterpreter.iml",
+    ],
+    visibility = ["//visibility:public"],
+)
 ### auto-generated section `iml intellij.phpstan.remoteInterpreter` end
