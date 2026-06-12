@@ -7,9 +7,9 @@
   <resource-bundle>messages.PhpStanBundle</resource-bundle>
 
   <dependencies>
-    <plugin id="com.jetbrains.php"/>
     <plugin id="com.intellij.modules.ultimate"/>
     <!-- region Generated dependencies - run `Generate Product Layouts` to regenerate -->
+    <module name="intellij.php.backend"/>
     <module name="intellij.platform.webide.impl"/>
     <!-- endregion -->
   </dependencies>

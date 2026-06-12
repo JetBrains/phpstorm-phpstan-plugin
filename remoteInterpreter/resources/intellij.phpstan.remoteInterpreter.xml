@@ -1,8 +1,10 @@
 <idea-plugin>
   <dependencies>
+    <!-- region Generated dependencies - run `Generate Product Layouts` to regenerate -->
     <plugin id="com.intellij.php.tools.quality.phpstan"/>
-    <plugin id="com.jetbrains.php"/>
+    <module name="intellij.php.backend"/>
     <plugin id="org.jetbrains.plugins.phpstorm-remote-interpreter"/>
+    <!-- endregion -->
   </dependencies>
   <extensions defaultExtensionNs="com.jetbrains.php">
     <tools.quality.PhpStan.PhpStanConfigurationProvider
