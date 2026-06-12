@@ -42,13 +42,19 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   private final Set<ProblemDescription> lineMessages = new HashSet<>();
   private final HighlightDisplayLevel myWarningsHighlightLevel;
   final String myFilePath;
+  final @Nullable String myEditorModeFilePath;
   final PsiFile myPsiFile;
   final Project myProject;
 
   protected PhpStanMessageProcessor(QualityToolAnnotatorInfo<?> info) {
+    this(info, null);
+  }
+
+  protected PhpStanMessageProcessor(QualityToolAnnotatorInfo<?> info, @Nullable String editorModeFilePath) {
     super(info);
     myWarningsHighlightLevel = HighlightDisplayLevel.WARNING; // TODO: fix
     myFilePath = info.getTempFilePath();
+    myEditorModeFilePath = editorModeFilePath;
     myPsiFile = info.getPsiFile();
     myProject = info.getProject();
   }
@@ -101,7 +107,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   }
 
   protected XMLMessageHandler getXmlMessageHandler(@Nullable String filePath) {
-    return new PhpStanXmlMessageHandler(filePath);
+    return new PhpStanXmlMessageHandler(filePath, myEditorModeFilePath);
   }
 
   @Override
@@ -129,13 +135,22 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     return PhpStanQualityToolType.INSTANCE;
   }
 
+  public static boolean matchesFile(@Nullable String filePath, @Nullable String editorModeFilePath, @Nullable String fileAttr) {
+    if (filePath == null) return true;
+    String attr = fileAttr == null ? "" : fileAttr;
+    if (filePath.endsWith(attr)) return true;
+    return editorModeFilePath != null && editorModeFilePath.endsWith(attr);
+  }
+
   static final class PhpStanXmlMessageHandler extends XMLMessageHandler {
 
     private final String myFilePath;
+    private final @Nullable String myEditorModeFilePath;
     private String myFileAttr;
 
-    private PhpStanXmlMessageHandler(@Nullable String filePath) {
+    PhpStanXmlMessageHandler(@Nullable String filePath, @Nullable String editorModeFilePath) {
       myFilePath = filePath;
+      myEditorModeFilePath = editorModeFilePath;
     }
 
     private List<ProblemDescription> myProblemList;
@@ -148,7 +163,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
       if (FILE_TAG.equals(tagName)) {
         myFileAttr = PathUtil.toSystemIndependentName(attributes.getValue(FILE_NAME_ATTR));
-        myProblemList = myFilePath == null || myFilePath.endsWith(myFileAttr == null ? "": myFileAttr) ? new ArrayList<>() : null;
+        myProblemList = matchesFile(myFilePath, myEditorModeFilePath, myFileAttr) ? new ArrayList<>() : null;
       }
       else if (ERROR_TAG.equals(tagName) || WARNING_TAG.equals(tagName)) {
         if (myProblemList != null) {
