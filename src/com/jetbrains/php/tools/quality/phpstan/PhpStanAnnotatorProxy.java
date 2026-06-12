@@ -16,6 +16,7 @@ import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolConfiguration;
 import com.jetbrains.php.tools.quality.QualityToolMessageProcessor;
 import com.jetbrains.php.tools.quality.QualityToolProcessCreator;
+import com.intellij.util.PathUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -74,12 +75,8 @@ public final class PhpStanAnnotatorProxy extends RateLimitedQualityToolAnnotator
     }
 
     if (isOnTheFly) {
-      if (annotatorInfo != null) {
-        PhpStanOptionsConfiguration config = PhpStanOptionsConfiguration.getInstance(project);
-        VirtualFile originalFile = annotatorInfo.getOriginalFile();
-        if (config.isEditorMode() && originalFile != null && supportsEditorMode(getOrDetectVersion(annotatorInfo, project))) {
-          return tool.getCommandLineOptions(singletonList(filePath), project, originalFile.getPath());
-        }
+      if (annotatorInfo != null && annotatorInfo.getOriginalFile() != null && isEditorModeEffective(annotatorInfo, project)) {
+        return tool.getCommandLineOptions(singletonList(filePath), project, annotatorInfo.getOriginalFile().getPath());
       }
       return tool.getCommandLineOptions(singletonList(filePath), project);
     }
@@ -92,8 +89,35 @@ public final class PhpStanAnnotatorProxy extends RateLimitedQualityToolAnnotator
                                         VirtualFile::getPath)), project);
   }
 
+  private boolean isEditorModeEffective(@NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> annotatorInfo,
+                                        @NotNull Project project) {
+    if (!annotatorInfo.isOnTheFly()) {
+      LOG.debug("Editor mode: not on-the-fly");
+      return false;
+    }
+    PhpStanOptionsConfiguration config = PhpStanOptionsConfiguration.getInstance(project);
+    if (!config.isEditorMode()) {
+      LOG.debug("Editor mode: disabled in settings");
+      return false;
+    }
+    Version version = getOrDetectVersion(annotatorInfo, project);
+    boolean supported = supportsEditorMode(version);
+    LOG.debug("Editor mode: version=", version, ", supported=", supported);
+    return supported;
+  }
+
   @Override
   protected QualityToolMessageProcessor createMessageProcessor(@NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> collectedInfo) {
+    var originalFile = collectedInfo.getOriginalFile();
+    if (originalFile == null) return new PhpStanMessageProcessor(collectedInfo);
+    if (isEditorModeEffective(collectedInfo, collectedInfo.getProject())) {
+      String originalPath = originalFile.getPath();
+      String mappedPath = updateIfRemoteMappingExists(originalPath, collectedInfo.getProject(), PhpStanQualityToolType.INSTANCE);
+      String editorModePath = PathUtil.toSystemIndependentName(mappedPath);
+      LOG.debug("Editor mode: creating processor with tempPath=", collectedInfo.getTempFilePath(), ", editorModePath=", editorModePath);
+      return new PhpStanMessageProcessor(collectedInfo, editorModePath);
+    }
+    LOG.debug("Editor mode: not active, using default processor with tempPath=", collectedInfo.getTempFilePath());
     return new PhpStanMessageProcessor(collectedInfo);
   }
 
