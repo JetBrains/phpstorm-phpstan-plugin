@@ -37,6 +37,7 @@
     <orderEntry type="module" module-name="intellij.phpstan" scope="TEST" />
     <orderEntry type="module" module-name="intellij.php.impl.tests" scope="TEST" />
     <orderEntry type="module" module-name="intellij.php.frontback.impl.tests" scope="TEST" />
+    <orderEntry type="module" module-name="intellij.libraries.junit4" scope="TEST" />
   </component>
   <component name="TestModuleProperties" production-module="intellij.phpstan" />
 </module>
