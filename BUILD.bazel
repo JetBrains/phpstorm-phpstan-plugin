@@ -187,6 +187,8 @@ jvm_library(
         "//phpstorm/php:php-impl-tests_test_lib",
         "//phpstorm/php-frontback-impl:php-frontback-impl-tests",
         "//phpstorm/php-frontback-impl:php-frontback-impl-tests_test_lib",
+        "@community//libraries/junit4",
+        "@community//libraries/junit4:junit4_test_lib",
     ],
 )
 ### auto-generated section `build intellij.phpstan.tests` end
