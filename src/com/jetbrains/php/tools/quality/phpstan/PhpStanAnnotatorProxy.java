@@ -76,7 +76,8 @@ public final class PhpStanAnnotatorProxy extends RateLimitedQualityToolAnnotator
 
     if (isOnTheFly) {
       if (annotatorInfo != null && annotatorInfo.getOriginalFile() != null && isEditorModeEffective(annotatorInfo, project)) {
-        return tool.getCommandLineOptions(singletonList(filePath), project, annotatorInfo.getOriginalFile().getPath());
+        String originalPath = updateIfRemoteMappingExists(annotatorInfo.getOriginalFile().getPath(), project, PhpStanQualityToolType.INSTANCE);
+        return tool.getCommandLineOptions(singletonList(filePath), project, originalPath);
       }
       return tool.getCommandLineOptions(singletonList(filePath), project);
     }
