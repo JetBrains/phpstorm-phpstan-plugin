@@ -4,7 +4,7 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.guessProjectDir
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.webcore.resourceRoots.PhpFrameworkExclusionProvider
+import com.intellij.webcore.resourceRoots.FrameworkExclusionProvider
 import org.yaml.snakeyaml.Yaml
 
 /**
@@ -16,7 +16,7 @@ import org.yaml.snakeyaml.Yaml
  * 
  * This provider excludes these cache directories from indexing when they're within the project.
  */
-class PhpStanExclusionProvider : PhpFrameworkExclusionProvider {
+class PhpStanExclusionProvider : FrameworkExclusionProvider {
   companion object {
     private val LOG = Logger.getInstance(PhpStanExclusionProvider::class.java)
   }

@@ -56,7 +56,7 @@
                          parentId="settings.php.quality.tools"
                          groupWeight="15"/>
     <completion.contributor language="PHP" implementationClass="com.jetbrains.php.phpstan.completion.PhpStanCompletionContributor"/>
-    <webcore.phpFrameworkExclusionProvider implementation="com.jetbrains.php.tools.quality.phpstan.exclusion.PhpStanExclusionProvider"/>
+    <webcore.frameworkExclusionProvider implementation="com.jetbrains.php.tools.quality.phpstan.exclusion.PhpStanExclusionProvider"/>
     <applicationSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanAppConfigurationManager"/>
     <projectSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager$PhpStanProjectConfigurationManager"/>
     <projectSettings service="com.jetbrains.php.tools.quality.phpstan.PhpStanBlackList"/>
