@@ -19,6 +19,7 @@ jvm_library(
         ["resources/**/*"],
     ),
     visibility = ["//visibility:public"],
+    runtime_deps = ["//phpstorm:php-resources"],
     deps = [
         # do not sort,
         "//phpstorm/php-backend",
@@ -84,6 +85,7 @@ jvm_library(
         "@community//platform/util/concurrency:concurrency_test_lib",
         "@community//jps/model-api:model_test_lib",
         "@community//platform/execution:execution_test_lib",
+        "//phpstorm:php-resources_test_lib",
     ],
 )
 ### auto-generated section `build intellij.phpstan` end
