@@ -62,6 +62,7 @@ jvm_library(
 exports_files(
     [
         "intellij.phpstan.remoteInterpreter.iml",
+        "resources/intellij.phpstan.remoteInterpreter.xml",
     ],
     visibility = ["//visibility:public"],
 )
