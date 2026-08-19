@@ -3,7 +3,6 @@ package com.jetbrains.php.phpstan.quality.tools
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.jetbrains.php.tools.quality.phpstan.exclusion.PhpStanExclusionProvider
-import java.nio.file.Paths
 
 class PhpStanExclusionProviderTest : BasePlatformTestCase() {
   private lateinit var provider: PhpStanExclusionProvider

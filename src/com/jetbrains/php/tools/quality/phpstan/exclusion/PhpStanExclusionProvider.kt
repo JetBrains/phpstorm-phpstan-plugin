@@ -57,7 +57,7 @@ class PhpStanExclusionProvider : FrameworkExclusionProvider {
     return try {
       configFile.inputStream.use { stream ->
         val content = stream.reader().readText().replace("\t", " ".repeat(4))
-        val data = Yaml().load<Map<String, Any>>(content) ?: return null
+        val data = Yaml().load<Any>(content) as? Map<*, *> ?: return null
         val parameters = data["parameters"] as? Map<*, *> ?: return null
         parameters["tmpDir"] as? String
       }
