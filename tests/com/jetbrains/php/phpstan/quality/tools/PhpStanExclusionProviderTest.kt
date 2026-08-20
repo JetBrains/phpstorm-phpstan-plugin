@@ -100,4 +100,44 @@ class PhpStanExclusionProviderTest : BasePlatformTestCase() {
     assertEquals(1, exclusions.size)
     assertEquals("cache/phpstan", exclusions[0])
   }
+
+  fun testConfigWithTmpDirPointingToProjectRoot() {
+    // PHPStan writes its cache into the project root with this configuration; there is no directory to exclude.
+    for (tmpDir in listOf(".", "./", "\"\"", "'.'")) {
+      createConfig("parameters:\n  tmpDir: $tmpDir")
+
+      val exclusions = provider.getExclusionDirectories(project)
+      assertTrue("tmpDir '$tmpDir' must not produce an exclusion, got $exclusions", exclusions.isEmpty())
+    }
+  }
+
+  fun testConfigWithAbsoluteTmpDir() {
+    createConfig("parameters:\n  tmpDir: /tmp/phpstan")
+
+    val exclusions = provider.getExclusionDirectories(project)
+    assertTrue(exclusions.isEmpty())
+  }
+
+  fun testConfigWithTmpDirOutsideProject() {
+    createConfig("parameters:\n  tmpDir: ../shared-cache")
+
+    val exclusions = provider.getExclusionDirectories(project)
+    assertTrue(exclusions.isEmpty())
+  }
+
+  fun testRelativeTmpDirIsNormalized() {
+    createConfig("parameters:\n  tmpDir: ./cache/phpstan/")
+
+    val exclusions = provider.getExclusionDirectories(project)
+    assertEquals("cache/phpstan", assertOneElement(exclusions))
+  }
+
+  private fun createConfig(content: String) {
+    WriteCommandAction.runWriteCommandAction(project) {
+      val root = myFixture.tempDirFixture.findOrCreateDir("")
+      val existing = root.findChild("phpstan.neon")
+      val configFile = existing ?: root.createChildData(this, "phpstan.neon")
+      configFile.setBinaryContent(content.toByteArray())
+    }
+  }
 }

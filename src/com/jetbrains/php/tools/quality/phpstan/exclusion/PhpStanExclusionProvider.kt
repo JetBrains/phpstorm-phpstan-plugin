@@ -3,7 +3,10 @@ package com.jetbrains.php.tools.quality.phpstan.exclusion
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.guessProjectDir
+import com.intellij.openapi.util.io.FileUtil
+import com.intellij.openapi.util.io.OSAgnosticPathUtil
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.util.PathUtilRt
 import com.intellij.webcore.resourceRoots.FrameworkExclusionProvider
 import org.yaml.snakeyaml.Yaml
 
@@ -24,15 +27,13 @@ class PhpStanExclusionProvider : FrameworkExclusionProvider {
   override val frameworkName: String = "PHPStan"
 
   override fun getExclusionDirectories(project: Project): List<String> {
+    val projectDir = project.guessProjectDir() ?: return emptyList()
     val tmpDir = findPhpStanConfig(project)?.let { config ->
       parseTmpDir(config)
     } ?: return emptyList()
 
-    val isEnvironmentVariable = tmpDir.startsWith("%")
-    if (!isEnvironmentVariable) {
-      return listOf(tmpDir)
-    }
-    return emptyList()
+    val relativePath = tmpDir.relativizeTmpDir(projectDir.path) ?: return emptyList()
+    return listOf(relativePath)
   }
 
   private fun findPhpStanConfig(project: Project): VirtualFile? {
@@ -66,4 +67,24 @@ class PhpStanExclusionProvider : FrameworkExclusionProvider {
       null
     }
   }
+}
+
+/**
+ * Returns PHPStan's `tmpDir` as a directory path relative to [basePath], or `null` when it does not denote a directory
+ * strictly inside it.
+ */
+internal fun String.relativizeTmpDir(basePath: String): String? {
+  val trimmed = trim()
+  // Placeholders such as %rootDir%, %currentWorkingDirectory%, or %TMP% are expanded by PHPStan, not by the IDE.
+  if (trimmed.isEmpty() || trimmed.contains('%')) return null
+  if (OSAgnosticPathUtil.isAbsolute(trimmed) ||
+      OSAgnosticPathUtil.startsWithWindowsDrive(trimmed) ||
+      PathUtilRt.isSeparator(trimmed.first())) {
+    return null
+  }
+
+  val resolved = FileUtil.toCanonicalPath("$basePath/$trimmed", '\\')
+  if (!FileUtil.isAncestor(basePath, resolved, true)) return null
+
+  return FileUtil.getRelativePath(basePath, resolved, '/')
 }
