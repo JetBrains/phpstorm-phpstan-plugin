@@ -11,3 +11,15 @@ This plugin adds dedicated functionality for [PHPStan](https://phpstan.org/) to 
 - Ability to run via remote interpreters such as Docker, WSL, and others
 - Automatic detection of PHPStan settings from composer.json
 - Manual configuration of PHPStan settings in the corresponding inspection options
+
+## Building from source
+
+The repository includes a Gradle wrapper and downloads the required JDK automatically.
+
+```shell
+./gradlew buildPlugin
+```
+
+The plugin archive is written to `build/distributions`. Use `./gradlew runIde` to start a development instance of PhpStorm with the plugin installed.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for test and contribution instructions.

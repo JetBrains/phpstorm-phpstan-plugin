@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch sources
+        uses: actions/checkout@v4
+
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Test and build plugin
+        run: ./gradlew test buildPlugin verifyPlugin
+
+      - name: Upload plugin archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: phpstan-plugin
+          path: build/distributions/*.zip
+
