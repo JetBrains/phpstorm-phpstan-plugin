@@ -30,15 +30,3 @@ dependencies {
 }
 
 configureJvm()
-
-tasks.processResources {
-  filesMatching("intellij.phpstan.remoteInterpreter.xml") {
-    filter {
-      when {
-        it == "<idea-plugin>" -> "<idea-plugin package=\"com.intellij.phpstan.remoteInterpreter\">"
-        it.contains("<module name=\"intellij.php.backend\"/>") -> ""
-        else -> it
-      }
-    }
-  }
-}
