@@ -65,11 +65,9 @@ class PhpStanOptionsPanel(
     myRateLimitPanel.configure(QualityToolRateLimitUI.DEFAULT_UI)
     myRateLimitPanel.reset(configuration.rateLimitSettings)
     myConfigPathTextField.text = configuration.config
-    myConfigPathTextField.init(project, getSdkAdditionalData(project, myComboBox),
-                               PhpStanBundle.message("phpstan.configuration.file"), true, false)
+    bindSdkBasedBrowse(project, myConfigPathTextField, myComboBox, PhpStanBundle.message("phpstan.configuration.file"), true, false)
     myAutoloadPathTextField.text = configuration.autoload
-    myAutoloadPathTextField.init(project, getSdkAdditionalData(project, myComboBox),
-                                 PhpStanBundle.message("phpstan.autoload.file"), true, false)
+    bindSdkBasedBrowse(project, myAutoloadPathTextField, myComboBox, PhpStanBundle.message("phpstan.autoload.file"), true, false)
     myConfigPathTextField.textField.document.addDocumentListener(object : DocumentAdapter() {
       override fun textChanged(e: DocumentEvent) {
         validate.run()
