@@ -1,5 +1,6 @@
 package com.jetbrains.php.tools.quality.phpstan
 
+import com.intellij.openapi.util.Disposer
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.ui.JBIntSpinner
 import com.intellij.util.ui.UIUtil
@@ -11,7 +12,9 @@ import javax.swing.JLabel
 
 class PhpStanOptionsPanelParityTest : BasePlatformTestCase() {
 
+  // the combo box is a Disposable that holds the project; nothing else owns it in the test
   private fun comboBox() = QualityToolConfigurationComboBox(project, PhpStanQualityToolType.INSTANCE)
+    .also { Disposer.register(testRootDisposable, it) }
 
   private fun createPanel(): PhpStanOptionsPanel = PhpStanOptionsPanel(project, comboBox(), Runnable {})
 
