@@ -1,5 +1,6 @@
 load("@community//build:tests-options.bzl", "jps_test")
 load("@community//platform/build-scripts/bazel-rules:dev_dist_content.bzl", "dev_dist_plugin_content")
+load("@community//platform/build-scripts/bazel-rules:dev_dist_plugin.bzl", "dev_dist_plugin")
 load("@rules_jvm//:jvm.bzl", "jvm_library")
 
 ### auto-generated section `build intellij.phpstan` start
@@ -101,12 +102,12 @@ exports_files(
 )
 ### auto-generated section `iml intellij.phpstan` end
 
-### auto-generated section `dev content intellij.phpstan` start
-dev_dist_plugin_content(
+### auto-generated section `dev intellij.phpstan` start
+dev_dist_plugin(
     descriptor_module = ":phpstan",
     prepacked_content_modules = ["//phpstorm/phpstan/remoteInterpreter:remoteInterpreter_content_module_jar"],
 )
-### auto-generated section `dev content intellij.phpstan` end
+### auto-generated section `dev intellij.phpstan` end
 
 ### auto-generated section `build intellij.phpstan.tests` start
 jvm_library(
