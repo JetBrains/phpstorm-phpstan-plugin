@@ -9,7 +9,7 @@ import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.StandardFileSystems;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.profile.codeInspection.InspectionProfileManager;
 import com.intellij.psi.PsiDirectory;
@@ -56,7 +56,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
     final String configPath = ComposerDataService.getInstance(project).getConfigPath();
     PhpStanOptionsConfiguration projectConfiguration = PhpStanOptionsConfiguration.getInstance(project);
 
-    final VirtualFile config = LocalFileSystem.getInstance().refreshAndFindFileByPath(configPath);
+    final VirtualFile config = StandardFileSystems.local().refreshAndFindFileByPath(configPath);
     if (config == null) return false;
 
     final String ruleset = getRuleset(config);
@@ -76,7 +76,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   @Override
   protected void applyInspectionSettingsFromComposer(Project project, PhpStanConfiguration configuration) {
     final String configPath = ComposerDataService.getInstance(project).getConfigPath();
-    final VirtualFile config = LocalFileSystem.getInstance().refreshAndFindFileByPath(configPath);
+    final VirtualFile config = StandardFileSystems.local().refreshAndFindFileByPath(configPath);
     if (config == null) return;
 
     final String memoryLimit = getMemoryLimit(config);
