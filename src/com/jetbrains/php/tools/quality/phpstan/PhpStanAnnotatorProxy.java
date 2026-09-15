@@ -10,8 +10,7 @@ import com.intellij.openapi.util.Version;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.SmartList;
-import com.jetbrains.php.tools.quality.QualityToolRateLimitSettings;
-import com.jetbrains.php.tools.quality.RateLimitedQualityToolAnnotator;
+import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolConfiguration;
 import com.jetbrains.php.tools.quality.QualityToolMessageProcessor;
@@ -31,7 +30,7 @@ import static com.intellij.util.containers.ContainerUtil.emptyList;
 import static com.intellij.util.containers.ContainerUtil.map;
 import static java.util.Collections.singletonList;
 
-public final class PhpStanAnnotatorProxy extends RateLimitedQualityToolAnnotator<PhpStanValidationInspection> {
+public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanValidationInspection> {
   public static final PhpStanAnnotatorProxy INSTANCE = new PhpStanAnnotatorProxy();
   private static final Logger LOG = Logger.getInstance(PhpStanAnnotatorProxy.class);
 
@@ -135,11 +134,6 @@ public final class PhpStanAnnotatorProxy extends RateLimitedQualityToolAnnotator
   @Override
   protected @NotNull PhpStanQualityToolType getQualityToolType() {
     return PhpStanQualityToolType.INSTANCE;
-  }
-
-  @Override
-  protected @NotNull QualityToolRateLimitSettings getRateLimitSettings(@NotNull Project project) {
-    return PhpStanOptionsConfiguration.getInstance(project).getRateLimitSettings();
   }
 
   @Override

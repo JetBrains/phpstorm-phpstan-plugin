@@ -13,8 +13,6 @@ import com.intellij.ui.dsl.builder.panel
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox
 import com.jetbrains.php.tools.quality.QualityToolsOptionsPanel
-import com.jetbrains.php.tools.quality.ui.QualityToolRateLimitPanel
-import com.jetbrains.php.tools.quality.ui.QualityToolRateLimitUI
 import javax.swing.JPanel
 import javax.swing.event.DocumentEvent
 
@@ -28,7 +26,6 @@ class PhpStanOptionsPanel(
   private val myMemoryLimitTextField = JBTextField()
   private val myConfigPathTextField = PhpTextFieldWithSdkBasedBrowse()
   private val myAutoloadPathTextField = PhpTextFieldWithSdkBasedBrowse()
-  private val myRateLimitPanel = QualityToolRateLimitPanel()
   private lateinit var myFullProjectRunJBCheckBox: JBCheckBox
   private lateinit var myEditorModeJBCheckBox: JBCheckBox
 
@@ -51,9 +48,6 @@ class PhpStanOptionsPanel(
     row(PhpStanBundle.message("phpstan.label.options")) {
       cell(myMemoryLimitTextField).align(AlignX.FILL)
     }
-    row {
-      cell(myRateLimitPanel).align(AlignX.FILL)
-    }
   }
 
   init {
@@ -62,8 +56,6 @@ class PhpStanOptionsPanel(
     myEditorModeJBCheckBox.isSelected = configuration.isEditorMode
     myMemoryLimitTextField.text = configuration.memoryLimit
     myJBIntSpinner.number = configuration.level
-    myRateLimitPanel.configure(QualityToolRateLimitUI.DEFAULT_UI)
-    myRateLimitPanel.reset(configuration.rateLimitSettings)
     myConfigPathTextField.text = configuration.config
     bindSdkBasedBrowse(project, myConfigPathTextField, myComboBox, PhpStanBundle.message("phpstan.configuration.file"), true, false)
     myAutoloadPathTextField.text = configuration.autoload
@@ -83,7 +75,6 @@ class PhpStanOptionsPanel(
     myEditorModeJBCheckBox.isSelected = configuration.isEditorMode
     myMemoryLimitTextField.text = configuration.memoryLimit
     myJBIntSpinner.number = configuration.level
-    myRateLimitPanel.reset(configuration.rateLimitSettings)
     myConfigPathTextField.text = configuration.config
     myAutoloadPathTextField.text = configuration.autoload
   }
@@ -94,7 +85,6 @@ class PhpStanOptionsPanel(
     if (myEditorModeJBCheckBox.isSelected != configuration.isEditorMode) return true
     if (!StringUtil.equals(myMemoryLimitTextField.text, configuration.memoryLimit)) return true
     if (myJBIntSpinner.number != configuration.level) return true
-    if (myRateLimitPanel.isModified(configuration.rateLimitSettings)) return true
     if (!StringUtil.equals(myConfigPathTextField.text, configuration.config)) return true
     if (!StringUtil.equals(myAutoloadPathTextField.text, configuration.autoload)) return true
     return false
@@ -106,7 +96,6 @@ class PhpStanOptionsPanel(
     configuration.isEditorMode = myEditorModeJBCheckBox.isSelected
     configuration.memoryLimit = myMemoryLimitTextField.text
     configuration.level = myJBIntSpinner.number
-    myRateLimitPanel.applyTo(configuration.rateLimitSettings)
     configuration.config = myConfigPathTextField.text
     configuration.autoload = myAutoloadPathTextField.text
   }
