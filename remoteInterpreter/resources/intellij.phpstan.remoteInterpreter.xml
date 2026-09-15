@@ -4,6 +4,7 @@
     <plugin id="com.intellij.php.tools.quality.phpstan"/>
     <plugin id="org.jetbrains.plugins.phpstorm-remote-interpreter"/>
     <module name="intellij.php.backend"/>
+    <module name="intellij.platform.concurrency"/>
     <module name="intellij.platform.core"/>
     <module name="intellij.platform.ide"/>
     <module name="intellij.platform.projectModel"/>
