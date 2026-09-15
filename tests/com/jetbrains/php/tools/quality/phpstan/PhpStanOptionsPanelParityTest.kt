@@ -1,9 +1,7 @@
 package com.jetbrains.php.tools.quality.phpstan
 
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.util.Disposer
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
-import com.intellij.testFramework.registerOrReplaceServiceInstance
 import com.intellij.ui.JBIntSpinner
 import com.intellij.util.ui.UIUtil
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse
@@ -13,27 +11,6 @@ import javax.swing.JCheckBox
 import javax.swing.JLabel
 
 class PhpStanOptionsPanelParityTest : BasePlatformTestCase() {
-
-  override fun setUp() {
-    super.setUp()
-    ApplicationManager.getApplication().registerOrReplaceServiceInstance(
-      PhpStanConfigurationManager.PhpStanAppConfigurationManager::class.java,
-      PhpStanConfigurationManager.PhpStanAppConfigurationManager(),
-      testRootDisposable,
-    )
-    project.registerOrReplaceServiceInstance(
-      PhpStanConfigurationManager.PhpStanProjectConfigurationManager::class.java,
-      PhpStanConfigurationManager.PhpStanProjectConfigurationManager(),
-      testRootDisposable,
-    )
-    project.registerOrReplaceServiceInstance(
-      PhpStanConfigurationManager::class.java,
-      PhpStanConfigurationManager(project),
-      testRootDisposable,
-    )
-    project.registerOrReplaceServiceInstance(PhpStanProjectConfiguration::class.java, PhpStanProjectConfiguration(), testRootDisposable)
-    project.registerOrReplaceServiceInstance(PhpStanOptionsConfiguration::class.java, PhpStanOptionsConfiguration(), testRootDisposable)
-  }
 
   // the combo box is a Disposable that holds the project; nothing else owns it in the test
   private fun comboBox() = QualityToolConfigurationComboBox(project, PhpStanQualityToolType.INSTANCE)

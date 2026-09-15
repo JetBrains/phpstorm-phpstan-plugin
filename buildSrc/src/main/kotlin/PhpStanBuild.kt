@@ -21,7 +21,8 @@ fun IntelliJPlatformDependenciesExtension.phpStanPlatform(project: Project) {
   testFramework(TestFrameworkType.Platform)
 
   bundledPlugin("com.jetbrains.php")
-  bundledPlugin("intellij.libraries.misc.plugin")
+  bundledPlugin("JavaScript")
+  bundledPlugin("intellij.problemView.plugin")
   bundledPlugin("intellij.structureView.plugin")
   bundledPlugin("intellij.testRunner.plugin")
   bundledPlugin("intellij.structuralSearch.plugin")
