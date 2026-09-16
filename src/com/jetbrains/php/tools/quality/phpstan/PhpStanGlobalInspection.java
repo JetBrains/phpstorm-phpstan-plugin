@@ -1,19 +1,10 @@
 package com.jetbrains.php.tools.quality.phpstan;
 
-import com.intellij.codeInspection.GlobalInspectionContext;
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.InspectionManagerBase;
 import com.intellij.codeInspection.LocalInspectionTool;
-import com.intellij.codeInspection.ProblemDescriptionsProcessor;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.codeInspection.ex.ExternalAnnotatorBatchInspection;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
-import com.intellij.psi.PsiFile;
 import com.intellij.util.containers.ContainerUtil;
-import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
 import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
 import org.jetbrains.annotations.NonNls;
@@ -27,26 +18,13 @@ import java.util.Objects;
 import static com.intellij.openapi.util.text.StringUtil.isNotEmpty;
 import static com.jetbrains.php.tools.quality.QualityToolAnnotator.updateIfRemoteMappingExists;
 
-public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection implements ExternalAnnotatorBatchInspection {
+public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspection {
   public boolean FULL_PROJECT = false;
   public @NonNls String memoryLimit = "2G";
   public int level = 4;
   public @NlsSafe String config = "";
   public @NlsSafe String autoload = "";
   public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PHPSTAN_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_2");
-
-  @Override
-  public void inspectionStarted(@NotNull InspectionManager manager,
-                                @NotNull GlobalInspectionContext globalContext,
-                                @NotNull ProblemDescriptionsProcessor problemDescriptionsProcessor) {
-    super.inspectionStarted(manager, globalContext, problemDescriptionsProcessor);
-    final PhpStanAnnotatorProxy annotator = getAnnotator();
-    final QualityToolAnnotatorInfo<PhpStanValidationInspection> info =
-      annotator.collectAnnotatorInfo(null, null, globalContext.getProject(), ((InspectionManagerBase)manager).getCurrentProfile(), false);
-    if (info != null) {
-      manager.getProject().putUserData(ANNOTATOR_INFO, annotator.doAnnotate(info));
-    }
-  }
 
   @Override
   public @Nullable LocalInspectionTool getSharedLocalInspectionTool() {
@@ -99,14 +77,5 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
       options.addAll(filePaths);
     }
     return options;
-  }
-
-  @Override
-  public ProblemDescriptor @NotNull [] checkFile(@NotNull PsiFile file,
-                                                 @NotNull GlobalInspectionContext context,
-                                                 @NotNull InspectionManager manager) {
-    ProblemsHolder holder = new ProblemsHolder(manager, file, false);
-    super.checkFile(file, manager, holder, context, null);
-    return holder.getResultsArray();
   }
 }
