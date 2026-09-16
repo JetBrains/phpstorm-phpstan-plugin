@@ -14,7 +14,6 @@ import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -24,21 +23,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.ERROR;
 import static com.jetbrains.php.tools.quality.QualityToolMessage.Severity.WARNING;
 import static com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection.PHPSTAN_ANNOTATOR_INFO;
 
 public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
-  private static final String ERROR_TAG = "error";
-  private static final String FILE_TAG = "file";
   private static final @NonNls String WARNING_MESSAGE_START = "<file";
   private static final @NonNls String WARNING_MESSAGE_END = "</file>";
-  private static final String WARNING_TAG = "warning";
-  private static final @NonNls String LINE_NUMBER_ATTR = "line";
-  private static final @NonNls String COLUMN_NUMBER_ATTR = "column";
-  private static final String MESSAGE_ATTR = "message";
-  private static final @NonNls String SEVERITY_ATTR = "severity";
-  private static final String FILE_NAME_ATTR = "name";
   private final Set<ProblemDescription> lineMessages = new HashSet<>();
   private final HighlightDisplayLevel myWarningsHighlightLevel;
   final String myFilePath;
@@ -89,14 +79,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
           }
         }
       } else {
-        final List<ProblemDescription> data = myProject.getUserData(PHPSTAN_ANNOTATOR_INFO);
-        if (data != null) {
-          data.addAll(messageHandler.getProblemList());
-          myProject.putUserData(PHPSTAN_ANNOTATOR_INFO, data);
-        }
-        else {
-          myProject.putUserData(PHPSTAN_ANNOTATOR_INFO, messageHandler.getProblemList());
-        }
+        appendProblems(myProject, PHPSTAN_ANNOTATOR_INFO, messageHandler.getProblemList());
       }
     }
   }
@@ -142,7 +125,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     return editorModeFilePath != null && editorModeFilePath.endsWith(attr);
   }
 
-  static final class PhpStanXmlMessageHandler extends XMLMessageHandler {
+  static final class PhpStanXmlMessageHandler extends CheckstyleXmlMessageHandler {
 
     private final String myFilePath;
     private final @Nullable String myEditorModeFilePath;
@@ -160,19 +143,17 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
     }
 
     @Override
-    protected void parseTag(@NotNull String tagName, @NotNull Attributes attributes) {
-      if (FILE_TAG.equals(tagName)) {
-        myFileAttr = PathUtil.toSystemIndependentName(attributes.getValue(FILE_NAME_ATTR));
-        myProblemList = matchesFile(myFilePath, myEditorModeFilePath, myFileAttr) ? new ArrayList<>() : null;
-      }
-      else if (ERROR_TAG.equals(tagName) || WARNING_TAG.equals(tagName)) {
-        if (myProblemList != null) {
-          mySeverity = attributes.getValue(SEVERITY_ATTR).equals(ERROR_TAG) ? ERROR : WARNING;
-          myLineNumber = parseLineNumber(attributes.getValue(LINE_NUMBER_ATTR));
-          int column = parseLineNumber(attributes.getValue(COLUMN_NUMBER_ATTR));
-          myProblemList
-            .add(new ProblemDescription(mySeverity, myLineNumber, Math.max(0, column - 1), attributes.getValue(MESSAGE_ATTR), myFileAttr));
-        }
+    protected void onFile(@Nullable String fileName) {
+      myFileAttr = PathUtil.toSystemIndependentName(fileName);
+      myProblemList = matchesFile(myFilePath, myEditorModeFilePath, myFileAttr) ? new ArrayList<>() : null;
+    }
+
+    @Override
+    protected void onMessage(@NotNull QualityToolMessage.Severity severity, int line, int column, @Nullable String message) {
+      if (myProblemList != null) {
+        mySeverity = severity;
+        myLineNumber = line;
+        myProblemList.add(new ProblemDescription(severity, line, Math.max(0, column - 1), message, myFileAttr));
       }
     }
   }
