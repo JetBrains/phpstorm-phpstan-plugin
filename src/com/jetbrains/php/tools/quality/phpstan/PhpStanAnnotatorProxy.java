@@ -39,43 +39,21 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
   private static final Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)");
 
   @Override
-  protected List<String> getOptions(@Nullable String filePath, @NotNull PhpStanValidationInspection inspection, 
-                                    @Nullable InspectionProfile profile, @NotNull Project project) {
-    return emptyList();
-  }
-
-  @Override
-  protected @Nullable List<String> getOptions(@Nullable String filePath,
-                                              @NotNull PhpStanValidationInspection inspection,
-                                              @Nullable InspectionProfile profile,
-                                              @NotNull Project project,
-                                              boolean isOnTheFly) {
-    return getCommandLineOptionsForMode(filePath, profile, project, isOnTheFly, null);
-  }
-
-  @Override
-  protected @Nullable List<String> getOptions(@Nullable String filePath,
-                                              @NotNull PhpStanValidationInspection inspection,
-                                              @Nullable InspectionProfile profile,
-                                              @NotNull Project project,
-                                              boolean isOnTheFly,
-                                              @NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> annotatorInfo) {
-    return getCommandLineOptionsForMode(filePath, profile, project, isOnTheFly, annotatorInfo);
+  protected @Nullable List<String> getOptions(@Nullable String filePath, @NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> info) {
+    return getCommandLineOptionsForMode(filePath, info);
   }
 
   private @Nullable List<String> getCommandLineOptionsForMode(@Nullable String filePath,
-                                                              @Nullable InspectionProfile profile,
-                                                              @NotNull Project project,
-                                                              boolean isOnTheFly,
-                                                              @Nullable QualityToolAnnotatorInfo<PhpStanValidationInspection> annotatorInfo) {
-    final PhpStanGlobalInspection tool = (PhpStanGlobalInspection)getQualityToolType().getGlobalTool(project, profile);
+                                                              @NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> info) {
+    Project project = info.getProject();
+    final PhpStanGlobalInspection tool = (PhpStanGlobalInspection)getQualityToolType().getGlobalTool(project, info.getProfile());
     if (tool == null) {
       return emptyList();
     }
 
-    if (isOnTheFly) {
-      if (annotatorInfo != null && annotatorInfo.getOriginalFile() != null && isEditorModeEffective(annotatorInfo, project)) {
-        String originalPath = updateIfRemoteMappingExists(annotatorInfo.getOriginalFile().getPath(), project, PhpStanQualityToolType.INSTANCE);
+    if (info.isOnTheFly()) {
+      if (info.getOriginalFile() != null && isEditorModeEffective(info, project)) {
+        String originalPath = updateIfRemoteMappingExists(info.getOriginalFile().getPath(), project, PhpStanQualityToolType.INSTANCE);
         return tool.getCommandLineOptions(singletonList(filePath), project, originalPath);
       }
       return tool.getCommandLineOptions(singletonList(filePath), project);
