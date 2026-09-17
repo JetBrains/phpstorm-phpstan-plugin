@@ -63,13 +63,13 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
     return PHPSTAN_ANNOTATOR_INFO;
   }
 
-  public List<String> getCommandLineOptions(@NotNull List<String> filePath, @NotNull Project project) {
-    return getCommandLineOptions(filePath, project, null);
+  public List<String> getBaseCommandLineOptions(@NotNull List<String> filePath, @NotNull Project project) {
+    return getBaseCommandLineOptions(filePath, project, null);
   }
 
-  public List<String> getCommandLineOptions(@NotNull List<String> filePath,
-                                            @NotNull Project project,
-                                            @Nullable String originalFilePath) {
+  public List<String> getBaseCommandLineOptions(@NotNull List<String> filePath,
+                                                 @NotNull Project project,
+                                                 @Nullable String originalFilePath) {
     @NonNls ArrayList<String> options = new ArrayList<>();
     PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(project);
     options.add("analyze");
@@ -85,10 +85,6 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
       options.add(updateIfRemoteMappingExists(configuration.getAutoload(), project, PhpStanQualityToolType.INSTANCE));
     }
     options.add("--memory-limit=" + configuration.getMemoryLimit());
-    options.add("--error-format=checkstyle");
-    options.add("--no-progress");
-    options.add("--no-ansi");
-    options.add("--no-interaction");
     List<String> filePaths = ContainerUtil.filter(filePath, Objects::nonNull);
     filePaths = ContainerUtil.map(filePaths, it -> updateIfRemoteMappingExists(it, project, PhpStanQualityToolType.INSTANCE));
     if (originalFilePath != null && filePaths.size() == 1) {

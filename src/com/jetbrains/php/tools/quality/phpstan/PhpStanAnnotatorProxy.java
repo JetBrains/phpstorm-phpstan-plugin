@@ -40,27 +40,36 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
 
   @Override
   protected @Nullable List<String> getOptions(@Nullable String filePath, @NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> info) {
-    return getCommandLineOptionsForMode(filePath, info);
+    Project project = info.getProject();
+    boolean editorModeEffective = info.getOriginalFile() != null && isEditorModeEffective(info, project);
+    String originalPath = editorModeEffective
+                           ? updateIfRemoteMappingExists(info.getOriginalFile().getPath(), project, PhpStanQualityToolType.INSTANCE)
+                           : null;
+    List<String> options = getBaseOptions(filePath, project, info.getProfile(), info.isOnTheFly(), originalPath);
+    if (options == null || options.isEmpty()) {
+      return options;
+    }
+    options.addAll(1, List.of("--error-format=checkstyle", "--no-progress", "--no-ansi", "--no-interaction"));
+    return options;
   }
 
-  private @Nullable List<String> getCommandLineOptionsForMode(@Nullable String filePath,
-                                                              @NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> info) {
-    Project project = info.getProject();
-    final PhpStanGlobalInspection tool = (PhpStanGlobalInspection)getQualityToolType().getGlobalTool(project, info.getProfile());
+  private @Nullable List<String> getBaseOptions(@Nullable String filePath, @NotNull Project project,
+                                                @Nullable InspectionProfile profile, boolean isOnTheFly,
+                                                @Nullable String originalPath) {
+    final PhpStanGlobalInspection tool = (PhpStanGlobalInspection)getQualityToolType().getGlobalTool(project, profile);
     if (tool == null) {
       return emptyList();
     }
 
-    if (info.isOnTheFly()) {
-      if (info.getOriginalFile() != null && isEditorModeEffective(info, project)) {
-        String originalPath = updateIfRemoteMappingExists(info.getOriginalFile().getPath(), project, PhpStanQualityToolType.INSTANCE);
-        return tool.getCommandLineOptions(singletonList(filePath), project, originalPath);
+    if (isOnTheFly) {
+      if (originalPath != null) {
+        return tool.getBaseCommandLineOptions(singletonList(filePath), project, originalPath);
       }
-      return tool.getCommandLineOptions(singletonList(filePath), project);
+      return tool.getBaseCommandLineOptions(singletonList(filePath), project);
     }
 
     PhpStanOptionsConfiguration configuration = PhpStanOptionsConfiguration.getInstance(project);
-    return tool.getCommandLineOptions(configuration.isFullProject()
+    return tool.getBaseCommandLineOptions(configuration.isFullProject()
                                       ? new SmartList<>(filePath, project.getBasePath())
                                       : isNotEmpty(configuration.getConfig()) ? emptyList() : concat(map(
                                         ProjectRootManager.getInstance(project).getContentSourceRoots(),
