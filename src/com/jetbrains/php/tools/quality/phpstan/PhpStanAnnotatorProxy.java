@@ -120,8 +120,8 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
   }
 
   @Override
-  protected boolean showMessage(@NotNull String message) {
-    return !message.contains("The Xdebug PHP extension is active, but \"--xdebug\" is not used");
+  protected boolean shouldReportInternalError(@NotNull String messageText) {
+    return !messageText.contains("The Xdebug PHP extension is active, but \"--xdebug\" is not used");
   }
 
   @VisibleForTesting
