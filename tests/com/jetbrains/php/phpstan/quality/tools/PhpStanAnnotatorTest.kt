@@ -8,7 +8,6 @@ import com.jetbrains.php.tools.quality.phpstan.PhpStanAnnotatorProxy
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager
 import com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection
 import com.jetbrains.php.tools.quality.phpstan.PhpStanMessageProcessor
-import com.jetbrains.php.tools.quality.phpstan.PhpStanQualityToolAnnotatorInfo
 
 class PhpStanAnnotatorTest : CodeInsightFixtureTestCase<ModuleFixtureBuilder<*>>() {
   override fun setUp() {
@@ -31,7 +30,7 @@ class PhpStanAnnotatorTest : CodeInsightFixtureTestCase<ModuleFixtureBuilder<*>>
   private fun runPhpStanAnnotator(file: PsiFile?): PhpStanMessageProcessor? {
     myFixture.enableInspections(PhpStanGlobalInspection())
     val annotator = PhpStanAnnotatorProxy.INSTANCE
-    val info = annotator.collectAnnotatorInfo(file, myFixture.editor, project, InspectionProfileManager.getInstance(project).currentProfile.name, false) as PhpStanQualityToolAnnotatorInfo?
+    val info = annotator.collectAnnotatorInfo(file, myFixture.editor, project, InspectionProfileManager.getInstance(project).currentProfile.name, false)
     if (info == null) {
       return null
     }

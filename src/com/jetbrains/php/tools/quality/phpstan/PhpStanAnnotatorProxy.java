@@ -8,7 +8,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.Version;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
 import com.intellij.util.SmartList;
 import com.jetbrains.php.tools.quality.QualityToolAnnotator;
 import com.jetbrains.php.tools.quality.QualityToolAnnotatorInfo;
@@ -106,16 +105,6 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
     }
     LOG.debug("Editor mode: not active, using default processor with tempPath=", collectedInfo.getTempFilePath());
     return new PhpStanMessageProcessor(collectedInfo);
-  }
-
-  @Override
-  protected @NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> createAnnotatorInfo(@Nullable PsiFile file,
-                                                                                               PhpStanValidationInspection tool,
-                                                                                               InspectionProfile inspectionProfile,
-                                                                                               Project project,
-                                                                                               QualityToolConfiguration configuration,
-                                                                                               boolean isOnTheFly) {
-    return new PhpStanQualityToolAnnotatorInfo(file, tool, inspectionProfile, project, configuration, isOnTheFly);
   }
 
   @Override
