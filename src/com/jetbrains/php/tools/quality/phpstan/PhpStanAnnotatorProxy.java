@@ -155,7 +155,7 @@ public final class PhpStanAnnotatorProxy extends QualityToolAnnotator<PhpStanVal
 
   private @Nullable Version getOrDetectVersion(@NotNull QualityToolAnnotatorInfo<PhpStanValidationInspection> annotatorInfo,
                                                @NotNull Project project) {
-    QualityToolConfiguration configuration = getConfiguration(project, annotatorInfo.getInspection());
+    QualityToolConfiguration configuration = getConfiguration(project);
     if (!(configuration instanceof PhpStanConfiguration phpStanConfig)) return null;
 
     Version cached = phpStanConfig.getVersion();
