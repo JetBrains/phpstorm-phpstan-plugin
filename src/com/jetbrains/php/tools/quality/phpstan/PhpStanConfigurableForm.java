@@ -23,11 +23,6 @@ public class PhpStanConfigurableForm<C extends PhpStanConfiguration> extends Qua
   }
 
   @Override
-  public String getHelpTopic() {
-    return "reference.settings.php.PhpStan";
-  }
-
-  @Override
   public @NotNull Pair<Boolean, String> validateMessage(@NonNls String message) {
     final Version version = extractVersion(message.trim().replaceFirst("PHPStan.* ([\\d.]*).*", "$1").trim());
     if (version == null || !message.contains(PHP_STAN)) {
