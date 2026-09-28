@@ -12,6 +12,9 @@ dev_dist_plugin(
         "lib/phpstan.jar": ["intellij.phpstan"],
     },
     main_module = "intellij.phpstan",
+    mode_refused_content_modules = {
+        "frontend": ["intellij.phpstan.remoteInterpreter"],
+    },
 )
 ### auto-generated section `dev intellij.phpstan` end
 
