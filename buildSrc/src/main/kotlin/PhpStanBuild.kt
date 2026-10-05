@@ -22,10 +22,12 @@ fun IntelliJPlatformDependenciesExtension.phpStanPlatform(project: Project) {
 
   bundledPlugin("com.jetbrains.php")
   bundledPlugin("JavaScript")
-  bundledPlugin("intellij.problemView.plugin")
-  bundledPlugin("intellij.structureView.plugin")
-  bundledPlugin("intellij.testRunner.plugin")
-  bundledPlugin("intellij.structuralSearch.plugin")
+  bundledPlugin("com.intellij.modules.jna")
+  bundledPlugin("com.intellij.modules.pty4j")
+  bundledPlugin("com.intellij.problemsView")
+  bundledPlugin("com.intellij.structureView")
+  bundledPlugin("com.intellij.platform.testRunner")
+  bundledPlugin("com.intellij.structuralSearch")
   bundledPlugin("org.jetbrains.plugins.phpstorm-remote-interpreter")
   bundledModule("intellij.platform.webide.impl")
 }
