@@ -5,8 +5,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.util.containers.ContainerUtil;
+import com.jetbrains.php.tools.quality.ParsedProblem;
 import com.jetbrains.php.tools.quality.QualityToolValidationGlobalInspection;
-import com.jetbrains.php.tools.quality.QualityToolXmlMessageProcessor;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,7 +24,7 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
   public int level = 4;
   public @NlsSafe String config = "";
   public @NlsSafe String autoload = "";
-  public static final Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> PHPSTAN_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_2");
+  public static final Key<List<ParsedProblem>> PHPSTAN_ANNOTATOR_INFO = Key.create("ANNOTATOR_INFO_2");
 
   @Override
   public @Nullable LocalInspectionTool getSharedLocalInspectionTool() {
@@ -37,7 +37,7 @@ public class PhpStanGlobalInspection extends QualityToolValidationGlobalInspecti
   }
 
   @Override
-  protected Key<List<QualityToolXmlMessageProcessor.ProblemDescription>> getKey() {
+  protected Key<List<ParsedProblem>> getKey() {
     return PHPSTAN_ANNOTATOR_INFO;
   }
 
