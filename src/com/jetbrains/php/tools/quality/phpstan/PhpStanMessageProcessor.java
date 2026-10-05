@@ -19,7 +19,6 @@ import static com.jetbrains.php.tools.quality.phpstan.PhpStanGlobalInspection.PH
 public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
   private static final @NonNls String WARNING_MESSAGE_START = "<file";
   private static final @NonNls String WARNING_MESSAGE_END = "</file>";
-  private final HighlightDisplayLevel myWarningsHighlightLevel;
   final String myFilePath;
   final @Nullable String myEditorModeFilePath;
   final PsiFile myPsiFile;
@@ -31,7 +30,6 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
 
   protected PhpStanMessageProcessor(QualityToolAnnotatorInfo<?> info, @Nullable String editorModeFilePath) {
     super(info);
-    myWarningsHighlightLevel = HighlightDisplayLevel.WARNING; // TODO: fix
     myFilePath = info.getTempFilePath();
     myEditorModeFilePath = editorModeFilePath;
     myPsiFile = info.getPsiFile();
@@ -71,7 +69,7 @@ public class PhpStanMessageProcessor extends QualityToolXmlMessageProcessor {
 
   @Override
   protected @Nullable HighlightDisplayLevel severityToDisplayLevel(@NotNull QualityToolMessage.Severity severity) {
-    return WARNING.equals(severity) ? myWarningsHighlightLevel : null;
+    return WARNING.equals(severity) ? HighlightDisplayLevel.WARNING : null;
   }
 
   @Override
