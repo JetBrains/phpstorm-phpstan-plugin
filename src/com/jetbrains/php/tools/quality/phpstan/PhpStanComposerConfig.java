@@ -74,7 +74,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
   }
 
   private boolean applyRuleset(@NotNull Project project, @NotNull @NlsSafe String customRuleset) {
-    return modifyRulesetInspectionSetting(project, tool -> PhpStanOptionsConfiguration.getInstance(project).setConfig(customRuleset));
+    return modifyRulesetInspectionSetting(project, () -> PhpStanOptionsConfiguration.getInstance(project).setConfig(customRuleset));
   }
 
   private boolean applyMemoryLimit(@NotNull Project project, @NotNull VirtualFile config) {
@@ -86,7 +86,7 @@ public class PhpStanComposerConfig extends QualityToolsComposerConfig<PhpStanCon
         }
       });
     return memoryLimit != null &&
-           modifyRulesetInspectionSetting(project, tool -> PhpStanOptionsConfiguration.getInstance(project).setMemoryLimit(memoryLimit));
+           modifyRulesetInspectionSetting(project, () -> PhpStanOptionsConfiguration.getInstance(project).setMemoryLimit(memoryLimit));
   }
 
   @Override
