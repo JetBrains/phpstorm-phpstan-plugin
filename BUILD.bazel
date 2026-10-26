@@ -8,10 +8,7 @@ dev_dist_plugin(
     content_modules = ["intellij.phpstan.remoteInterpreter"],
     descriptor = "resources/META-INF/plugin.xml",
     jars = {
-        "lib/phpstan.jar": [
-            "intellij.phpstan",
-            "intellij.phpstan.remoteInterpreter",
-        ],
+        "lib/phpstan.jar": ["intellij.phpstan"],
     },
     main_module = "intellij.phpstan",
     mode_refused_content_modules = {
