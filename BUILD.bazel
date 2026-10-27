@@ -101,14 +101,16 @@ jvm_library(
         "//phpstorm:php-resources_test_lib",
     ],
 )
+### auto-generated section `build intellij.phpstan` end
 
+### auto-generated section `plugin intellij.phpstan` start
 ij_plugin(
     name = "phpstan_plugin",
     descriptor_module = ":phpstan",
     content_modules = ["//phpstorm/phpstan/remoteInterpreter"],
     visibility = ["//visibility:public"],
 )
-### auto-generated section `build intellij.phpstan` end
+### auto-generated section `plugin intellij.phpstan` end
 
 ### auto-generated section `iml intellij.phpstan` start
 exports_files(
