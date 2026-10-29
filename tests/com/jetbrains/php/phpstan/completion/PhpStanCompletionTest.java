@@ -1,32 +1,26 @@
 package com.jetbrains.php.phpstan.completion;
 
-import com.intellij.testFramework.TestFrameworkUtil;
-import com.intellij.testFramework.TestIndexingModeSupporter;
-import com.jetbrains.php.fixtures.PhpCompletionTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.openapi.project.Project;
+import com.intellij.testFramework.TestIndexingModeSupporter.IndexingMode;
+import com.intellij.testFramework.junit5.TestApplication;
+import com.intellij.testFramework.junit5.fixture.TestFixture;
+import com.jetbrains.php.fixtures.PhpCompletionTestFixture;
+import com.jetbrains.php.fixtures.PhpIndexingModeTest;
+import com.jetbrains.php.fixtures.PhpTestDataLayout;
 
-public class PhpStanCompletionTest extends PhpCompletionTestCase {
+import static com.jetbrains.php.fixtures.PhpCompletionTestFixture.phpCompletionFixture;
+import static com.jetbrains.php.fixtures.PhpTestFixtures.phpProjectFixture;
 
-  @Override
-  protected @NotNull String getTestDataHome() {
-    return "/phpstorm/phpstan/testData/";
-  }
+@TestApplication
+public class PhpStanCompletionTest {
+  private static final TestFixture<Project> projectFixture = phpProjectFixture();
+  private final TestFixture<PhpCompletionTestFixture> php =
+    phpCompletionFixture(projectFixture, new PhpTestDataLayout("completion").withHome("/phpstorm/phpstan/testData/"));
 
-  @Override
-  protected String getFixtureTestDataFolder() {
-    return "completion";
-  }
-
-  public void testDocTagCompletions() {
-    doTestLookupElementsContains("phpstan-require-extends", "phpstan-require-implements");
-  }
-
-  public static Test suite() {
-    TestSuite suite = new TestSuite();
-    suite.addTestSuite(PhpStanCompletionTest.class);
-    TestIndexingModeSupporter.addAllTests(PhpStanCompletionTest.class, suite);
-    return TestFrameworkUtil.flattenSuite(suite);
+  @PhpIndexingModeTest
+  public void testDocTagCompletions(IndexingMode mode) {
+    php.get().runInMode(mode, () -> {
+      php.get().doTestLookupElementsContains("phpstan-require-extends", "phpstan-require-implements");
+    });
   }
 }

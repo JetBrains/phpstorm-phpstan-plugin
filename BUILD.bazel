@@ -197,6 +197,14 @@ jvm_library(
         "//phpstorm/php-frontback-impl:php-frontback-impl-tests_test_lib",
         "@community//libraries/junit4",
         "@community//libraries/junit4:junit4_test_lib",
+        "@community//platform/testFramework/junit5",
+        "@community//platform/testFramework/junit5:junit5_test_lib",
+        "@community//libraries/junit6",
+        "@community//libraries/junit6:junit6_test_lib",
+        "@community//libraries/junit6-params",
+        "@community//libraries/junit6-params:junit6-params_test_lib",
+        "@community//libraries/assertj-core",
+        "@community//libraries/assertj-core:assertj-core_test_lib",
     ],
 )
 ### auto-generated section `build intellij.phpstan.tests` end
