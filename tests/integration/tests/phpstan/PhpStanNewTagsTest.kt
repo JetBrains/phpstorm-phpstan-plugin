@@ -1,9 +1,8 @@
 package integration.tests.phpstan
 
-import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.application.runReadActionBlocking
-import com.intellij.openapi.util.io.FileUtil
 import com.intellij.psi.util.childrenOfType
+import com.intellij.testFramework.common.publishArtifact
 import com.intellij.testFramework.junit5.TestApplication
 import com.jetbrains.php.PhpIndex
 import com.jetbrains.php.fixtures.PhpCodeInsightTestFixture.Companion.phpCodeInsightFixture
@@ -15,13 +14,18 @@ import com.jetbrains.php.phpstan.lang.documentation.parser.PhpStanDocParserTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.io.TempDir
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
-import java.io.File
-import java.io.FileOutputStream
 import java.net.URL
+import java.nio.file.Path
 import java.util.zip.ZipInputStream
+import kotlin.io.path.createDirectories
 import kotlin.io.path.div
+import kotlin.io.path.exists
+import kotlin.io.path.outputStream
+import kotlin.io.path.readLines
+import kotlin.io.path.writeText
 
 @TestApplication
 class PhpStanNewTagsTest {
@@ -31,19 +35,19 @@ class PhpStanNewTagsTest {
 
   private val php by phpCodeInsightFixture(projectFixture, PhpTestDataLayout("newTags").withHome(PhpStanDocParserTest.TEST_DATA_HOME))
 
-  private lateinit var phpstanFolder: File
+  @TempDir
+  private lateinit var phpstanFolder: Path
 
   @BeforeEach
   fun setUp() {
-    phpstanFolder = File(PathManager.getHomePath() + "/" + php.basePath)
-    FileUtil.createDirectory(phpstanFolder)
     val zipUrl = URL("https://github.com/phpstan/phpstan-src/archive/refs/heads/1.10.x.zip")
     downloadAndUnpackZip(zipUrl, phpstanFolder)
   }
 
   @Test
   fun testNewTags() {
-    php.fixture.copyFileToProject("phpstan-src-1.10.x/src/PhpDoc/PhpDocNodeResolver.php")
+    val relativePath = "phpstan-src-1.10.x/src/PhpDoc/PhpDocNodeResolver.php"
+    php.fixture.copyFileToProject((phpstanFolder / relativePath).toString(), relativePath)
     val annotations = mutableListOf<String>()
     runReadActionBlocking {
       val classWithAnnotations = PhpIndex.getInstance(php.project).getClassesByFQN("PHPStan\\PhpDoc\\PhpDocNodeResolver").first()
@@ -58,27 +62,25 @@ class PhpStanNewTagsTest {
       }
     }
     val resultFileName = "phpstan-tags.txt"
-    val resultFile = (phpstanFolder.toPath() / resultFileName).toFile()
-    resultFile.writeText(annotations.sorted().joinToString("\n"))
-    println("##teamcity[publishArtifacts '${resultFile.absolutePath}']")
-    val pathToPreviousResults = (phpstanFolder.toPath() / "previousResults" / resultFileName).toFile()
+    publishArtifact(resultFileName) { it.writeText(annotations.sorted().joinToString("\n")) }
+    val pathToPreviousResults = Path.of(php.testDataPath, "previousResults", resultFileName)
     if(pathToPreviousResults.exists()){
       assertThat(annotations).containsExactlyInAnyOrderElementsOf(pathToPreviousResults.readLines())
     } else {
-      println("Previous results are not found at ${pathToPreviousResults.absolutePath}")
+      println("Previous results are not found at ${pathToPreviousResults.toAbsolutePath()}")
     }
   }
-  private fun downloadAndUnpackZip(zipUrl: URL, destinationDirectory: File) {
+  private fun downloadAndUnpackZip(zipUrl: URL, destinationDirectory: Path) {
     val zipConnection = zipUrl.openConnection()
     val zipInputStream = ZipInputStream(BufferedInputStream(zipConnection.getInputStream()))
     var zipEntry = zipInputStream.nextEntry
     while (zipEntry != null) {
-      val file = File(destinationDirectory, zipEntry.name)
+      val file = destinationDirectory / zipEntry.name
       if (zipEntry.isDirectory) {
-        file.mkdirs()
+        file.createDirectories()
       }
       else {
-        val fileOutputStream = FileOutputStream(file)
+        val fileOutputStream = file.outputStream()
         val bufferedOutputStream = BufferedOutputStream(fileOutputStream, 2048)
         val data = ByteArray(2048)
         var count: Int
