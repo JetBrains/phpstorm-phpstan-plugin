@@ -18,7 +18,7 @@ fun IntelliJPlatformDependenciesExtension.phpStanPlatform(project: Project) {
     useInstaller.set(false)
     productMode.set(ProductMode.MONOLITH)
   }
-  testFramework(TestFrameworkType.Platform)
+  testFrameworks(TestFrameworkType.Platform, TestFrameworkType.JUnit5, TestFrameworkType.JUnit5CodeInsight)
 
   bundledPlugin("com.jetbrains.php")
   bundledPlugin("JavaScript")

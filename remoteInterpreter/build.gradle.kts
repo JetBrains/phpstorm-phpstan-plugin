@@ -25,7 +25,6 @@ dependencies {
 
   intellijPlatform {
     phpStanPlatform(project)
-    localPlugin(project(":"))
   }
 }
 
