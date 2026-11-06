@@ -3,9 +3,11 @@ package com.jetbrains.php.phpstan.quality.tools
 import com.jetbrains.php.tools.quality.ParsedProblem
 import com.jetbrains.php.tools.quality.QualityToolMessage.Severity
 import com.jetbrains.php.tools.quality.phpstan.PhpStanReportParser
-import junit.framework.TestCase
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 
-class PhpStanReportParserTest : TestCase() {
+class PhpStanReportParserTest {
   private val report = """
     <?xml version="1.0" encoding="UTF-8"?>
     <checkstyle>
@@ -19,6 +21,7 @@ class PhpStanReportParserTest : TestCase() {
     </checkstyle>
   """.trimIndent()
 
+  @Test
   fun testAllFiles() {
     assertEquals(
       listOf(
@@ -30,21 +33,25 @@ class PhpStanReportParserTest : TestCase() {
     )
   }
 
+  @Test
   fun testOneFile() {
     val problems = PhpStanReportParser("/project/src/b.php").parse(report)
     assertEquals(listOf("Other file"), problems.map { it.message })
   }
 
+  @Test
   fun testEditorModeFile() {
     val problems = PhpStanReportParser("/tmp/copy.php", "/src/a.php").parse(report)
     assertEquals(2, problems.size)
   }
 
+  @Test
   fun testMalformedReportKeepsEarlierProblems() {
     val problems = PhpStanReportParser().parse(report.substringBefore("</file>") + "<broken")
     assertEquals(2, problems.size)
   }
 
+  @Test
   fun testProblemWithoutLineIsSkipped() {
     val problems = PhpStanReportParser().parse("""<file name="a.php"><error severity="error" message="m"/></file>""")
     assertTrue(problems.isEmpty())

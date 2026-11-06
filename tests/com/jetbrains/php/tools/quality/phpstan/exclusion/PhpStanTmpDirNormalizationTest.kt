@@ -1,8 +1,8 @@
 package com.jetbrains.php.tools.quality.phpstan.exclusion
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Test
 
 class PhpStanTmpDirNormalizationTest {
   private fun normalize(path: String) = path.relativizeTmpDir(BASE)
@@ -25,7 +25,7 @@ class PhpStanTmpDirNormalizationTest {
   @Test
   fun `paths that collapse to the project root are rejected`() {
     for (path in listOf("", "   ", ".", "./", "/", "//", "/.", "./.")) {
-      assertNull("'$path' must not resolve to the project root", normalize(path))
+      assertNull(normalize(path), "'$path' must not resolve to the project root")
     }
   }
 

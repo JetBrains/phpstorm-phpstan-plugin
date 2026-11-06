@@ -1,15 +1,29 @@
 package com.jetbrains.php.tools.quality.phpstan
 
+import com.intellij.openapi.Disposable
 import com.intellij.openapi.util.Disposer
-import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import com.intellij.platform.testFramework.junit5.codeInsight.fixture.codeInsightProjectFixture
+import com.intellij.testFramework.junit5.TestApplication
+import com.intellij.testFramework.junit5.TestDisposable
 import com.intellij.ui.JBIntSpinner
 import com.intellij.util.ui.UIUtil
 import com.jetbrains.php.config.interpreters.PhpTextFieldWithSdkBasedBrowse
 import com.jetbrains.php.tools.quality.QualityToolConfigurationComboBox
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import javax.swing.JCheckBox
 import javax.swing.JLabel
 
-class PhpStanOptionsPanelParityTest : BasePlatformTestCase() {
+@TestApplication
+class PhpStanOptionsPanelParityTest {
+  private val projectFixture = codeInsightProjectFixture()
+  private val project get() = projectFixture.get()
+
+  @TestDisposable
+  lateinit var testRootDisposable: Disposable
 
   // the combo box is a Disposable that holds the project; nothing else owns it in the test
   private fun comboBox() = QualityToolConfigurationComboBox(project, PhpStanQualityToolType.INSTANCE)
@@ -19,6 +33,7 @@ class PhpStanOptionsPanelParityTest : BasePlatformTestCase() {
 
   private fun config(): PhpStanOptionsConfiguration = PhpStanOptionsConfiguration.getInstance(project)
 
+  @Test
   fun testResetIsNotModifiedThenDetectsChange() {
     config().apply {
       setFullProject(true)
@@ -30,12 +45,13 @@ class PhpStanOptionsPanelParityTest : BasePlatformTestCase() {
     }
     val panel = createPanel()
     panel.reset()
-    assertFalse("Freshly reset panel must not be modified", panel.isModified)
+    assertFalse(panel.isModified, "Freshly reset panel must not be modified")
 
     config().setFullProject(false)
-    assertTrue("isModified must detect the checkbox differing from the configuration", panel.isModified)
+    assertTrue(panel.isModified, "isModified must detect the checkbox differing from the configuration")
   }
 
+  @Test
   fun testApplyWritesUiStateBack() {
     config().apply {
       setFullProject(true)
@@ -66,21 +82,22 @@ class PhpStanOptionsPanelParityTest : BasePlatformTestCase() {
     assertEquals("/tmp/autoload.php", config().autoload)
   }
 
+  @Test
   fun testStructurePlacesControls() {
     val root = createPanel().getOptionsPanel()
 
     val checkboxTexts = UIUtil.findComponentsOfType(root, JCheckBox::class.java)
       .mapNotNull { it.text?.filterNot(Char::isISOControl) }
-    assertTrue("Full-project-run checkbox missing: $checkboxTexts", checkboxTexts.any { it.contains("Full project run") })
-    assertTrue("Editor-mode checkbox missing: $checkboxTexts", checkboxTexts.any { it.contains("Editor mode") })
+    assertTrue(checkboxTexts.any { it.contains("Full project run") }, "Full-project-run checkbox missing: $checkboxTexts")
+    assertTrue(checkboxTexts.any { it.contains("Editor mode") }, "Editor-mode checkbox missing: $checkboxTexts")
 
-    assertTrue("Both SDK-based path fields (config + autoload) must be placed",
-               UIUtil.findComponentsOfType(root, PhpTextFieldWithSdkBasedBrowse::class.java).size >= 2)
-    assertNotNull("Level spinner missing", UIUtil.findComponentOfType(root, JBIntSpinner::class.java))
+    assertTrue(UIUtil.findComponentsOfType(root, PhpTextFieldWithSdkBasedBrowse::class.java).size >= 2,
+               "Both SDK-based path fields (config + autoload) must be placed")
+    assertNotNull(UIUtil.findComponentOfType(root, JBIntSpinner::class.java), "Level spinner missing")
 
     val labels = UIUtil.findComponentsOfType(root, JLabel::class.java).mapNotNull { it.text?.filterNot(Char::isISOControl) }
-    assertTrue("Configuration-file label missing: $labels", labels.any { it.contains("Configuration file") })
-    assertTrue("Level label missing: $labels", labels.any { it.contains("Level") })
-    assertTrue("Memory-limit label missing: $labels", labels.any { it.contains("Memory limit") })
+    assertTrue(labels.any { it.contains("Configuration file") }, "Configuration-file label missing: $labels")
+    assertTrue(labels.any { it.contains("Level") }, "Level label missing: $labels")
+    assertTrue(labels.any { it.contains("Memory limit") }, "Memory-limit label missing: $labels")
   }
 }

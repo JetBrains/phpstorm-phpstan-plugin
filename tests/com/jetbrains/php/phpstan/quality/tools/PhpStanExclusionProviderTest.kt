@@ -1,22 +1,35 @@
 package com.jetbrains.php.phpstan.quality.tools
 
 import com.intellij.openapi.command.WriteCommandAction
-import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import com.intellij.platform.testFramework.junit5.codeInsight.fixture.codeInsightFixture
+import com.intellij.platform.testFramework.junit5.codeInsight.fixture.codeInsightProjectFixture
+import com.intellij.testFramework.junit5.TestApplication
 import com.jetbrains.php.tools.quality.phpstan.exclusion.PhpStanExclusionProvider
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
-class PhpStanExclusionProviderTest : BasePlatformTestCase() {
+@TestApplication
+class PhpStanExclusionProviderTest {
+  private val projectFixture = codeInsightProjectFixture()
+  private val myFixture by codeInsightFixture(projectFixture)
+  private val project get() = myFixture.project
   private lateinit var provider: PhpStanExclusionProvider
 
-  override fun setUp() {
-    super.setUp()
+  @BeforeEach
+  fun setUp() {
     provider = PhpStanExclusionProvider()
   }
 
+  @Test
   fun testNoConfigFile() {
     val exclusions = provider.getExclusionDirectories(project)
     assertTrue(exclusions.isEmpty())
   }
 
+  @Test
   fun testConfigWithTmpDir() {
     val configContent = """
       parameters:
@@ -34,6 +47,7 @@ class PhpStanExclusionProviderTest : BasePlatformTestCase() {
     assertEquals(".phpstan-cache", exclusions[0])
   }
 
+  @Test
   fun testConfigWithEnvironmentVariable() {
     val configContent = """
       parameters:
@@ -50,6 +64,7 @@ class PhpStanExclusionProviderTest : BasePlatformTestCase() {
     assertTrue(exclusions.isEmpty())
   }
 
+  @Test
   fun testInvalidYamlConfig() {
     val configContent = "invalid yaml {{{ content"
 
@@ -63,6 +78,7 @@ class PhpStanExclusionProviderTest : BasePlatformTestCase() {
     assertTrue(exclusions.isEmpty())
   }
 
+  @Test
   fun testConfigWithoutTmpDir() {
     val configContent = """
       parameters:
@@ -81,6 +97,7 @@ class PhpStanExclusionProviderTest : BasePlatformTestCase() {
     assertTrue(exclusions.isEmpty())
   }
 
+  @Test
   fun testMultipleConfigFiles() {
     val configContent = """
       parameters:
@@ -100,16 +117,18 @@ class PhpStanExclusionProviderTest : BasePlatformTestCase() {
     assertEquals("cache/phpstan", exclusions[0])
   }
 
+  @Test
   fun testConfigWithTmpDirPointingToProjectRoot() {
     // PHPStan writes its cache into the project root with this configuration; there is no directory to exclude.
     for (tmpDir in listOf(".", "./", "\"\"", "'.'")) {
       createConfig("parameters:\n  tmpDir: $tmpDir")
 
       val exclusions = provider.getExclusionDirectories(project)
-      assertTrue("tmpDir '$tmpDir' must not produce an exclusion, got $exclusions", exclusions.isEmpty())
+      assertTrue(exclusions.isEmpty(), "tmpDir '$tmpDir' must not produce an exclusion, got $exclusions")
     }
   }
 
+  @Test
   fun testConfigWithAbsoluteTmpDir() {
     createConfig("parameters:\n  tmpDir: /tmp/phpstan")
 
@@ -117,6 +136,7 @@ class PhpStanExclusionProviderTest : BasePlatformTestCase() {
     assertTrue(exclusions.isEmpty())
   }
 
+  @Test
   fun testConfigWithTmpDirOutsideProject() {
     createConfig("parameters:\n  tmpDir: ../shared-cache")
 
@@ -124,11 +144,12 @@ class PhpStanExclusionProviderTest : BasePlatformTestCase() {
     assertTrue(exclusions.isEmpty())
   }
 
+  @Test
   fun testRelativeTmpDirIsNormalized() {
     createConfig("parameters:\n  tmpDir: ./cache/phpstan/")
 
     val exclusions = provider.getExclusionDirectories(project)
-    assertEquals("cache/phpstan", assertOneElement(exclusions))
+    assertThat(exclusions).containsExactly("cache/phpstan")
   }
 
   private fun createConfig(content: String) {
