@@ -1,28 +1,35 @@
 package com.jetbrains.php.phpstan.quality.tools;
 
-import com.intellij.openapi.util.io.FileUtilRt;
-import com.jetbrains.php.config.composer.QualityToolsComposerConfigTest;
-import com.jetbrains.php.tools.quality.QualityToolConfigurationManager;
+import com.intellij.testFramework.junit5.TestApplication;
+import com.intellij.testFramework.junit5.fixture.TestFixture;
+import com.jetbrains.php.config.composer.QualityToolsComposerConfigTestFixture;
 import com.jetbrains.php.tools.quality.phpstan.PhpStanConfigurationManager;
-import com.jetbrains.php.util.PhpOsUtil;
-import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Test;
 
-public class PhpStanComposerConfigTest extends QualityToolsComposerConfigTest {
+import static com.jetbrains.php.config.composer.QualityToolsComposerConfigTestFixture.qualityToolsComposerConfigFixture;
 
-  @Override
-  protected QualityToolConfigurationManager getQualityToolConfigurationManager() {
-    return PhpStanConfigurationManager.getInstance(getProject());
+@TestApplication
+public class PhpStanComposerConfigTest {
+  private final TestFixture<QualityToolsComposerConfigTestFixture> qualityTool =
+    qualityToolsComposerConfigFixture(project -> PhpStanConfigurationManager.getInstance(project), "phpstan", "phpstan/phpstan");
+
+  @Test
+  public void testGeneral() {
+    qualityTool.get().doTestGeneral();
   }
 
-  @NotNull
-  @Override
-  protected String getPath() {
-    return FileUtilRt.toSystemIndependentName(myFixture.getTempDirPath()) + "/vendor/bin/phpstan" + (PhpOsUtil.isWindows(getProject()) ? ".bat" : "");
+  @Test
+  public void testNoVersion() {
+    qualityTool.get().doTestNoVersion();
   }
 
-  @NotNull
-  @Override
-  protected String getPackageName() {
-    return "phpstan/phpstan";
+  @Test
+  public void testEmpty() {
+    qualityTool.get().doTestEmpty();
+  }
+
+  @Test
+  public void testEmptyJSON() {
+    qualityTool.get().doTestEmptyJSON();
   }
 }
