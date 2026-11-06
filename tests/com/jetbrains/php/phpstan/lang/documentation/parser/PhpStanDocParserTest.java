@@ -1,48 +1,64 @@
 package com.jetbrains.php.phpstan.lang.documentation.parser;
 
-import com.jetbrains.php.lang.parser.BasicPhpParserTestCase;
+import com.intellij.openapi.project.Project;
+import com.intellij.testFramework.junit5.TestApplication;
+import com.intellij.testFramework.junit5.fixture.TestFixture;
+import com.jetbrains.php.lang.parser.PhpFileSetParserTestFixture;
+import org.junit.jupiter.api.Test;
 
-public class PhpStanDocParserTest extends BasicPhpParserTestCase {
+import static com.intellij.testFramework.junit5.fixture.FixturesKt.projectFixture;
+import static com.jetbrains.php.lang.parser.PhpFileSetParserTestFixture.phpFileSetParserFixture;
+
+@TestApplication
+public class PhpStanDocParserTest {
   public static final String TEST_DATA_HOME = "/phpstorm/phpstan/testData/";
 
-  @Override
-  protected String getDataPath() {
-    return TEST_DATA_HOME + "parser";
+  private static final TestFixture<Project> projectFixture = projectFixture();
+
+  private final TestFixture<PhpFileSetParserTestFixture> parser = phpFileSetParserFixture(projectFixture, TEST_DATA_HOME + "parser");
+
+  @Test
+  public void test$DocTags() {
+    parser.get().doTest();
   }
 
-  public void test$DocTags() throws Throwable {
-    doTest();
+  @Test
+  public void test$DocMethodsTags() {
+    parser.get().doTest();
   }
 
-  public void test$DocMethodsTags() throws Throwable {
-    doTest();
+  @Test
+  public void test$Template() {
+    parser.get().doTest();
   }
 
-  public void test$Template() throws Throwable {
-    doTest();
+  @Test
+  public void test$Assert() {
+    parser.get().doTest();
   }
 
-  public void test$Assert() throws Throwable {
-    doTest();
+  @Test
+  public void test$Inheritance() {
+    parser.get().doTest();
   }
 
-  public void test$Inheritance() throws Throwable {
-    doTest();
+  @Test
+  public void test$Method() {
+    parser.get().doTest();
   }
 
-  public void test$Method() throws Throwable {
-    doTest();
+  @Test
+  public void test$Type() {
+    parser.get().doTest();
   }
 
-  public void test$Type() throws Throwable {
-    doTest();
+  @Test
+  public void test$InplaceCovariantGeneric() {
+    parser.get().doTest();
   }
 
-  public void test$InplaceCovariantGeneric() throws Throwable {
-    doTest();
-  }
-
-  public void test$InplaceContravariantGeneric() throws Throwable {
-    doTest();
+  @Test
+  public void test$InplaceContravariantGeneric() {
+    parser.get().doTest();
   }
 }
