@@ -34,7 +34,16 @@ jvm_library(
         ["resources/**/*"],
     ),
     visibility = ["//visibility:public"],
-    runtime_deps = ["//phpstorm:php-resources"],
+    runtime_deps = [
+        # do not sort,
+        "@community//platform/remote-core",
+        "@community//platform/forms_rt:java-guiForms-rt",
+        "//webcore/impl",
+        "@community//platform/util/concurrency",
+        "@community//jps/model-api:model",
+        "@community//platform/execution",
+        "//phpstorm:php-resources",
+    ],
     deps = [
         # do not sort,
         "//phpstorm/php-backend",
@@ -44,7 +53,6 @@ jvm_library(
         "@community//platform/projectModel-api:projectModel",
         "@community//platform/analysis-api:analysis",
         "@community//platform/platform-api:ide",
-        "@community//platform/remote-core",
         "@community//platform/util/jdom",
         "@community//platform/util:util-ui",
         "@community//libraries/gson",
@@ -54,12 +62,7 @@ jvm_library(
         "//phpstorm/php-openapi:php",
         "@community//platform/platform-util-io:ide-util-io",
         "@community//platform/ide-core",
-        "@community//platform/forms_rt:java-guiForms-rt",
-        "//webcore/impl",
         "@community//libraries/snakeyaml",
-        "@community//platform/util/concurrency",
-        "@community//jps/model-api:model",
-        "@community//platform/execution",
     ],
 )
 ### auto-generated section `build intellij.phpstan` end
