@@ -1,18 +1,26 @@
+load("@community//build:jps_module.bzl", "jps_module")
 load("@community//build:tests-options.bzl", "jps_test")
+load("@community//platform/build-scripts/bazel-rules:dist_plugin.bzl", "dist_plugin")
 load("@community//platform/build-scripts/bazel-rules:ij_plugin.bzl", "ij_plugin")
-load("@jps_dynamic_deps_ultimate//:targets.bzl", "dist_plugin")
 load("@rules_jvm//:jvm.bzl", "jvm_library")
 
 ### auto-generated section `dev intellij.phpstan` start
 dist_plugin(
     content_modules = ["intellij.phpstan.remoteInterpreter"],
     descriptor = "resources/META-INF/plugin.xml",
+    descriptors = {
+        "//phpstorm/phpstan/remoteInterpreter:resources/intellij.phpstan.remoteInterpreter.xml": "intellij.phpstan.remoteInterpreter.xml",
+    },
     jars = {
         "lib/phpstan.jar": ["intellij.phpstan"],
     },
     main_module = "intellij.phpstan",
     mode_refused_content_modules = {
         "frontend": ["intellij.phpstan.remoteInterpreter"],
+    },
+    module_labels = {
+        "intellij.phpstan": "//phpstorm/phpstan:phpstan",
+        "intellij.phpstan.remoteInterpreter": "//phpstorm/phpstan/remoteInterpreter:remoteInterpreter",
     },
 )
 ### auto-generated section `dev intellij.phpstan` end
@@ -77,12 +85,11 @@ ij_plugin(
 ### auto-generated section `plugin intellij.phpstan` end
 
 ### auto-generated section `iml intellij.phpstan` start
-exports_files(
-    [
-        "intellij.phpstan.iml",
-        "resources/META-INF/plugin.xml",
-    ],
-    visibility = ["//visibility:public"],
+jps_module(
+    name = "intellij.phpstan",
+    descriptors = ["resources/META-INF/plugin.xml"],
+    plugin = True,
+    target = "phpstan",
 )
 ### auto-generated section `iml intellij.phpstan` end
 
@@ -134,11 +141,9 @@ jvm_library(
 ### auto-generated section `build intellij.phpstan.tests` end
 
 ### auto-generated section `iml intellij.phpstan.tests` start
-exports_files(
-    [
-        "intellij.phpstan.tests.iml",
-    ],
-    visibility = ["//visibility:public"],
+jps_module(
+    name = "intellij.phpstan.tests",
+    target = "phpstan-tests_test_lib",
 )
 ### auto-generated section `iml intellij.phpstan.tests` end
 
