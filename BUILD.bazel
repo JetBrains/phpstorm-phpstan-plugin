@@ -6,22 +6,13 @@ load("@rules_jvm//:jvm.bzl", "jvm_library")
 
 ### auto-generated section `dev intellij.phpstan` start
 dist_plugin(
-    content_modules = ["intellij.phpstan.remoteInterpreter"],
+    content_modules = {"intellij.phpstan.remoteInterpreter": "//phpstorm/phpstan/remoteInterpreter"},
     descriptor = "resources/META-INF/plugin.xml",
-    descriptors = {
-        "//phpstorm/phpstan/remoteInterpreter:resources/intellij.phpstan.remoteInterpreter.xml": "intellij.phpstan.remoteInterpreter.xml",
-    },
-    jars = {
-        "lib/phpstan.jar": ["intellij.phpstan"],
-    },
+    jars = {"lib/phpstan.jar": ["intellij.phpstan"]},
     main_module = "intellij.phpstan",
-    mode_refused_content_modules = {
-        "frontend": ["intellij.phpstan.remoteInterpreter"],
-    },
-    module_labels = {
-        "intellij.phpstan": "//phpstorm/phpstan:phpstan",
-        "intellij.phpstan.remoteInterpreter": "//phpstorm/phpstan/remoteInterpreter:remoteInterpreter",
-    },
+    mode_refused_content_modules = {"frontend": ["intellij.phpstan.remoteInterpreter"]},
+    module_descriptors = ["//phpstorm/phpstan/remoteInterpreter:resources/intellij.phpstan.remoteInterpreter.xml"],
+    module_labels = {"intellij.phpstan": "//phpstorm/phpstan"},
 )
 ### auto-generated section `dev intellij.phpstan` end
 
